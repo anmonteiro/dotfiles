@@ -75,6 +75,7 @@
 (setq electric-indent-mode nil)
 
 ;; disable "Use Option as Meta key" and set Mac Cmd key as Meta
+(setq default-input-method "MacOSX")
 (setq mac-option-modifier nil
       mac-command-modifier 'meta
       x-select-enable-clipboard t)
