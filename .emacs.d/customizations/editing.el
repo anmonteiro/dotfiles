@@ -51,6 +51,15 @@
   (comment-or-uncomment-region (line-beginning-position) (line-end-position)))
 (global-set-key (kbd "C-;") 'toggle-comment-on-line)
 
+;; auto-indent by pressing the return key
+(add-hook 'prog-mode-hook
+          (lambda ()
+            (local-set-key (kbd "RET") 'newline-and-indent)))
+
+(add-hook 'paredit-mode-hook
+          (lambda ()
+            (local-set-key (kbd "RET") 'paredit-newline)))
+
 ;; yay rainbows!
 ;; global-rainbow-delimiters-mode was removed
 ;; see: https://github.com/jlr/rainbow-delimiters/pull/41/commits
