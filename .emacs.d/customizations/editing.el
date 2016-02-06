@@ -60,6 +60,10 @@
           (lambda ()
             (local-set-key (kbd "RET") 'paredit-newline)))
 
+(add-hook 'cider-repl-mode-hook
+          (lambda ()
+            (local-set-key (kbd "RET") 'cider-repl-return)))
+
 ;; yay rainbows!
 ;; global-rainbow-delimiters-mode was removed
 ;; see: https://github.com/jlr/rainbow-delimiters/pull/41/commits
