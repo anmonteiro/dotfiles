@@ -56,13 +56,9 @@
           (lambda ()
             (local-set-key (kbd "RET") 'newline-and-indent)))
 
-(add-hook 'paredit-mode-hook
-          (lambda ()
-            (local-set-key (kbd "RET") 'paredit-newline)))
-
-(add-hook 'cider-repl-mode-hook
-          (lambda ()
-            (local-set-key (kbd "RET") 'cider-repl-return)))
+;; auto-indent with paredit-newline when using paredit
+(eval-after-load 'paredit
+  '(define-key paredit-mode-map [remap newline-and-indent] 'paredit-newline))
 
 ;; yay rainbows!
 ;; global-rainbow-delimiters-mode was removed
