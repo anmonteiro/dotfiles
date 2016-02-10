@@ -80,7 +80,10 @@
     ;; sidebar / file explorer
     neotree
 
-    markdown-mode))
+    markdown-mode
+
+    ;; s string manipulation library
+    s))
 
 ;; On OS X, an Emacs instance started from the graphical user
 ;; interface will have a different environment than a shell in a

@@ -5,7 +5,7 @@
   (exec-path-from-shell-copy-envs
    '("PATH")))
 
-
+(require 's)
 (defun instashell (pre)
   "Opens a shell buffer based in the current directory and auto-named
    to prevent buffer name clashing on the *shell* buffer name.
