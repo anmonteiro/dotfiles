@@ -18,25 +18,26 @@
 (setq neo-vc-integration '(face char))
 
 ;; Patch to fix vc integration
-;; (defun neo-vc-for-node (node)
-;;   (let* ((backend (vc-backend node))
-;;          (vc-state (when backend (vc-state node backend))))
-;;     ;; (message "%s %s %s" node backend vc-state)
-;;     (cons (cdr (assoc vc-state neo-vc-state-char-alist))
-;;           (cl-case vc-state
-;;             (up-to-date       neo-vc-up-to-date-face)
-;;             (edited           neo-vc-edited-face)
-;;             (needs-update     neo-vc-needs-update-face)
-;;             (needs-merge      neo-vc-needs-merge-face)
-;;             (unlocked-changes neo-vc-unlocked-changes-face)
-;;             (added            neo-vc-added-face)
-;;             (removed          neo-vc-removed-face)
-;;             (conflict         neo-vc-conflict-face)
-;;             (missing          neo-vc-missing-face)
-;;             (ignored          neo-vc-ignored-face)
-;;             (unregistered     neo-vc-unregistered-face)
-;;             (user             neo-vc-user-face)
-;;             (t                neo-vc-default-face)))))
-
+;; as per https://github.com/jaypei/emacs-neotree/pull/156
+(defun neo-vc-for-node (node)
+  (let* ((backend (ignore-errors
+                    (vc-responsible-backend node)))
+         (vc-state (when backend (vc-state node backend))))
+    ;; (message "anm: %s %s %s" node backend vc-state)
+    (cons (cdr (assoc vc-state neo-vc-state-char-alist))
+          (cl-case vc-state
+            (up-to-date       neo-vc-up-to-date-face)
+            (edited           neo-vc-edited-face)
+            (needs-update     neo-vc-needs-update-face)
+            (needs-merge      neo-vc-needs-merge-face)
+            (unlocked-changes neo-vc-unlocked-changes-face)
+            (added            neo-vc-added-face)
+            (removed          neo-vc-removed-face)
+            (conflict         neo-vc-conflict-face)
+            (missing          neo-vc-missing-face)
+            (ignored          neo-vc-ignored-face)
+            (unregistered     neo-vc-unregistered-face)
+            (user             neo-vc-user-face)
+            (otherwise        neo-vc-default-face)))))
 
 (provide 'setup-neotree)
