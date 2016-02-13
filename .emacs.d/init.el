@@ -135,6 +135,9 @@
 ;; some user interface elements
 (load "ui.el")
 
+;; Set up fonts
+(load "fonts.el")
+
 ;; For Neotree sidebar
 (load "setup-neotree.el")
 
