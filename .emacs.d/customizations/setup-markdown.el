@@ -6,4 +6,4 @@
           (lambda ()
             (setq fci-handle-truncate-lines nil)
             (setq truncate-partial-width-windows nil)
-            (setq-default truncate-lines nil)))
+            (setq truncate-lines nil)))

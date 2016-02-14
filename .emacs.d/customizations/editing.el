@@ -95,6 +95,9 @@
       mac-command-modifier 'meta
       x-select-enable-clipboard t)
 
+;; truncate lines by default
+(setq-default truncate-lines t)
+
 ;; display a vertical rule at column 80
 (require 'fill-column-indicator)
 (add-hook 'after-change-major-mode-hook 'fci-mode)
