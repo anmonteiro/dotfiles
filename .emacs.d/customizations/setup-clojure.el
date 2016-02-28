@@ -50,6 +50,12 @@
 ;; enable paredit in your REPL
 (add-hook 'cider-repl-mode-hook 'paredit-mode)
 
+;; run the tests for the ns we're in
+(defun same-ns-fn (ns)
+  (when ns ns))
+
+(setq cider-test-infer-test-ns 'same-ns-fn)
+
 ;; Use clojure mode for other extensions
 (add-to-list 'auto-mode-alist '("\\.edn$" . clojure-mode))
 (add-to-list 'auto-mode-alist '("\\.boot$" . clojure-mode))
