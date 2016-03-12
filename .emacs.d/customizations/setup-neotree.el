@@ -17,4 +17,6 @@
 
 (setq neo-vc-integration '(face char))
 
+(setq neo-show-hidden-files 't)
+
 (provide 'setup-neotree)
