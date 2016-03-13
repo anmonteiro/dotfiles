@@ -99,5 +99,7 @@
 (setq-default truncate-lines t)
 
 ;; display a vertical rule at column 80
+(setq-default fill-column 80)
+
 (require 'fill-column-indicator)
 (add-hook 'after-change-major-mode-hook 'fci-mode)
