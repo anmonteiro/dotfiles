@@ -83,7 +83,13 @@
     markdown-mode
 
     ;; s string manipulation library
-    s))
+    s
+
+    yaml-mode
+
+    haskell-mode
+
+    hindent))
 
 ;; On OS X, an Emacs instance started from the graphical user
 ;; interface will have a different environment than a shell in a
@@ -155,3 +161,5 @@
 (load "setup-clojure.el")
 (load "setup-js.el")
 (load "setup-markdown.el")
+(load "setup-haskell.el")
+
