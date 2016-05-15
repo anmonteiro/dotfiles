@@ -78,6 +78,18 @@
                   tab-width 2
                   indent-tabs-mode nil)))
 
+(add-hook 'makefile-mode-hook
+          (lambda ()
+            (setq indent-tabs-mode t)
+            (setq-default indent-tabs-mode t)
+            (setq tab-width 2)))
+
+(add-hook 'makefile-gmake-mode-hook
+          (lambda ()
+            (setq indent-tabs-mode t)
+            (setq-default indent-tabs-mode t)
+            (setq tab-width 2)))
+
 ;; use 2 spaces for tabs
 (defun die-tabs ()
   (interactive)
