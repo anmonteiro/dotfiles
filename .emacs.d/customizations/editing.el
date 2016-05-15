@@ -72,6 +72,12 @@
                   tab-width 2
                   indent-tabs-mode nil)))
 
+(add-hook 'css-mode-hook
+          (lambda ()
+            (setq css-indent-offset 2
+                  tab-width 2
+                  indent-tabs-mode nil)))
+
 ;; use 2 spaces for tabs
 (defun die-tabs ()
   (interactive)
