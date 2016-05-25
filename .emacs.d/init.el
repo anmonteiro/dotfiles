@@ -14,11 +14,9 @@
 ;; Define package repositories
 (require 'package)
 (add-to-list 'package-archives
-             '("marmalade" . "http://marmalade-repo.org/packages/") t)
-(add-to-list 'package-archives
-             '("tromey" . "http://tromey.com/elpa/") t)
-(add-to-list 'package-archives
              '("melpa" . "http://melpa.org/packages/") t)
+(add-to-list 'package-archives
+             '("melpa-stable" . "http://stable.melpa.org/packages/") t)
 
 ;; (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
 ;;                          ("marmalade" . "http://marmalade-repo.org/packages/")
@@ -89,7 +87,9 @@
 
     haskell-mode
 
-    hindent))
+    hindent
+
+    less))
 
 ;; On OS X, an Emacs instance started from the graphical user
 ;; interface will have a different environment than a shell in a
