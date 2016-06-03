@@ -7,6 +7,9 @@
 ;; Show line numbers
 (global-linum-mode)
 
+;; Show columns numbers
+(setq column-number-mode t)
+
 ;; Don't show native OS scroll bars for buffers because they're redundant
 (when (fboundp 'scroll-bar-mode)
   (scroll-bar-mode -1))
