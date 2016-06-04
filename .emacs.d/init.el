@@ -89,7 +89,9 @@
 
     hindent
 
-    less))
+    less
+
+    markdown-preview-mode))
 
 ;; On OS X, an Emacs instance started from the graphical user
 ;; interface will have a different environment than a shell in a
