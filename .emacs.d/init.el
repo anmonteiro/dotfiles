@@ -164,4 +164,5 @@
 (load "setup-js.el")
 (load "setup-markdown.el")
 (load "setup-haskell.el")
+(load "setup-latex.el")
 
