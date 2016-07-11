@@ -89,7 +89,7 @@
 
     hindent
 
-    less
+    less-css-mode
 
     markdown-preview-mode))
 
