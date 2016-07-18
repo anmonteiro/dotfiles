@@ -120,3 +120,21 @@
 (setq-default fill-column 80)
 
 (add-hook 'after-change-major-mode-hook 'fci-mode)
+
+;; diff-hl setup
+
+(require 'diff-hl)
+
+(set-face-attribute 'diff-hl-change nil
+                    :foreground "#E2C08D"
+                    :background "#E2C08D")
+(set-face-attribute 'diff-hl-insert nil
+                    :foreground "green4"
+                    :background "green4")
+(set-face-attribute 'diff-hl-delete nil
+                    :foreground "red3"
+                    :background "red3")
+
+(add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
+(add-hook 'after-change-major-mode-hook 'turn-on-diff-hl-mode)
+(add-hook 'after-change-major-mode-hook 'diff-hl-flydiff-mode)

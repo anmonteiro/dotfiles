@@ -93,6 +93,7 @@
 
     markdown-preview-mode
 
+    diff-hl
 
     fill-column-indicator))
 
