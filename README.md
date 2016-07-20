@@ -5,7 +5,7 @@ From [Git, dotfiles & Hardlinks](https://codingkilledthecat.wordpress.com/2012/0
 symlinking files inside the repository out of it, into your home directory:
 
 ```shell
-~/dotfiles $ rm ~/.emacs.d
-~/dotfiles $ cd ~
+~ $ rm ~/.emacs.d
+~ $ cd ~
 ~ $ ln -s dotfiles/.emacs.d .
 ```
