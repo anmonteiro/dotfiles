@@ -66,6 +66,8 @@
 ;;(global-rainbow-delimiters-mode t)
 (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
 
+;; Whitespace
+
 (add-hook 'prog-mode-hook
           (lambda ()
             (setq c-basic-offset 2
@@ -97,6 +99,9 @@
   (mark-whole-buffer)
   (untabify (region-beginning) (region-end))
   (keyboard-quit))
+
+;; delete trailing whitespace on save
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
 
 ;; fix weird os x kill error
 (defun ns-get-pasteboard ()
