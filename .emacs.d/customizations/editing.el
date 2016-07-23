@@ -100,6 +100,9 @@
   (untabify (region-beginning) (region-end))
   (keyboard-quit))
 
+;; show trailing whitespace by default
+(setq-default show-trailing-whitespace t)
+
 ;; delete trailing whitespace on save
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
