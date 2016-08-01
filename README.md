@@ -1,5 +1,7 @@
 # dotfiles
 
+## Symlinking to dotfiles
+
 From [Git, dotfiles & Hardlinks](https://codingkilledthecat.wordpress.com/2012/08/08/git-dotfiles-and-hardlinks/):
 
 symlinking files inside the repository out of it, into your home directory:
@@ -8,4 +10,10 @@ symlinking files inside the repository out of it, into your home directory:
 ~ $ rm ~/.emacs.d
 ~ $ cd ~
 ~ $ ln -s dotfiles/.emacs.d .
+```
+
+## Installing Emacs
+
+``` shell
+brew install emacs --HEAD --use-git-head --with-cocoa --with-gnutls --with-rsvg --with-imagemagick
 ```
