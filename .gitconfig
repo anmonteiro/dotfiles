@@ -1,0 +1,10 @@
+[filter "lfs"]
+	clean = git lfs clean %f
+	smudge = git lfs smudge %f
+	required = true
+[user]
+	name = António Nuno Monteiro
+	email = anmonteiro@gmail.com
+	signingkey = 3EF052D0A8494FE9
+[commit]
+	gpgsign = true
