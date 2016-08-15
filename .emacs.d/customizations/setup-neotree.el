@@ -18,8 +18,6 @@
 
 (setq neo-show-hidden-files t)
 
-(setq neo-auto-indent-point t)
-
 ;; face customizations
 
 (set-face-attribute 'neo-vc-edited-face nil
