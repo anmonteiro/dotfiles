@@ -7,6 +7,9 @@
 ;; file and jump to node.
 (setq-default neo-smart-open t)
 
+;; change root automatically when running `projectile-switch-project`
+(setq projectile-switch-project-action 'neotree-projectile-action)
+
 ;; Don't allow neotree to be the only open window
 (setq-default neo-dont-be-alone t)
 
