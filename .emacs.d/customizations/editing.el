@@ -146,3 +146,7 @@
 (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
 (add-hook 'after-change-major-mode-hook 'turn-on-diff-hl-mode)
 (add-hook 'after-change-major-mode-hook 'diff-hl-flydiff-mode)
+
+;; smooth-scrolling
+
+(smooth-scrolling-mode 1)

@@ -95,7 +95,9 @@
 
     diff-hl
 
-    fill-column-indicator))
+    fill-column-indicator
+
+    smooth-scrolling))
 
 ;; On OS X, an Emacs instance started from the graphical user
 ;; interface will have a different environment than a shell in a
