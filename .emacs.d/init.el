@@ -97,7 +97,17 @@
 
     fill-column-indicator
 
-    smooth-scrolling))
+    smooth-scrolling
+
+    flycheck
+
+    web-mode
+
+    js2-mode
+
+    json-mode
+
+    flycheck-flow))
 
 ;; On OS X, an Emacs instance started from the graphical user
 ;; interface will have a different environment than a shell in a

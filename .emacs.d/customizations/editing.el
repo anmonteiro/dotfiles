@@ -150,3 +150,12 @@
 ;; smooth-scrolling
 
 (smooth-scrolling-mode 1)
+(setq smooth-scroll-margin 5)
+
+;; Flycheck
+
+;; http://www.flycheck.org/manual/latest/index.html
+(require 'flycheck)
+
+;; turn on flychecking globally
+(add-hook 'after-init-hook #'global-flycheck-mode)
