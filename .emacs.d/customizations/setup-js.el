@@ -70,8 +70,8 @@
 
 (add-hook 'web-mode-hook
           '(lambda ()
-             (define-key js2-mode-map "{" #'paredit-open-curly)
-             (define-key js2-mode-map "}" #'paredit-close-curly)))
+             (define-key web-mode-map "{" #'paredit-open-curly)
+             (define-key web-mode-map "}" #'paredit-close-curly)))
 
 (setq js-indent-level 2)
 (eval-after-load "sgml-mode"
