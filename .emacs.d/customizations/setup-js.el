@@ -45,7 +45,18 @@
     (when (and eslint (file-executable-p eslint))
       (setq-local flycheck-javascript-eslint-executable eslint))))
 
+(defun my/use-flow-from-node-modules ()
+  (let* ((root (locate-dominating-file
+                (or (buffer-file-name) default-directory)
+                "node_modules"))
+         (flow (and root
+                    (expand-file-name "node_modules/flow-bin/vendor/flow"
+                                      root))))
+    (when (and flow (file-executable-p flow))
+      (setq-local flycheck-javascript-flow-executable flow))))
+
 (add-hook 'flycheck-mode-hook #'my/use-eslint-from-node-modules)
+(add-hook 'flycheck-mode-hook #'my/use-flow-from-node-modules)
 
 ;; Flycheck + Flowtype
 (require 'flycheck-flow)
