@@ -1,5 +1,5 @@
 ;; javascript / html
-(add-to-list 'auto-mode-alist '("\\.js$" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.js$" . js-mode))
 (add-to-list 'auto-mode-alist '("\\.eslintrc.*$" . json-mode))
 (add-to-list 'auto-mode-alist '("\\.babelrc$" . json-mode))
 
@@ -62,6 +62,8 @@
 (require 'flycheck-flow)
 (flycheck-add-next-checker 'javascript-eslint 'javascript-flow)
 
+(add-hook 'js-mode-hook 'subword-mode)
+(add-hook 'js-mode-hook 'enable-paredit-mode)
 (add-hook 'js2-mode-hook 'subword-mode)
 (add-hook 'js2-mode-hook 'enable-paredit-mode)
 (add-hook 'web-mode-hook 'subword-mode)
@@ -69,6 +71,10 @@
 (add-hook 'json-mode-hook 'enable-paredit-mode)
 (add-hook 'html-mode-hook 'subword-mode)
 
+(add-hook 'js-mode-hook
+          (lambda ()
+            (define-key js-mode-map "{" #'paredit-open-curly)
+            (define-key js-mode-map "}" #'paredit-close-curly)))
 (add-hook 'js2-mode-hook
           (lambda ()
             (define-key js2-mode-map "{" #'paredit-open-curly)
@@ -108,15 +114,18 @@ If in a character literal, do nothing.  This prevents accidentally
         ((not (paredit-in-char-p))
          (paredit-insert-pair n ?\' ?\' 'paredit-forward-for-quote))))
 
+(add-hook 'js-mode-hook
+          '(lambda ()
+             (define-key js-mode-map "'" #'paredit-singlequote)))
 (add-hook 'js2-mode-hook
           '(lambda ()
-             (define-key web-mode-map "'" #'paredit-singlequote)))
+             (define-key js2-mode-map "'" #'paredit-singlequote)))
 (add-hook 'web-mode-hook
           '(lambda ()
              (define-key web-mode-map "'" #'paredit-singlequote)))
 (add-hook 'json-mode-hook
           '(lambda ()
-             (define-key web-mode-map "'" #'paredit-singlequote)))
+             (define-key json-mode-map "'" #'paredit-singlequote)))
 
 (setq js-indent-level 2)
 (eval-after-load "sgml-mode"
