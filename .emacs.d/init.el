@@ -107,7 +107,9 @@
 
     json-mode
 
-    flycheck-flow))
+    flycheck-flow
+
+    all-the-icons))
 
 ;; On OS X, an Emacs instance started from the graphical user
 ;; interface will have a different environment than a shell in a

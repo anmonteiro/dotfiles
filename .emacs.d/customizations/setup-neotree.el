@@ -15,11 +15,17 @@
 
 (global-set-key [f8] 'neotree-toggle)
 
-(setq neo-theme 'nerd) ; 'classic, 'nerd, 'ascii, 'arrow
+(setq neo-theme (if window-system 'icons 'nerd)) ; 'classic, 'nerd, 'ascii, 'arrow
 
 (setq neo-vc-integration '(face char))
 
 (setq neo-show-hidden-files t)
+
+(setq neo-toggle-window-keep-p t)
+
+(setq neo-force-change-root t)
+
+(add-hook 'neotree-mode-hook (lambda () (setq-local tab-width 1)))
 
 ;; face customizations
 
