@@ -8,3 +8,5 @@
 	signingkey = 3EF052D0A8494FE9
 [commit]
 	gpgsign = true
+[gpg]
+	program = /usr/local/bin/gpg
