@@ -43,3 +43,9 @@
 (add-hook 'tex-mode-hook 'truncate-lines)
 (add-hook 'TeX-mode-hook 'truncate-lines)
 (add-hook 'bibtex-mode-hook 'truncate-lines)
+
+(add-hook 'latex-mode-hook 'flyspell-mode)
+(add-hook 'LaTeX-mode-hook 'flyspell-mode)
+(add-hook 'tex-mode-hook 'flyspell-mode)
+(add-hook 'TeX-mode-hook 'flyspell-mode)
+(add-hook 'bibtex-mode-hook 'flyspell-mode)
