@@ -25,7 +25,6 @@
 
 (setq neo-force-change-root t)
 
-(add-hook 'neotree-mode-hook (lambda () (setq-local tab-width 1)))
 
 ;; face customizations
 
