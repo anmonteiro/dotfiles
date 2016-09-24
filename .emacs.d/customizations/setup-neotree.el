@@ -2,6 +2,7 @@
 ;; https://github.com/jaypei/emacs-neotree
 
 (require 'neotree)
+(require 'all-the-icons)
 
 ;; every time when the neotree window is  opened, it will try to find current
 ;; file and jump to node.
@@ -25,6 +26,8 @@
 
 (setq neo-force-change-root t)
 
+(add-to-list 'all-the-icons-icon-alist
+             '("^build\.boot$" all-the-icons-alltheicon "clojure" :height 1.0 :face all-the-icons-dblue))
 
 ;; face customizations
 
