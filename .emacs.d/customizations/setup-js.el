@@ -60,7 +60,7 @@
 
 ;; Flycheck + Flowtype
 (require 'flycheck-flow)
-(flycheck-add-next-checker 'javascript-eslint 'javascript-flow)
+(flycheck-add-next-checker 'javascript-flow 'javascript-eslint)
 
 (add-hook 'js-mode-hook 'subword-mode)
 (add-hook 'js-mode-hook 'enable-paredit-mode)
