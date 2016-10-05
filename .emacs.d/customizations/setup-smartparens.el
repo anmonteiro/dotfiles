@@ -6,6 +6,16 @@
 (show-smartparens-global-mode t)
 (sp-use-paredit-bindings)
 
+;; overlay face customizations
+(set-face-attribute 'sp-pair-overlay-face nil
+                    :background "#826e6e")
+
+(set-face-attribute 'sp-wrap-overlay-face nil
+                    :background "#826e6e")
+
+(set-face-attribute 'sp-wrap-tag-overlay-face nil
+                    :background "#826e6e")
+
 ;; Markdown mode
 
 (sp-with-modes '(markdown-mode gfm-mode rst-mode)
