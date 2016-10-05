@@ -109,7 +109,11 @@
 
     flycheck-flow
 
-    all-the-icons))
+    all-the-icons
+
+    go-mode
+
+    smartparens))
 
 ;; On OS X, an Emacs instance started from the graphical user
 ;; interface will have a different environment than a shell in a
@@ -184,3 +188,4 @@
 (load "setup-haskell.el")
 (load "setup-latex.el")
 
+(load "setup-smartparens.el")

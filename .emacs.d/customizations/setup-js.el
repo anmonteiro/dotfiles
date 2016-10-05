@@ -63,12 +63,12 @@
 (flycheck-add-next-checker 'javascript-flow 'javascript-eslint)
 
 (add-hook 'js-mode-hook 'subword-mode)
-(add-hook 'js-mode-hook 'enable-paredit-mode)
+(add-hook 'js-mode-hook 'smartparens-mode)
 (add-hook 'js2-mode-hook 'subword-mode)
-(add-hook 'js2-mode-hook 'enable-paredit-mode)
+(add-hook 'js2-mode-hook 'smartparens-mode)
 (add-hook 'web-mode-hook 'subword-mode)
-(add-hook 'web-mode-hook 'enable-paredit-mode)
-(add-hook 'json-mode-hook 'enable-paredit-mode)
+(add-hook 'web-mode-hook 'smartparens-mode)
+(add-hook 'json-mode-hook 'smartparens-mode)
 (add-hook 'html-mode-hook 'subword-mode)
 
 (add-hook 'js-mode-hook
