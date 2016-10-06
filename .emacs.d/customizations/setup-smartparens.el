@@ -2,9 +2,11 @@
 (require 'smartparens-config)
 
 (setq sp-base-key-bindings 'paredit)
+(sp-use-paredit-bindings)
+
+(define-key smartparens-mode-map (kbd "C-<right>") 'sp-slurp-hybrid-sexp)
 
 (show-smartparens-global-mode t)
-(sp-use-paredit-bindings)
 
 ;; overlay face customizations
 (set-face-attribute 'sp-pair-overlay-face nil
