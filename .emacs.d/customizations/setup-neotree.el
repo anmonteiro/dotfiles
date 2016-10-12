@@ -26,6 +26,8 @@
 
 (setq neo-force-change-root t)
 
+(add-hook 'neotree-mode-hook (lambda () (setq-local mode-line-format nil)))
+
 (add-to-list 'all-the-icons-icon-alist
              '("^build\.boot$" all-the-icons-alltheicon "clojure" :height 1.0 :face all-the-icons-dblue))
 

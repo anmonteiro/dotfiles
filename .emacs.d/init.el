@@ -189,3 +189,4 @@
 (load "setup-latex.el")
 
 (load "setup-smartparens.el")
+(load "setup-powerline.el")

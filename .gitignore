@@ -1,2 +1,3 @@
 repl-history
 *.jar
+*.elc
