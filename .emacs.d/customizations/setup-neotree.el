@@ -11,9 +11,6 @@
 ;; change root automatically when running `projectile-switch-project`
 (setq projectile-switch-project-action 'neotree-projectile-action)
 
-;; Don't allow neotree to be the only open window
-(setq-default neo-dont-be-alone t)
-
 (global-set-key [f8] 'neotree-toggle)
 
 (setq neo-theme (if window-system 'icons 'nerd)) ; 'classic, 'nerd, 'ascii, 'arrow
