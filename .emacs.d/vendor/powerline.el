@@ -3,6 +3,7 @@
 ;; Name: Emacs Powerline
 ;; Author: Nicolas Rougier and Chen Yuan
 ;; Version: 1.2
+;; Package-Requires: ((cl-lib "0.5"))
 ;; Keywords: statusline
 ;; Repository: https://github.com/yuanotes/powerline (not maintained)
 ;; Alternative: https://github.com/milkypostman/powerline by Donald Curtis
@@ -537,15 +538,15 @@ static char * %s[] = {
 (defun memoize (func)
   "Memoize the given function. If argument is a symbol then
 install the memoized function over the original function."
-  (typecase func
+  (cl-typecase func
     (symbol (fset func (memoize-wrap (symbol-function func))) func)
     (function (memoize-wrap func))))
 
 (defun memoize-wrap (func)
   "Return the memoized version of the given function."
-  (let ((table-sym (gensym))
-  (val-sym (gensym))
-  (args-sym (gensym)))
+  (let ((table-sym (cl-gensym))
+  (val-sym (cl-gensym))
+  (args-sym (cl-gensym)))
     (set table-sym (make-hash-table :test 'equal))
     `(lambda (&rest ,args-sym)
        ,(concat (documentation func) "\n(memoized function)")
