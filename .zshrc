@@ -94,3 +94,11 @@ prompt_dir() {
   prompt_segment blue black ${${${:-/${(j:/:)${(M)${(s:/:)${(D)PWD:h}}#(|.)[^.]}}/${PWD:t}}//(\/${(j:\/:)${(M)${(s:\/:)${(D)HOME:h}}#(|.)[^.]}}\/${HOME:t}|\/~)/\~}//\/\//\/}
 }
 
+export BOOT_JVM_OPTIONS="-client
+-XX:+TieredCompilation
+-XX:TieredStopAtLevel=1
+-Xmx2g
+-XX:+UseConcMarkSweepGC
+-XX:+CMSClassUnloadingEnabled
+-Xverify:none"
+
