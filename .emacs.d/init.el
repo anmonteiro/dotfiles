@@ -113,7 +113,9 @@
 
     go-mode
 
-    smartparens))
+    smartparens
+
+    elm-mode))
 
 ;; On OS X, an Emacs instance started from the graphical user
 ;; interface will have a different environment than a shell in a
@@ -190,3 +192,4 @@
 
 (load "setup-smartparens.el")
 (load "setup-powerline.el")
+(load "setup-elm.el")
