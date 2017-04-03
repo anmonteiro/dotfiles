@@ -166,3 +166,4 @@
 (load "setup-smartparens.el")
 (load "setup-powerline.el")
 (load "setup-elm.el")
+(load "hacks.el")
