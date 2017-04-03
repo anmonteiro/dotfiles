@@ -41,81 +41,55 @@
   '(;; makes handling lisp expressions much, much easier
     ;; Cheatsheet: http://www.emacswiki.org/emacs/PareditCheatsheet
     paredit
-
     ;; key bindings and code colorization for Clojure
     ;; https://github.com/clojure-emacs/clojure-mode
     clojure-mode
-
     ;; extra syntax highlighting for clojure
     clojure-mode-extra-font-locking
-
     ;; integration with a Clojure REPL
     ;; https://github.com/clojure-emacs/cider
     cider
-
     ;; allow ido usage in as many contexts as possible. see
     ;; customizations/navigation.el line 23 for a description
     ;; of ido
     ido-ubiquitous
-
     ;; Enhances M-x to allow easier execution of commands. Provides
     ;; a filterable list of possible commands in the minibuffer
     ;; http://www.emacswiki.org/emacs/Smex
     smex
-
     ;; project navigation
     projectile
-
     ;; colorful parenthesis matching
     rainbow-delimiters
-
     ;; edit html tags like sexps
     tagedit
-
     ;; git integration
     magit
-
     ;; sidebar / file explorer
     neotree
-
     markdown-mode
-
     ;; s string manipulation library
     s
-
     yaml-mode
-
     haskell-mode
-
     hindent
-
     less-css-mode
-
     markdown-preview-mode
-
     diff-hl
-
     fill-column-indicator
-
     smooth-scrolling
-
     flycheck
-
     web-mode
-
     js2-mode
-
     json-mode
-
     flycheck-flow
-
     all-the-icons
-
     go-mode
-
     smartparens
-
-    elm-mode))
+    elm-mode
+    purescript-mode
+    psc-ide
+    merlin))
 
 ;; On OS X, an Emacs instance started from the graphical user
 ;; interface will have a different environment than a shell in a
@@ -172,7 +146,6 @@
 
 ;; For Neotree sidebar
 (load "setup-neotree.el")
-
 
 ;; These customizations make editing a bit nicer.
 (load "editing.el")
