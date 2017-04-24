@@ -90,7 +90,8 @@
     purescript-mode
     psc-ide
     merlin
-    terraform-mode))
+    terraform-mode
+    dockerfile-mode))
 
 ;; On OS X, an Emacs instance started from the graphical user
 ;; interface will have a different environment than a shell in a
@@ -163,7 +164,7 @@
 (load "setup-markdown.el")
 (load "setup-haskell.el")
 (load "setup-latex.el")
-
+(load "setup-reason.el")
 (load "setup-smartparens.el")
 (load "setup-powerline.el")
 (load "setup-elm.el")

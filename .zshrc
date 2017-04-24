@@ -102,3 +102,9 @@ export BOOT_JVM_OPTIONS="-client
 -XX:+CMSClassUnloadingEnabled
 -Xverify:none"
 
+fpath=(/usr/local/share/zsh-completions $fpath)
+
+alias sed=gsed
+
+export PATH=$PATH:~/.bin
+alias realpath=grealpath

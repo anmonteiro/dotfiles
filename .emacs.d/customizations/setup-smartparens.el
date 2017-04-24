@@ -47,3 +47,8 @@ This predicate is only tested on \"insert\" action."
 (sp-with-modes '(js-mode js2-mode web-mode)
   (sp-local-pair "/*" "*/" :post-handlers '((" | " "SPC")
                                             ("* ||\n[i]" "RET"))))
+
+(sp-with-modes '(reason-mode)
+  (sp-local-pair "<" ">" ;; :post-handlers '((" | " "SPC")
+                         ;;                  ("* ||\n[i]" "RET"))
+                 ))
