@@ -23,6 +23,8 @@
 
 (setq neo-force-change-root t)
 
+(setq neo-autorefresh t)
+
 (add-hook 'neotree-mode-hook (lambda () (setq-local mode-line-format nil)))
 
 (add-to-list 'all-the-icons-icon-alist
