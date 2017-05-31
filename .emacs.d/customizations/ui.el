@@ -62,3 +62,6 @@
 
 ;; no bell
 (setq ring-bell-function 'ignore)
+
+(setq split-height-threshold 1200)
+(setq split-width-threshold 2000)
