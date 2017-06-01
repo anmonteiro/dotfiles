@@ -94,6 +94,11 @@ prompt_dir() {
   prompt_segment blue black ${${${:-/${(j:/:)${(M)${(s:/:)${(D)PWD:h}}#(|.)[^.]}}/${PWD:t}}//(\/${(j:\/:)${(M)${(s:\/:)${(D)HOME:h}}#(|.)[^.]}}\/${HOME:t}|\/~)/\~}//\/\//\/}
 }
 
+mov2gif(){
+  ffmpeg -i "$1" -vf scale=800:-1 -pix_fmt rgb24 -r 10 -f image2pipe -vcodec ppm - |\
+    convert -delay 10 -layerstw Optimize -loop 0 - "$2"
+}
+
 export BOOT_JVM_OPTIONS="-client
 -XX:+TieredCompilation
 -XX:TieredStopAtLevel=1
