@@ -159,3 +159,7 @@
 
 ;; turn on flychecking globally
 (add-hook 'after-init-hook #'global-flycheck-mode)
+
+(require 'snoopy-mode)
+;; turn on snoopy mode globally
+(add-hook 'prog-mode-hook 'snoopy-mode)
