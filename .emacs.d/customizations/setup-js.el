@@ -89,27 +89,3 @@
             (setq coffee-cleanup-whitespace nil)))
 (custom-set-variables
  '(coffee-tab-width 2))
-
-(require 'prettier-js)
-
-(setq prettier-width-mode 'fill)
-(setq prettier-args '("--single-quote" "--trailing-comma=all" "--parser=flow"))
-
-(defun my/use-prettier-from-node-modules ()
-  (let* ((root (locate-dominating-file
-                (or (buffer-file-name) default-directory)
-                "node_modules"))
-         (prettier (and root
-                        (expand-file-name "node_modules/.bin/prettier"
-                                          root))))
-    (when (and prettier (file-executable-p prettier))
-      (setq-local prettier-command prettier))))
-
-(defun my/prettier-before-save ()
-  (add-hook 'before-save-hook 'prettier-before-save))
-
-(add-hook 'js-mode-hook (lambda ()
-                          (my/use-prettier-from-node-modules)
-                          (my/prettier-before-save)))
-(add-hook 'js2-mode-hook 'my/prettier-before-save)
-(add-hook 'web-mode-hook 'my/prettier-before-save)
