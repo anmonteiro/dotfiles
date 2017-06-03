@@ -19,8 +19,6 @@
 (add-hook 'js2-mode-hook #'my/use-prettier-from-node-modules)
 (add-hook 'web-mode-hook 'prettier-js-mode)
 (add-hook 'web-mode-hook #'my/use-prettier-from-node-modules)
-(add-hook 'json-mode-hook 'prettier-js-mode)
-(add-hook 'json-mode-hook #'my/use-prettier-from-node-modules)
 ;; CSS
 (add-hook 'css-mode-hook 'prettier-js-mode)
 (add-hook 'css-mode-hook #'my/use-prettier-from-node-modules)
