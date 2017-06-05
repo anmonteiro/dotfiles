@@ -1,3 +1,12 @@
+(defun snoopy/simulate-insert-char (val)
+  "A target for a key binding which tries to simulate inserting the key in such
+   a way that e.g. smartparens can intercept it, but without the possibility of
+   being recursively invoked;  that makes this a suitable target to use when swapping
+   two keys in a minor mode. (whereas keyboard macros would get in a recursion loop)
+   "
+  (insert val)
+  (run-hooks 'post-self-insert-hook))
+
 (define-minor-mode snoopy-mode
   "Toggle snoopy mode."
   nil
@@ -10,9 +19,12 @@
     ("6" . (lambda () (interactive) (insert-char ?^ 1)))
     ("7" . (lambda () (interactive) (insert-char ?& 1)))
     ("8" . (lambda () (interactive) (insert-char ?* 1)))
-    ("9" . paredit-open-round)
-    ("0" . paredit-close-round)
-
+    ("9" . (lambda () (interactive) (if paredit-mode
+                                        (paredit-open-round)
+                                        (snoopy/simulate-insert-char ?())))
+    ("0" . (lambda () (interactive) (if paredit-mode
+                                        (paredit-close-round)
+                                        (snoopy/simulate-insert-char ?)))))
     ("!" . (lambda () (interactive) (insert-char ?1 1)))
     ("@" . (lambda () (interactive) (insert-char ?2 1)))
     ("#" . (lambda () (interactive) (insert-char ?3 1)))
