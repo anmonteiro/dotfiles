@@ -52,3 +52,5 @@ This predicate is only tested on \"insert\" action."
   (sp-local-pair "<" ">" ;; :post-handlers '((" | " "SPC")
                          ;;                  ("* ||\n[i]" "RET"))
                  ))
+(provide 'setup-smartparens)
+;;; setup-smartparens.el ends here

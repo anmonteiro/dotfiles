@@ -1,3 +1,4 @@
+(require 'setup-smartparens)
 ;; javascript / html
 (add-to-list 'auto-mode-alist '("\\.js$" . js-mode))
 (add-to-list 'auto-mode-alist '("\\.eslintrc.*$" . json-mode))
@@ -77,7 +78,6 @@
      (require 'tagedit)
      (tagedit-add-paredit-like-keybindings)
      (add-hook 'html-mode-hook (lambda () (tagedit-mode 1)))))
-
 
 ;; coffeescript
 (add-to-list 'auto-mode-alist '("\\.coffee.erb$" . coffee-mode))
