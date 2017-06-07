@@ -1,7 +1,7 @@
 (require 'prettier-js)
 
 (setq prettier-js-width-mode 'fill)
-(setq prettier-js-args '("--single-quote" "--trailing-comma=all" "--parser=flow"))
+(setq prettier-js-args '("--single-quote" "--trailing-comma=all"))
 
 (defun my/use-prettier-from-node-modules ()
   (let* ((root (locate-dominating-file
