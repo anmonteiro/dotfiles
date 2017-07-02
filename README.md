@@ -15,5 +15,5 @@ symlinking files inside the repository out of it, into your home directory:
 ## Installing Emacs
 
 ``` shell
-brew install emacs --HEAD --use-git-head --with-cocoa --with-gnutls --with-rsvg --with-imagemagick
+brew install emacs --HEAD --with-cocoa --with-modules --with-ctags --with-dbus --with-gnutls --with-rsvg --imagemagick
 ```
