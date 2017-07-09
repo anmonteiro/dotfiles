@@ -111,5 +111,9 @@ fpath=(/usr/local/share/zsh-completions $fpath)
 
 alias sed=gsed
 
-export PATH=$PATH:~/.bin
+export V8_HOME="$HOME/.bin/v8"
+export SPIDERMONKEY_HOME="$HOME/.bin/spidermonkey"
+export DYLD_FRAMEWORK_PATH=/Applications/WebKit.app/Contents/Frameworks/10.12/
+export PATH=$PATH:~/.bin:/Applications/WebKit.app/Contents/Frameworks/10.12/JavaScriptCore.framework/Resources
+
 alias realpath=grealpath
