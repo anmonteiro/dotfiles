@@ -14,6 +14,15 @@ symlinking files inside the repository out of it, into your home directory:
 
 ## Installing Emacs
 
+### Standard version
+
 ``` shell
-brew install emacs --HEAD --with-cocoa --with-modules --with-ctags --with-dbus --with-gnutls --with-rsvg --imagemagick
+$ brew install emacs --HEAD --with-cocoa --with-modules --with-ctags --with-dbus --with-gnutls --with-rsvg --imagemagick
+```
+
+### Railwaycat Emacs port for macOS
+
+```shell
+$ brew tap railwaycat/emacsmacport
+$ brew install emacs-mac
 ```

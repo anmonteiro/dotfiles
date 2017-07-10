@@ -1,1 +1,1 @@
-do shell script "open -n -a /usr/local/Cellar/emacs/HEAD/Emacs.app"
+do shell script "open -n -a /usr/local/opt/emacs-mac/Emacs.app"
