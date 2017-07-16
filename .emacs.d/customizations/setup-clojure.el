@@ -48,6 +48,9 @@
 ;; Wrap when navigating history.
 (setq cider-repl-wrap-history t)
 
+;; Automatically save file when loading the buffer
+(setq cider-save-file-on-load t)
+
 ;; enable paredit in your REPL
 (add-hook 'cider-repl-mode-hook 'paredit-mode)
 (add-hook 'cider-repl-mode-hook 'snoopy-mode)
