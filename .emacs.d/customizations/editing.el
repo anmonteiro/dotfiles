@@ -106,6 +106,12 @@
 ;; delete trailing whitespace on save
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
+;; highlight-symbol
+
+(add-hook 'prog-mode-hook 'highlight-symbol-mode)
+
+(setq highlight-symbol-idle-delay 0.5)
+
 ;; fix weird os x kill error
 (defun ns-get-pasteboard ()
   "Returns the value of the pasteboard, or nil for unsupported formats."
