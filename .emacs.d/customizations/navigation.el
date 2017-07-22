@@ -22,20 +22,43 @@
 ;; Shows a list of buffers
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
-;; Enhances M-x to allow easier execution of commands. Provides
-;; a filterable list of possible commands in the minibuffer
-;; http://www.emacswiki.org/emacs/Smex
-(setq smex-save-file (concat user-emacs-directory ".smex-items"))
-(smex-initialize)
-(global-set-key (kbd "M-x") 'smex)
-
 ;; projectile everywhere!
 (projectile-global-mode)
 
+(require 'ace-window)
+(global-set-key (kbd "M-p") 'ace-window)
+
+;; Most configuration taken from https://tuhdo.github.io/helm-intro.html
 (require 'helm-config)
 (helm-mode 1)
 
 (global-set-key (kbd "C-x C-f") 'helm-find-files)
+(global-set-key (kbd "M-x") 'helm-M-x)
+(global-set-key (kbd "C-x b") 'helm-mini)
 
-(require 'ace-window)
-(global-set-key (kbd "M-p") 'ace-window)
+;; Enable fuzzy matching for selected commands
+;; https://github.com/emacs-helm/helm/wiki/Fuzzy-matching
+(setq helm-buffers-fuzzy-matching t
+      helm-recentf-fuzzy-match    t
+      helm-M-x-fuzzy-match        t
+      helm-mode-fuzzy-match       t)
+
+;; open the helm buffer inside the current window
+(setq helm-split-window-in-side-p t)
+
+(setq helm-ff-file-name-history-use-recentf t)
+
+;; rebind tab to run persistent action
+(define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
+;; make TAB work in terminal
+(define-key helm-map (kbd "C-i") 'helm-execute-persistent-action)
+(define-key helm-map (kbd "C-z")  'helm-select-action)
+
+(require 'helm-projectile)
+(helm-projectile-on)
+
+;; TODO:
+;; - helm-kill-ring
+;; - helm-occur / swoop
+;; - helm-google-suggest C-x c C-c g is too long
+;; - helm-ag

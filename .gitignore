@@ -1,3 +1,9 @@
 repl-history
 *.jar
 *.elc
+.recentf
+elpa/
+backups/
+cider-history
+projectile-bookmarks*
+auto-save-list/

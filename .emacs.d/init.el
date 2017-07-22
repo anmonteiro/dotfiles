@@ -49,10 +49,6 @@
     ;; integration with a Clojure REPL
     ;; https://github.com/clojure-emacs/cider
     cider
-    ;; Enhances M-x to allow easier execution of commands. Provides
-    ;; a filterable list of possible commands in the minibuffer
-    ;; http://www.emacswiki.org/emacs/Smex
-    smex
     ;; project navigation
     projectile
     ;; colorful parenthesis matching
@@ -91,6 +87,7 @@
     prettier-js
     highlight-symbol
     helm
+    helm-projectile
     ace-window))
 
 ;; On OS X, an Emacs instance started from the graphical user
