@@ -38,24 +38,16 @@
 ;; manually with M-x package-install
 ;; Add in your own as you wish:
 (defvar my-packages
-  '(;; makes handling lisp expressions much, much easier
-    ;; Cheatsheet: http://www.emacswiki.org/emacs/PareditCheatsheet
-    paredit
-    ;; key bindings and code colorization for Clojure
-    ;; https://github.com/clojure-emacs/clojure-mode
+  '(paredit
     clojure-mode
     ;; extra syntax highlighting for clojure
     clojure-mode-extra-font-locking
-    ;; integration with a Clojure REPL
-    ;; https://github.com/clojure-emacs/cider
     cider
-    ;; project navigation
     projectile
     ;; colorful parenthesis matching
     rainbow-delimiters
     ;; edit html tags like sexps
     tagedit
-    ;; git integration
     magit
     ;; sidebar / file explorer
     neotree
@@ -105,7 +97,6 @@
   (when (not (package-installed-p p))
     (package-install p)))
 
-
 ;; Place downloaded elisp files in ~/.emacs.d/vendor. You'll then be able
 ;; to load them.
 ;;
@@ -118,7 +109,6 @@
 ;; Adding this code will make Emacs enter yaml mode whenever you open
 ;; a .yml file
 (add-to-list 'load-path "~/.emacs.d/vendor")
-
 
 ;;;;
 ;; Customization

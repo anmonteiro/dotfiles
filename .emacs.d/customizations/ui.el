@@ -1,11 +1,9 @@
 ;; These customizations change the way emacs looks and disable/enable
-;; some user interface elements. Some useful customizations are
-;; commented out, and begin with the line "CUSTOMIZE". These are more
-;; a matter of preference and may require some fiddling to match your
-;; preferences
+;; some user interface elements.
+
 
 ;; Show line numbers
-(global-linum-mode)
+(setq-default display-line-numbers t)
 
 ;; Show columns numbers
 (setq column-number-mode t)

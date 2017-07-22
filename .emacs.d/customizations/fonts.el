@@ -8,7 +8,7 @@
                (42 . ".\\(?:\\(?:\\*\\*/\\)\\|\\(?:\\*[*/]\\)\\|[*/>]\\)")
                (43 . ".\\(?:\\(?:\\+\\+\\)\\|[+>]\\)")
                (45 . ".\\(?:\\(?:-[>-]\\|<<\\|>>\\)\\|[<>}~-]\\)")
-               ;; (46 . ".\\(?:\\(?:\\.[.<]\\)\\|[.=-]\\)")
+               (46 . ".\\(?:\\(?:\\.[.<]\\)\\|[.=-]\\)")
                (47 . ".\\(?:\\(?:\\*\\*\\|//\\|==\\)\\|[*/=>]\\)")
                (48 . ".\\(?:x[a-zA-Z]\\)")
                (58 . ".\\(?:::\\|[:=]\\)")
@@ -31,3 +31,14 @@
 (add-hook 'cider-repl-mode-hook
           (lambda ()
             (setq auto-composition-mode nil)))
+
+(defun set-font-size (pre)
+  "Sets the default font size to be 14 (the default).
+
+   With a prefix argument (`C-u`), sets the default font size to that of the
+   prefix argument."
+  (interactive "P")
+  (let ((size (if (and pre (numberp pre)) (* pre 10) 141)))
+    (set-face-attribute 'default nil :height size)))
+
+(global-set-key (kbd "C-x M-f") 'set-font-size)
