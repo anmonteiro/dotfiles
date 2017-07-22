@@ -94,7 +94,7 @@ prompt_dir() {
   prompt_segment blue black ${${${:-/${(j:/:)${(M)${(s:/:)${(D)PWD:h}}#(|.)[^.]}}/${PWD:t}}//(\/${(j:\/:)${(M)${(s:\/:)${(D)HOME:h}}#(|.)[^.]}}\/${HOME:t}|\/~)/\~}//\/\//\/}
 }
 
-mov2gif(){
+mov2gif() {
   ffmpeg -i "$1" -vf scale=800:-1 -pix_fmt rgb24 -r 10 -f image2pipe -vcodec ppm - |\
     convert -delay 10 -layers Optimize -loop 0 - "$2"
 }

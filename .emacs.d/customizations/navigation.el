@@ -36,6 +36,8 @@
 (global-set-key (kbd "M-x") 'helm-M-x)
 (global-set-key (kbd "C-x b") 'helm-mini)
 
+(setq helm-truncate-lines t)
+
 ;; Enable fuzzy matching for selected commands
 ;; https://github.com/emacs-helm/helm/wiki/Fuzzy-matching
 (setq helm-buffers-fuzzy-matching t
