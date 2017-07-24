@@ -1,40 +1,21 @@
 (require 'setup-smartparens)
+
 ;; javascript / html
 (add-to-list 'auto-mode-alist '("\\.js$" . js-mode))
 (add-to-list 'auto-mode-alist '("\\.eslintrc.*$" . json-mode))
 (add-to-list 'auto-mode-alist '("\\.babelrc$" . json-mode))
 
-;; http://codewinds.com/blog/2015-04-02-emacs-flycheck-eslint-jsx.html
-;; use web-mode for .jsx files
-(add-to-list 'auto-mode-alist '("\\.jsx$" . web-mode))
-
 ;; disable jshint since we prefer eslint checking
 (setq-default flycheck-disabled-checkers
-  (append flycheck-disabled-checkers
-    '(javascript-jshint json-python-json javascript-jshint
-      javascript-gjslint javascript-jscs)))
+              (append flycheck-disabled-checkers
+                      '(javascript-jshint json-python-json javascript-jshint
+                                          javascript-gjslint javascript-jscs)))
 
-;; use eslint with web-mode for jsx files
-(flycheck-add-mode 'javascript-eslint 'web-mode)
+;; use eslint with rjsx-mode for jsx files
+(flycheck-add-mode 'javascript-eslint 'rjsx-mode)
 
 ;; customize flycheck temp file prefix
 (setq-default flycheck-temp-prefix ".flycheck")
-
-;; adjust indents for web-mode to 2 spaces
-(defun custom-web-mode-hook ()
-  "Hooks for Web mode. Adjust indents"
-  ;;; http://web-mode.org/
-  (setq web-mode-markup-indent-offset 2)
-  (setq web-mode-css-indent-offset 2)
-  (setq web-mode-code-indent-offset 2))
-(add-hook 'web-mode-hook 'custom-web-mode-hook)
-
-;; for better jsx syntax-highlighting in web-mode
-(defadvice web-mode-highlight-part (around tweak-jsx activate)
-  (if (equal web-mode-content-type "jsx")
-    (let ((web-mode-enable-part-face nil))
-      ad-do-it)
-    ad-do-it))
 
 (defun my/use-eslint-from-node-modules ()
   (let* ((root (locate-dominating-file
@@ -65,10 +46,8 @@
 
 (add-hook 'js-mode-hook 'subword-mode)
 (add-hook 'js-mode-hook 'smartparens-mode)
-(add-hook 'js2-mode-hook 'subword-mode)
-(add-hook 'js2-mode-hook 'smartparens-mode)
-(add-hook 'web-mode-hook 'subword-mode)
-(add-hook 'web-mode-hook 'smartparens-mode)
+(add-hook 'rjsx-mode-hook 'subword-mode)
+(add-hook 'rjsx-mode-hook 'smartparens-mode)
 (add-hook 'json-mode-hook 'smartparens-mode)
 (add-hook 'html-mode-hook 'subword-mode)
 

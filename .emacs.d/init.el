@@ -63,8 +63,7 @@
     fill-column-indicator
     smooth-scrolling
     flycheck
-    web-mode
-    js2-mode
+    rjsx-mode
     json-mode
     flycheck-flow
     all-the-icons
