@@ -32,6 +32,10 @@
           (lambda ()
             (setq auto-composition-mode nil)))
 
+(add-hook 'helm-major-mode-hook
+          (lambda ()
+            (setq auto-composition-mode nil)))
+
 (defun set-font-size (pre)
   "Sets the default font size to be 14 (the default).
 

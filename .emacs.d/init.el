@@ -79,6 +79,7 @@
     highlight-symbol
     helm
     helm-projectile
+    helm-ag
     ace-window))
 
 ;; On OS X, an Emacs instance started from the graphical user
