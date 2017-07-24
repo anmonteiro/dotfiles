@@ -8,7 +8,7 @@
 ;; Don't display line numbers in magit-mode
 (add-hook 'magit-mode-hook
           (lambda ()
-            (setq-default display-line-numbers nil)))
+            (setq-local display-line-numbers nil)))
 
 ;; Show columns numbers
 (setq column-number-mode t)
