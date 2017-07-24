@@ -12,4 +12,8 @@
 (setq inhibit-startup-message t)
 
 ;; magit emacsclient
-(set-variable 'magit-emacsclient-executable "/usr/local/Cellar/emacs/HEAD/bin/emacsclient")
+(set-variable 'magit-emacsclient-executable "/usr/local/bin/emacsclient")
+
+;; Misc attempts to make Emacs not slow down
+(setq font-lock-maximum-decoration 6)
+(setq-default bidi-display-reordering nil)
