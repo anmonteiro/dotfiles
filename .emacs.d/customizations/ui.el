@@ -5,6 +5,11 @@
 ;; Show line numbers
 (setq-default display-line-numbers t)
 
+;; Don't display line numbers in magit-mode
+(add-hook 'magit-mode-hook
+          (lambda ()
+            (setq-default display-line-numbers nil)))
+
 ;; Show columns numbers
 (setq column-number-mode t)
 
