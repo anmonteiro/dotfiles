@@ -31,20 +31,22 @@
 ;; Most configuration taken from https://tuhdo.github.io/helm-intro.html
 (require 'helm-config)
 (helm-mode 1)
+(helm-autoresize-mode 1)
 
 (global-set-key (kbd "C-x C-f") 'helm-find-files)
 (global-set-key (kbd "M-x") 'helm-M-x)
 (global-set-key (kbd "C-x b") 'helm-mini)
 (global-set-key (kbd "M-y") 'helm-show-kill-ring)
 
-(setq helm-truncate-lines t)
-
 ;; Enable fuzzy matching for selected commands
 ;; https://github.com/emacs-helm/helm/wiki/Fuzzy-matching
 (setq helm-buffers-fuzzy-matching t
       helm-recentf-fuzzy-match    t
       helm-M-x-fuzzy-match        t
-      helm-mode-fuzzy-match       t)
+      helm-mode-fuzzy-match       t
+      helm-truncate-lines         t
+      helm-autoresize-max-height 30
+      helm-autoresize-min-height 30)
 
 ;; open the helm buffer inside the current window
 (setq helm-split-window-in-side-p t)
@@ -60,7 +62,27 @@
 (require 'helm-projectile)
 (helm-projectile-on)
 
+(require 'helm-swoop)
+(setq helm-swoop-split-with-multiple-windows t
+      helm-swoop-split-direction 'split-window-vertically
+      helm-swoop-use-line-number-face t
+      helm-swoop-speed-or-color t)
+
+(setq helm-swoop-pre-input-function
+      (lambda ()
+        (if (region-active-p)
+            (buffer-substring-no-properties (region-beginning)
+                                            (region-end))
+          "")))
+
+;; Interactive search key bindings. By default, C-s/C-M-s and C-r/C-M/r run
+;; isearch, this swaps those bindings for `helm-swoop`.
+(global-set-key (kbd "C-s") 'helm-swoop)
+(global-set-key (kbd "C-r") 'helm-swoop)
+(global-set-key (kbd "C-M-s") 'helm-swoop)
+(global-set-key (kbd "C-M-r") 'helm-swoop)
+
 ;; TODO:
-;; - helm-occur / swoop
+;; - helm-ag: search in hidden dirs by default, better keybindings, better CLI defaults
 ;; - helm-google-suggest C-x c C-c g is too long
-;; - helm-ag
+;; - eldoc / is there a helm thing?

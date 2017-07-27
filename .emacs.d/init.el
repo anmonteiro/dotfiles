@@ -80,6 +80,7 @@
     helm
     helm-projectile
     helm-ag
+    helm-swoop
     ace-window))
 
 ;; On OS X, an Emacs instance started from the graphical user
