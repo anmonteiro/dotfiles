@@ -76,7 +76,7 @@
     terraform-mode
     dockerfile-mode
     prettier-js
-    highlight-symbol
+    auto-highlight-symbol
     helm
     helm-projectile
     helm-ag

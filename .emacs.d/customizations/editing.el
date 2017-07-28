@@ -100,9 +100,9 @@
 
 ;; highlight-symbol
 
-(add-hook 'prog-mode-hook 'highlight-symbol-mode)
+(add-hook 'prog-mode-hook 'auto-highlight-symbol-mode)
 
-(setq highlight-symbol-idle-delay 0.5)
+(setq ahs-idle-interval 0.4)
 
 ;; fix weird os x kill error
 (defun ns-get-pasteboard ()
