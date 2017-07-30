@@ -155,7 +155,6 @@
 (load "setup-latex.el")
 (load "setup-reason.el")
 (load "setup-smartparens.el")
-(load "setup-powerline.el")
 (load "setup-elm.el")
 (load "setup-css.el")
 (load "setup-prettier.el")
