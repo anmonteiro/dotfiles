@@ -53,9 +53,6 @@
   '(define-key paredit-mode-map [remap newline-and-indent] 'paredit-newline))
 
 ;; yay rainbows!
-;; global-rainbow-delimiters-mode was removed
-;; see: https://github.com/jlr/rainbow-delimiters/pull/41/commits
-;;(global-rainbow-delimiters-mode t)
 (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
 
 ;; Whitespace
