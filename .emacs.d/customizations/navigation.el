@@ -61,6 +61,7 @@
 
 (require 'helm-projectile)
 (helm-projectile-on)
+(setq helm-projectile-truncate-lines t)
 
 (require 'helm-swoop)
 (setq helm-swoop-split-with-multiple-windows t
@@ -74,6 +75,11 @@
             (buffer-substring-no-properties (region-beginning)
                                             (region-end))
           "")))
+
+(define-key helm-swoop-map (kbd "C-r") 'helm-previous-line)
+(define-key helm-swoop-map (kbd "C-s") 'helm-next-line)
+(define-key helm-multi-swoop-map (kbd "C-r") 'helm-previous-line)
+(define-key helm-multi-swoop-map (kbd "C-s") 'helm-next-line)
 
 ;; Interactive search key bindings. By default, C-s/C-M-s and C-r/C-M/r run
 ;; isearch, this swaps those bindings for `helm-swoop`.
