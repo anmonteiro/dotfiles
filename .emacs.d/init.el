@@ -150,6 +150,7 @@
 ;; Language-specific
 (load "setup-clojure.el")
 (load "setup-js.el")
+(load "setup-java.el")
 (load "setup-markdown.el")
 (load "setup-haskell.el")
 (load "setup-latex.el")
