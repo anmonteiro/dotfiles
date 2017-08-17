@@ -82,7 +82,8 @@
     helm-ag
     helm-swoop
     ace-window
-    snoopy))
+    snoopy
+    tuareg))
 
 ;; On OS X, an Emacs instance started from the graphical user
 ;; interface will have a different environment than a shell in a
