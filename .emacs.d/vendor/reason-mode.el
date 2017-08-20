@@ -3,7 +3,7 @@
 
 ;; Version: 0.4.0
 ;; Author: Mozilla
-;; Url: https://github.com/arichiardi/reason-mode
+;; Url: https://github.com/reasonml-editor/reason-mode
 ;; Keywords: languages, ocaml
 ;; Package-Requires: ((emacs "24.0"))
 
@@ -53,7 +53,7 @@
     ;; Strings
     (modify-syntax-entry ?\" "\"" table)
     (modify-syntax-entry ?\\ "\\" table)
-    (modify-syntax-entry ?\' "\"'"  table)
+    (modify-syntax-entry ?\' "_"  table)
 
     ;; Comments
     (modify-syntax-entry ?/  ". 124b" table)
@@ -105,6 +105,13 @@
       symbol-end))
 
 (defconst reason-re-ident "[[:word:][:multibyte:]_][[:word:][:multibyte:]_[:digit:]]*")
+
+(defconst reason--char-literal-rx
+  (rx (seq (group "'")
+           (or (seq "\\" anything)
+               (not (any "'\\")))
+           (group "'"))))
+
 (defun reason-re-word (inner) (concat "\\<" inner "\\>"))
 (defun reason-re-grab (inner) (concat "\\(" inner "\\)"))
 
@@ -154,10 +161,32 @@
          (t
           (reason-mode-try-find-alternate-file mod-name ".rei")))))))
 
+(defun reason--syntax-propertize-multiline-string (end)
+  (let ((ppss (syntax-ppss)))
+    (when (eq t (nth 3 ppss))
+      (let ((key (save-excursion
+                   (goto-char (nth 8 ppss))
+                   (and (looking-at "{\\([a-z]*\\)|")
+                        (match-string 1)))))
+        (when (search-forward (format "|%s}" key) end 'move)
+          (put-text-property (1- (match-end 0)) (match-end 0)
+                             'syntax-table (string-to-syntax "|")))))))
+
+(defun reason-syntax-propertize-function (start end)
+  (goto-char start)
+  (reason--syntax-propertize-multiline-string end)
+  (funcall
+   (syntax-propertize-rules
+    (reason--char-literal-rx (1 "\"") (2 "\""))
+    ;; multi line strings
+    ("\\({\\)[a-z]*|"
+     (1 (prog1 "|"
+          (goto-char (match-end 0))
+          (reason--syntax-propertize-multiline-string end)))))
+   (point) end))
 
 (defalias 'reason-parent-mode
   (if (fboundp 'prog-mode) 'prog-mode 'fundamental-mode))
-
 
 ;;;###autoload
 (define-derived-mode reason-mode reason-parent-mode "Reason"
@@ -167,6 +196,8 @@
   :group 'reason-mode
   :syntax-table reason-mode-syntax-table
 
+  ;; Syntax
+  (setq-local syntax-propertize-function #'reason-syntax-propertize-function)
   ;; Indentation
   (setq-local indent-line-function 'reason-mode-indent-line)
   ;; Fonts
