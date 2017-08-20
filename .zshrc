@@ -117,3 +117,6 @@ export DYLD_FRAMEWORK_PATH=/Applications/WebKit.app/Contents/Frameworks/10.12/
 export PATH=$PATH:~/.bin:/Applications/WebKit.app/Contents/Frameworks/10.12/JavaScriptCore.framework/Resources
 
 alias realpath=grealpath
+
+# OPAM configuration
+. ~/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
