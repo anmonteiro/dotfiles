@@ -14,24 +14,10 @@
 
 (setq merlin-ac-setup t)
 
-(defun chomp-end (str)
-  "Chomp tailing whitespace from STR."
-  (replace-regexp-in-string (rx (* (any " \t\n")) eos)
-                            ""
-                            str))
-
 (defun shell-cmd (cmd)
   "Returns the stdout output of a shell command or nil if the command returned
    an error"
-  (let ((stdoutput (chomp-end
-                    (with-output-to-string
-                      (with-current-buffer
-                          standard-output
-                        (process-file shell-file-name nil
-                                      '(t nil)  nil
-                                      shell-command-switch cmd))))))
-    (when (not (= (length stdoutput) 0))
-      stdoutput)))
+  (car (ignore-errors (apply 'process-lines (split-string cmd)))))
 
 (let* ((refmt-bin (or (shell-cmd "refmt ----where")
                       (shell-cmd "which refmt")))
