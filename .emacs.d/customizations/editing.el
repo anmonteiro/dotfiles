@@ -12,6 +12,8 @@
         try-complete-lisp-symbol-partially
         try-complete-lisp-symbol))
 
+(global-set-key (kbd "s-TAB") 'completion-at-point)
+
 ;; Highlights matching parenthesis
 (show-paren-mode 1)
 
@@ -112,9 +114,10 @@
 
 ;; disable "Use Option as Meta key" and set Mac Cmd key as Meta
 (setq default-input-method "MacOSX")
-(setq mac-option-modifier nil
-      mac-command-modifier 'meta
-      x-select-enable-clipboard t)
+(when window-system
+  (setq mac-option-modifier 'super
+        mac-command-modifier 'meta))
+(setq x-select-enable-clipboard t)
 
 ;; truncate lines by default
 (setq-default truncate-lines t)

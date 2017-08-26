@@ -71,8 +71,6 @@
     smartparens
     elm-mode
     purescript-mode
-    psc-ide
-    merlin
     terraform-mode
     dockerfile-mode
     prettier-js

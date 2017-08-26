@@ -40,7 +40,8 @@
 
 ;; Enable fuzzy matching for selected commands
 ;; https://github.com/emacs-helm/helm/wiki/Fuzzy-matching
-(setq helm-buffers-fuzzy-matching t
+(setq helm-candidate-number-limit 50
+      helm-buffers-fuzzy-matching t
       helm-recentf-fuzzy-match    t
       helm-M-x-fuzzy-match        t
       helm-mode-fuzzy-match       t
@@ -61,7 +62,9 @@
 
 (require 'helm-projectile)
 (helm-projectile-on)
+
 (setq helm-projectile-truncate-lines t)
+(global-set-key (kbd "C-c p s g") 'helm-do-ag-project-root)
 
 (require 'helm-swoop)
 (setq helm-swoop-split-with-multiple-windows t
