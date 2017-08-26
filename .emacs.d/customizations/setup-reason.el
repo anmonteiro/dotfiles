@@ -1,8 +1,18 @@
-;;----------------------------------------------------------------------------
-;; Reason setup
-;; Expects reason-cli to be installed:
-;; npm install -g git://github.com/reasonml/reason-cli.git
-;;----------------------------------------------------------------------------
+(require 'reason-mode)
+
+;; Merlin
+(let ((opam-share (ignore-errors (car (process-lines "opam" "config" "var" "share")))))
+  (when (and opam-share (file-directory-p opam-share))
+    ;; Register Merlin
+    (add-to-list 'load-path (expand-file-name "emacs/site-lisp" opam-share))
+    (autoload 'merlin-mode "merlin" nil t nil)
+    ;; Automatically start it in OCaml buffers
+    (add-hook 'tuareg-mode-hook 'merlin-mode t)
+    (add-hook 'caml-mode-hook 'merlin-mode t)
+    ;; Use opam switch to lookup ocamlmerlin binary
+    (setq merlin-command 'opam)))
+
+(setq merlin-ac-setup t)
 
 (defun chomp-end (str)
   "Chomp tailing whitespace from STR."
@@ -30,14 +40,13 @@
        (merlin-base-dir (when merlin-bin
                           (replace-regexp-in-string "bin/ocamlmerlin$" "" merlin-bin))))
   ;; Add npm merlin.el to the emacs load path and tell emacs where to find ocamlmerlin
-  (when merlin-bin
-    (add-to-list 'load-path (concat merlin-base-dir "share/emacs/site-lisp/"))
-    (setq merlin-command merlin-bin))
+  ;; (when merlin-bin
+  ;;   (add-to-list 'load-path (concat merlin-base-dir "share/emacs/site-lisp/"))
+  ;;   (setq merlin-command merlin-bin))
 
   (when refmt-bin
     (setq refmt-command refmt-bin)))
 
-(require 'reason-mode)
 (require 'merlin)
 
 (add-hook 'reason-mode-hook (lambda ()
@@ -47,17 +56,3 @@
 (setq refmt-width-mode 'fill)
 
 (add-hook 'reason-mode-hook 'smartparens-mode)
-
-;; Merlin
-(let ((opam-share (ignore-errors (car (process-lines "opam" "config" "var" "share")))))
-  (when (and opam-share (file-directory-p opam-share))
-    ;; Register Merlin
-    (add-to-list 'load-path (expand-file-name "emacs/site-lisp" opam-share))
-    (autoload 'merlin-mode "merlin" nil t nil)
-    ;; Automatically start it in OCaml buffers
-    (add-hook 'tuareg-mode-hook 'merlin-mode t)
-    (add-hook 'caml-mode-hook 'merlin-mode t)
-    ;; Use opam switch to lookup ocamlmerlin binary
-    (setq merlin-command 'opam)))
-
-(setq merlin-ac-setup t)
