@@ -13,6 +13,7 @@
         try-complete-lisp-symbol))
 
 (global-set-key (kbd "s-TAB") 'completion-at-point)
+(setq ffap-machine-p-known 'reject)
 
 ;; Highlights matching parenthesis
 (show-paren-mode 1)
