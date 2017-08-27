@@ -81,7 +81,9 @@
     helm-swoop
     ace-window
     snoopy
-    tuareg))
+    tuareg
+    rainbow-mode
+    base16-theme))
 
 ;; On OS X, an Emacs instance started from the graphical user
 ;; interface will have a different environment than a shell in a

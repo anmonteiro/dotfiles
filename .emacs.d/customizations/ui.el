@@ -18,13 +18,21 @@
   (scroll-bar-mode -1))
 
 ;; Color Themes
-;; Read http://batsov.com/articles/2012/02/19/color-theming-in-emacs-reloaded/
-;; for a great explanation of emacs color themes.
-;; https://www.gnu.org/software/emacs/manual/html_node/emacs/Custom-Themes.html
-;; for a more technical explanation.
-(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
-(add-to-list 'load-path "~/.emacs.d/themes")
-(load-theme 'tomorrow-night-eighties t)
+(load-theme 'base16-flat t)
+
+;; base16-atelier-sulphurpool
+;; base16-bright
+;; base16-eighties
+;; base16-flat
+;; base16-gruvbox-dark-pale
+;; base16-oceanicnext
+;; base16-ocean
+;; base16-solarflare
+;; base16-solarized-dark
+;; base16-solarized-light
+
+;; rainbow-mode
+(add-hook 'prog-mode-hook 'rainbow-mode)
 
 ;; increase font size for better readability
 (set-face-attribute 'default nil :height 140)
