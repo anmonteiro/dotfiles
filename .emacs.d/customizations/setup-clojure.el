@@ -91,4 +91,8 @@
      (define-key clojure-mode-map (kbd "C-c C-v") 'cider-start-http-server)
      (define-key clojure-mode-map (kbd "C-M-r") 'cider-refresh)
      (define-key clojure-mode-map (kbd "C-c u") 'cider-user-ns)
-     (define-key cider-mode-map (kbd "C-c u") 'cider-user-ns)))
+     (define-key cider-mode-map (kbd "C-c u") 'cider-user-ns)
+     (define-key cider-mode-map (kbd "C-M-i") 'company-complete)))
+
+(add-hook 'cider-mode-hook #'company-mode t)
+(add-hook 'cider-mode-hook #'cider-company-enable-fuzzy-completion t)

@@ -82,6 +82,7 @@
     ace-window
     snoopy
     tuareg
+    company
     rainbow-mode
     base16-theme))
 

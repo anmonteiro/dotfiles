@@ -12,7 +12,45 @@
         try-complete-lisp-symbol-partially
         try-complete-lisp-symbol))
 
-(global-set-key (kbd "s-TAB") 'completion-at-point)
+(require 'company)
+
+(add-hook 'after-init-hook 'global-company-mode)
+
+(eval-after-load 'company
+  '(progn
+     ;; (define-key company-active-map (kbd "M-n") nil)
+     ;; (define-key company-active-map (kbd "M-p") nil)
+     (define-key company-active-map (kbd "C-n") 'company-select-next)
+     (define-key company-active-map (kbd "C-p") 'company-select-previous)))
+
+(setq company-idle-delay 0.3
+      company-tooltip-idle-delay 0.3)
+
+(require 'color)
+
+;; (let ((bg (face-attribute 'default :background)))
+;;   (custom-set-faces
+;;    `(company-tooltip ((t (:inherit default :background ,(color-lighten-name bg 17)))))
+;;    `(company-tooltip-selection ((t (:inherit font-lock-function-name-face))))
+
+;;    `(company-scrollbar-bg ((t (:background ,(color-lighten-name bg 10)))))
+;;    `(company-scrollbar-fg ((t (:background ,(color-lighten-name bg 5)))))
+
+;;    `(company-tooltip-common ((t (:inherit font-lock-constant-face))))
+;;    `(company-tooltip-common-selection ((t (:inherit font-lock-function-name-face))))
+
+;;    `(company-tooltip-annotation ((t (:inherit font-lock-string-face))))
+;;    `(company-tooltip-annotation-selection ((t (:inherit font-lock-string-face))))))
+
+(defun on-off-fci-before-company (command)
+  (when (string= "show" command)
+    (turn-off-fci-mode))
+  (when (string= "hide" command)
+    (turn-on-fci-mode)))
+
+;; https://github.com/company-mode/company-mode/issues/180
+(advice-add 'company-call-frontends :before #'on-off-fci-before-company)
+
 (setq ffap-machine-p-known 'reject)
 
 ;; Highlights matching parenthesis

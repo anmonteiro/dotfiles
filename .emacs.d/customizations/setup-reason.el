@@ -6,13 +6,10 @@
     ;; Register Merlin
     (add-to-list 'load-path (expand-file-name "emacs/site-lisp" opam-share))
     (autoload 'merlin-mode "merlin" nil t nil)
-    ;; Automatically start it in OCaml buffers
-    (add-hook 'tuareg-mode-hook 'merlin-mode t)
-    (add-hook 'caml-mode-hook 'merlin-mode t)
     ;; Use opam switch to lookup ocamlmerlin binary
     (setq merlin-command 'opam)))
 
-(setq merlin-ac-setup t)
+(setq merlin-ac-setup 'easy)
 
 (defun shell-cmd (cmd)
   "Returns the stdout output of a shell command or nil if the command returned
@@ -34,11 +31,21 @@
     (setq refmt-command refmt-bin)))
 
 (require 'merlin)
+(require 'ocp-indent)
+
+(defun setup-ocaml-reason ()
+  (company-mode)
+  ;; (company-quickhelp-mode)
+  (setq-local merlin-completion-with-doc t)
+  (setq-local indent-line-function 'ocp-indent-line)
+  (setq-local indent-region-function 'ocp-indent-region)
+  (merlin-mode)
+  (smartparens-mode))
 
 (add-hook 'reason-mode-hook (lambda ()
                               (add-hook 'before-save-hook 'refmt-before-save)
-                              (merlin-mode)))
+                              (setup-ocaml-reason)))
+
+(add-hook 'tuareg-mode-hook 'setup-ocaml-reason)
 
 (setq refmt-width-mode 'fill)
-
-(add-hook 'reason-mode-hook 'smartparens-mode)
