@@ -64,7 +64,7 @@
 (helm-projectile-on)
 
 (setq helm-projectile-truncate-lines t)
-(global-set-key (kbd "C-c p s g") 'helm-do-ag-project-root)
+(define-key projectile-mode-map (kbd "C-c p s g") 'helm-do-ag-project-root)
 
 (require 'helm-swoop)
 (setq helm-swoop-split-with-multiple-windows t
