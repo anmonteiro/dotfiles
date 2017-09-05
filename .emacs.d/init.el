@@ -69,7 +69,6 @@
     all-the-icons
     go-mode
     smartparens
-    elm-mode
     purescript-mode
     terraform-mode
     dockerfile-mode
