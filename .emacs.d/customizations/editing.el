@@ -165,7 +165,8 @@
 ;; display a vertical rule at column 80
 (setq-default fill-column 80)
 
-(add-hook 'after-change-major-mode-hook 'fci-mode)
+(add-hook 'prog-mode-hook 'fci-mode)
+(add-hook 'text-mode-hook 'fci-mode)
 
 ;; diff-hl setup
 
