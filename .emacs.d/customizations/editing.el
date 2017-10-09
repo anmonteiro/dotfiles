@@ -165,8 +165,8 @@
 ;; display a vertical rule at column 80
 (setq-default fill-column 80)
 
-(add-hook 'prog-mode-hook 'fci-mode)
-(add-hook 'text-mode-hook 'fci-mode)
+(add-hook 'prog-mode-hook 'turn-on-fci-mode)
+(add-hook 'text-mode-hook 'turn-on-fci-mode)
 
 ;; diff-hl setup
 
@@ -197,7 +197,7 @@
 (require 'flycheck)
 
 ;; turn on flychecking globally
-(add-hook 'after-init-hook #'global-flycheck-mode)
+(add-hook 'after-init-hook 'global-flycheck-mode)
 
 (require 'snoopy)
 ;; turn on snoopy mode globally

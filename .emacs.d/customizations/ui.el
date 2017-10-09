@@ -3,12 +3,9 @@
 
 
 ;; Show line numbers
-(setq-default display-line-numbers t)
-
-;; Don't display line numbers in magit-mode
-(add-hook 'magit-mode-hook
-          (lambda ()
-            (setq-local display-line-numbers nil)))
+(add-hook 'fundamental-mode-hook 'display-line-numbers-mode)
+(add-hook 'prog-mode-hook 'display-line-numbers-mode)
+(add-hook 'text-mode-hook 'display-line-numbers-mode)
 
 ;; Show columns numbers
 (setq column-number-mode t)

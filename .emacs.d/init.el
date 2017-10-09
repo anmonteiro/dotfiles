@@ -84,7 +84,8 @@
     company
     rainbow-mode
     base16-theme
-    inf-clojure))
+    inf-clojure
+    lsp-mode))
 
 ;; On OS X, an Emacs instance started from the graphical user
 ;; interface will have a different environment than a shell in a
