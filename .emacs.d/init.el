@@ -87,6 +87,7 @@
     base16-theme
     doom-themes
     inf-clojure
+    reason-mode
     lsp-mode))
 
 ;; On OS X, an Emacs instance started from the graphical user
