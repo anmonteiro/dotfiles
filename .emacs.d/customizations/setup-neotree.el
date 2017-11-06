@@ -33,7 +33,7 @@
             (local-set-key (kbd "C-M-r") 'isearch-backward-regexp)))
 
 (add-to-list 'all-the-icons-icon-alist
-             '("^build\.boot$" all-the-icons-alltheicon "clojure" :height 1.0 :face all-the-icons-dblue))
+             '("^build\.boot$" all-the-icons-alltheicon "clojure-line" :height 1.0 :face all-the-icons-blue :v-adjust 0.0))
 
 ;; face customizations
 

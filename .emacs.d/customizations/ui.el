@@ -15,7 +15,7 @@
   (scroll-bar-mode -1))
 
 ;; Color Themes
-(load-theme 'base16-eighties t)
+(load-theme 'doom-one t)
 
 ;; base16-atelier-sulphurpool
 ;; base16-bright

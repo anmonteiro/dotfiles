@@ -29,7 +29,10 @@
 (global-set-key (kbd "M-P") 'ace-window)
 
 ;; Most configuration taken from https://tuhdo.github.io/helm-intro.html
+(require 'helm)
 (require 'helm-config)
+(require 'helm-buffers)
+
 (helm-mode 1)
 (helm-autoresize-mode 1)
 

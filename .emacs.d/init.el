@@ -82,8 +82,10 @@
     snoopy
     tuareg
     company
+    company-quickhelp
     rainbow-mode
     base16-theme
+    doom-themes
     inf-clojure
     lsp-mode))
 

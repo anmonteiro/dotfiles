@@ -2,19 +2,21 @@
 
 ;; Key binding to use "hippie expand" for text autocompletion
 ;; http://www.emacswiki.org/emacs/HippieExpand
-(global-set-key (kbd "M-/") 'hippie-expand)
+;; (global-set-key (kbd "M-/") 'hippie-expand)
 
 ;; Lisp-friendly hippie expand
-(setq hippie-expand-try-functions-list
-      '(try-expand-dabbrev
-        try-expand-dabbrev-all-buffers
-        try-expand-dabbrev-from-kill
-        try-complete-lisp-symbol-partially
-        try-complete-lisp-symbol))
+;; (setq hippie-expand-try-functions-list
+;;       '(try-expand-dabbrev
+;;         try-expand-dabbrev-all-buffers
+;;         try-expand-dabbrev-from-kill
+;;         try-complete-lisp-symbol-partially
+;;         try-complete-lisp-symbol))
 
 (require 'company)
 
-(add-hook 'after-init-hook 'global-company-mode)
+(add-hook 'after-init-hook (lambda ()
+                             (global-company-mode)
+                             (company-quickhelp-mode 1)))
 
 (eval-after-load 'company
   '(progn
@@ -43,14 +45,14 @@
 ;;    `(company-tooltip-annotation ((t (:inherit font-lock-string-face))))
 ;;    `(company-tooltip-annotation-selection ((t (:inherit font-lock-string-face))))))
 
-(defun on-off-fci-before-company (command)
-  (when (string= "show" command)
-    (turn-off-fci-mode))
-  (when (string= "hide" command)
-    (turn-on-fci-mode)))
+;; (defun on-off-fci-before-company (command)
+;;   (when (string= "show" command)
+;;     (turn-off-fci-mode))
+;;   (when (string= "hide" command)
+;;     (turn-on-fci-mode)))
 
 ;; https://github.com/company-mode/company-mode/issues/180
-(advice-add 'company-call-frontends :before #'on-off-fci-before-company)
+;; (advice-add 'company-call-frontends :before #'on-off-fci-before-company)
 
 (setq ffap-machine-p-known 'reject)
 
@@ -83,6 +85,7 @@
   "comment or uncomment current line"
   (interactive)
   (comment-or-uncomment-region (line-beginning-position) (line-end-position)))
+
 (global-set-key (kbd "C-;") 'toggle-comment-on-line)
 
 ;; auto-indent by pressing the return key
