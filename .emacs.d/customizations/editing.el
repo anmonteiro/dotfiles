@@ -13,6 +13,8 @@
 ;;         try-complete-lisp-symbol))
 
 (require 'company)
+(require 'company-lsp)
+(push 'company-lsp company-backends)
 
 (add-hook 'after-init-hook (lambda ()
                              (global-company-mode)
@@ -28,6 +30,8 @@
 
 (setq company-idle-delay 0.3
       company-tooltip-idle-delay 0.3)
+
+(global-set-key (kbd "C-M-?") 'xref-find-references)
 
 (require 'color)
 

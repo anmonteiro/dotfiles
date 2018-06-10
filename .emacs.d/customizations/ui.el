@@ -3,9 +3,7 @@
 
 
 ;; Show line numbers
-(add-hook 'fundamental-mode-hook 'display-line-numbers-mode)
-(add-hook 'prog-mode-hook 'display-line-numbers-mode)
-(add-hook 'text-mode-hook 'display-line-numbers-mode)
+(global-display-line-numbers-mode)
 
 ;; Show columns numbers
 (setq column-number-mode t)

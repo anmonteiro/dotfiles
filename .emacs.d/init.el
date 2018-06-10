@@ -88,7 +88,10 @@
     doom-themes
     inf-clojure
     reason-mode
-    lsp-mode))
+    lsp-mode
+    lsp-ocaml
+    company-lsp
+    graphql-mode))
 
 ;; On OS X, an Emacs instance started from the graphical user
 ;; interface will have a different environment than a shell in a
