@@ -52,6 +52,8 @@
 
 (add-hook 'tuareg-jbuild-mode 'paredit-mode)
 
+(add-to-list 'auto-mode-alist '("\\.mll$" . tuareg-mode))
+
 (setq refmt-width-mode 'fill)
 
 ;; (with-eval-after-load 'lsp-mode
@@ -65,5 +67,4 @@
 (add-hook 'reason-mode-hook 'lsp-ocaml-enable)
 (add-hook 'tuareg-mode-hook 'lsp-ocaml-enable)
 (add-hook 'caml-mode-hook 'lsp-ocaml-enable)
-(add-hook 'tuareg-dune-mode 'paredit-mode)
-
+(add-hook 'tuareg-dune-mode-hook 'paredit-mode)
