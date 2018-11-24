@@ -1,13 +1,13 @@
 [filter "lfs"]
-	required = true
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
+	required = true
 [user]
 	name = Antonio Nuno Monteiro
 	email = anmonteiro@gmail.com
-	signingkey = 3EF052D0A8494FE9
+	signingkey = D3FF992B411EF867
 [commit]
 	gpgsign = true
 [gpg]
-	program = /usr/local/bin/gpg
+	program = /Users/anmonteiro/.nix-profile/bin/gpg

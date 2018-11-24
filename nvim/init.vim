@@ -29,7 +29,7 @@ if dein#load_state('/Users/anmonteiro/.cache/dein')
     \ 'on_ft': ['clojure'],
     \})
   call dein#add('jiangmiao/auto-pairs', {
-    \ 'on_ft': ['ocaml', 'reason', 'javascript', 'vim', 'sql', 'lisp'],
+    \ 'on_ft': ['ocaml', 'reason', 'javascript', 'vim', 'sql', 'lisp', 'clojure', 'nix', 'json'],
     \})
   call dein#add('vim-airline/vim-airline')
   call dein#add('vim-airline/vim-airline-themes')
@@ -40,6 +40,9 @@ if dein#load_state('/Users/anmonteiro/.cache/dein')
     \ 'on_ft': ['ocaml', 'reason', 'javascript', 'vim', 'sql', 'lisp'],
     \})
   call dein#add('tpope/vim-fugitive')
+  call dein#add('LnL7/vim-nix', {
+    \ 'on_ft': ['nix'],
+    \})
 
   " call dein#add('MartinLafreniere/vim-PairTools', {
     " \ 'on_ft': ['ocaml', 'reason', 'javascript', 'vim', 'sql'],
@@ -65,7 +68,7 @@ endif
 "End dein Scripts-------------------------
 
 " Function to source all .vim files in directory
-" (https://devel.tech/snippets/n/vIMvi29n/include-all-vim-files-in-a-directory/)
+" (https://devel.tech/snippets/n/vIMvi29n/include-all-vim-files-in-a-directory)
 " {
 function! SourceDirectory(file)
   for s:fpath in split(globpath(a:file, '*.vim'), '\n')
@@ -76,3 +79,6 @@ endfunction
 
 call SourceDirectory('~/.config/nvim/customizations/')
 
+if has("gui_vimr")
+  source ~/.config/nvim/ginit.vim
+endif

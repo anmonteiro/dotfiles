@@ -25,6 +25,12 @@ let g:loaded_logiPat           = 1
 
 " Color Scheme
 let g:gruvbox_number_column = 'bg1'
+let g:gruvbox_italic = 1
+let g:gruvbox_italicize_strings = 1
+" let g:gruvbox_improved_strings = 1
+let g:gruvbox_improved_warnings = 1
+
+" let g:gruvbox_contrast_dark = 'hard'
 colorscheme gruvbox
 set background=dark
 " Line numbers
@@ -52,3 +58,9 @@ set list
 "4a4a59
 "highlight NonText guifg=#eeeeee
 "highlight SpecialKey guifg=#4a4a59
+
+if !has("gui_vimr")
+  hi Normal ctermbg=NONE guibg=NONE
+endif
+
+autocmd VimEnter * highlight Comment cterm=italic gui=italic

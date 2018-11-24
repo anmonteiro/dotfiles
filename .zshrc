@@ -55,6 +55,10 @@ DEFAULT_USER=`whoami`
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git colorize)
 
+# Needs to run before the line after for `zsh` to be in that PATH. For some
+# reason, Nix put its initialization in `~/.bash_profile`
+source ~/.bash_profile
+
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
@@ -66,9 +70,9 @@ source $ZSH/oh-my-zsh.sh
 
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
-  export EDITOR='emacs'
+  export EDITOR='nvim'
 else
-  export EDITOR='emacs'
+  export EDITOR='nvim'
 fi
 
 # Compilation flags
@@ -86,9 +90,7 @@ fi
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
-source ~/.bash_profile
+source ~/.nix-profile/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 prompt_dir() {
   prompt_segment blue black ${${${:-/${(j:/:)${(M)${(s:/:)${(D)PWD:h}}#(|.)[^.]}}/${PWD:t}}//(\/${(j:\/:)${(M)${(s:\/:)${(D)HOME:h}}#(|.)[^.]}}\/${HOME:t}|\/~)/\~}//\/\//\/}
@@ -118,5 +120,32 @@ export PATH=$PATH:~/.bin:/Applications/WebKit.app/Contents/Frameworks/10.12/Java
 
 alias realpath=grealpath
 
-# OPAM configuration
-. ~/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
+# opam configuration
+test -r /Users/anmonteiro/.opam/opam-init/init.zsh && . /Users/anmonteiro/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
+
+# checkout a pull request locally
+ppr() {
+  git fetch origin pull/$1/head:PR-$1 && git checkout PR-$1;
+}
+
+alias vim=nvim
+alias ls=exa
+alias grep=egrep
+
+export LADDER_LOG_LEVEL=error
+export GOPATH="/Users/anmonteiro/Documents/github/go"
+export PATH="$HOME/bin:$PATH:/usr/local/opt/coreutils/libexec/gnubin:$GOPATH/bin"
+
+# added by travis gem
+[ -f /Users/anmonteiro/.travis/travis.sh ] && source /Users/anmonteiro/.travis/travis.sh
+
+capture() {
+  sudo dtrace -p "$1" -qn '
+        syscall::write*:entry
+        /pid == $target && arg0 == 1/ {
+            printf("%s", copyinstr(arg1, arg2));
+        }
+    '
+}
+
+export PATH="$HOME/.wasmer/bin:$PATH"

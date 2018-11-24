@@ -40,6 +40,7 @@ let g:NERDSpaceDelims = 1
 " Vimagit config
 let g:magit_discard_untracked_do_delete = 1
 
+autocmd BufEnter *.nix :setlocal filetype=nix
 " Snoopy Mode
 " http://vim.wikia.com/wiki/Invert_the_number_row_keys_for_faster_typing
 " map each number to its shift-key character
