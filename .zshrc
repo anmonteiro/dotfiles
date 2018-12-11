@@ -131,6 +131,7 @@ ppr() {
 alias vim=nvim
 alias ls=exa
 alias grep=egrep
+alias cat=bat
 
 export LADDER_LOG_LEVEL=error
 export GOPATH="/Users/anmonteiro/Documents/github/go"

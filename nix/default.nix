@@ -13,21 +13,26 @@ let
       bs-platform
 
       # Nixpkgs index packages
+      autoconf
       awscli
+      bat
+      boot
       curl
       emacs
       exa
       ffmpeg
       git
       git-lfs
+      gmp
       go
       gnupg
       jq
       kubernetes
       libev
       mongodb
+      mpir
       neovim
-      nodejs
+      nodejs-10_x
       cacert
       nix
       opam
