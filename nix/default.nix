@@ -11,6 +11,8 @@ let
       esy
       lumo
       bs-platform
+      openssl
+      gmp
 
       # Nixpkgs index packages
       autoconf
@@ -23,7 +25,6 @@ let
       ffmpeg
       git
       git-lfs
-      gmp
       go
       gnupg
       jq
@@ -36,7 +37,7 @@ let
       cacert
       nix
       opam
-      openssl
+      pkgconfig
       python
       pythonPackages.pywatchman
       rlwrap
@@ -61,6 +62,8 @@ let
   esy = pkgs.callPackage ./esy {};
   lumo = pkgs.callPackage ./lumo-cljs {};
   bs-platform = pkgs.callPackage ./bs-platform {};
+  openssl = import ./openssl { inherit pkgs; };
+  gmp = import ./gmp { inherit pkgs; };
 
   # A custom '.bashrc' (see bashrc/default.nix for details)
   # bashrc = pkgs.callPackage ./bashrc {};
