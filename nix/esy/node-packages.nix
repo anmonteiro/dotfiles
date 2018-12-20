@@ -25,13 +25,13 @@ let
   };
 in
 {
-  esy-next = nodeEnv.buildNodePackage {
+  esy = nodeEnv.buildNodePackage {
     name = "esy";
     packageName = "esy";
-    version = "0.4.3";
+    version = "0.4.5";
     src = fetchurl {
-      url = "https://registry.npmjs.org/esy/-/esy-0.4.3.tgz";
-      sha512 = "pCmrj/acbDTiV63SXjRhkIMUBg7Qfq0dgERvSEP40YrDlBLPYQmBv/o52iEA7zt83rkC6Lvn1nXCwiJ9N0pg8A==";
+      url = "https://registry.npmjs.org/esy/-/esy-0.4.5.tgz";
+      sha512 = "CJ5RrY/MAuNCc8l8/4eypTmGm33JvAMkdcH3tWchrbP7SYCIdhLINS6juziC5vitUU7pNMalDba9SuDXRXXq5A==";
     };
     dependencies = [
       sources."@esy-ocaml/esy-opam-0.0.15"

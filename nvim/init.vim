@@ -37,7 +37,7 @@ if dein#load_state('/Users/anmonteiro/.cache/dein')
   call dein#add('jreybert/vimagit', { 'rev': 'next' })
   call dein#add('ctrlpvim/ctrlp.vim')
   call dein#add('tpope/vim-surround', {
-    \ 'on_ft': ['ocaml', 'reason', 'javascript', 'vim', 'sql', 'lisp'],
+    \ 'on_ft': ['ocaml', 'reason', 'javascript', 'vim', 'sql', 'lisp', 'nix'],
     \})
   call dein#add('tpope/vim-fugitive')
   call dein#add('LnL7/vim-nix', {

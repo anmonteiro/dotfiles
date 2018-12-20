@@ -41,10 +41,10 @@ let
       python
       pythonPackages.pywatchman
       rlwrap
-      ruby
       silver-searcher
       terraform
       tmux
+      vagrant
       watchman
       yarn
       zsh
