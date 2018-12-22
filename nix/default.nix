@@ -41,11 +41,13 @@ let
       python
       pythonPackages.pywatchman
       rlwrap
+      rustup
       silver-searcher
       terraform
       tmux
       vagrant
       watchman
+      wget
       yarn
       zsh
       zsh-completions

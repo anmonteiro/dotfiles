@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#! /usr/bin/env nix-shell
 #! nix-shell -i bash -p nodePackages.node2nix
 
 PACKAGE=($(echo ${1} | awk '{split($0,a,"@"); print a[1],a[2],a[3]}'))
@@ -26,10 +26,10 @@ else
   INPUT="[\"$PKG_NAME\"]"
 fi
 
-echo $INPUT
+echo $INPUT $tempdir
 
-# mkdir -p $tempdir
-# pushd $tempdir
-# node2nix --nodejs-10 --input <( echo $INPUT)
-# nix-env --install --file .
-# popd
+mkdir -p $tempdir
+pushd $tempdir
+node2nix --nodejs-10 --input <( echo $INPUT)
+nix-env --install --file .
+popd
