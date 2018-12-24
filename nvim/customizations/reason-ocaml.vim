@@ -6,4 +6,10 @@ let g:LanguageClient_serverCommands = {
     \ }
 " ['ocaml-language-server', '--stdio'],
 
-autocmd BufEnter *dune* :setlocal filetype=lisp
+autocmd FileType reason silent! call merlin#Register()
+autocmd FileType reason nnoremap <silent> gf :ReasonPrettyPrint<CR>
+
+let g:syntastic_reason = 1
+let g:syntastic_ocaml_checkers = ['merlin']
+let g:syntastic_reason_checkers = ['merlin']
+

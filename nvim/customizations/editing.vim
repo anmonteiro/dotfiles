@@ -15,7 +15,7 @@ set clipboard=unnamed
 set noswapfile
 
 " Set Vim's update time to 1 second – the default is 4 seconds which is too much
-set updatetime=1000
+set updatetime=200
 
 " show existing tab with 4 spaces width
 set tabstop=2
@@ -40,7 +40,33 @@ let g:NERDSpaceDelims = 1
 " Vimagit config
 let g:magit_discard_untracked_do_delete = 1
 
+""" leader config
+
+noremap <SPACE> <Nop>
+sunmap <SPACE>
+
+map <Space> <leader>
+
+""" Filetype associations
+
 autocmd BufEnter *.nix :setlocal filetype=nix
+autocmd BufRead,BufNewFile Vagrantfile :setlocal filetype=ruby
+autocmd BufRead,BufNewFile jbuild :setlocal filetype=dune
+
+
+""" Syntastic
+
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+" let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+nnoremap <silent> <leader>e :Errors<CR>
+
 " Snoopy Mode
 " http://vim.wikia.com/wiki/Invert_the_number_row_keys_for_faster_typing
 " map each number to its shift-key character

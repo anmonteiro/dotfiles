@@ -17,33 +17,49 @@ if dein#load_state('/Users/anmonteiro/.cache/dein')
   " Add or remove your plugins here:
   "  call dein#add('Shougo/neosnippet.vim')
   "  call dein#add('Shougo/neosnippet-snippets')
-  call dein#add('morhetz/gruvbox')
-  call dein#add('reasonml-editor/vim-reason-plus')
-  call dein#add('autozimu/LanguageClient-neovim', {
-    \ 'rev': 'next',
-    \ 'build': 'bash install.sh',
+  " call dein#add('morhetz/gruvbox')
+  """ Theming
+  call dein#add('vim-airline/vim-airline')
+  " call dein#add('vim-airline/vim-airline-themes')
+  call dein#add('jordwalke/vim-taste')
+
+  """ Editing
+  call dein#add('tpope/vim-surround')
+  call dein#add('jiangmiao/auto-pairs')
+  call dein#add('scrooloose/nerdcommenter')
+  call dein#add('ctrlpvim/ctrlp.vim')
+  call dein#add('vim-syntastic/syntastic')
+
+  """ Git
+  call dein#add('mhinz/vim-signify')
+  call dein#add('jreybert/vimagit', { 'rev': 'next' })
+  call dein#add('tpope/vim-fugitive')
+
+  """ OCaml / Reason
+  call dein#add('rgrinberg/vim-ocaml' , {
+    \ 'on_ft': ['ocaml', 'opam', 'dune'],
+    \ })
+  call dein#add('jordwalke/vim-reason' , {
+    \ 'rev': 'WIP',
     \ 'on_ft': ['reason', 'ocaml'],
     \ })
-  call dein#add('airblade/vim-gitgutter')
+  " call dein#add('reasonml-editor/vim-reason-plus')
+    " \ 'on_ft': ['reason', 'ocaml'],
+  " call dein#add('autozimu/LanguageClient-neovim', {
+    " \ 'rev': 'next',
+    " \ 'build': 'bash install.sh',
+    " \ 'on_ft': ['reason', 'ocaml'],
+    " \ })
+
+  """ Clojure
   call dein#add('tpope/vim-fireplace', {
     \ 'on_ft': ['clojure'],
-    \})
-  call dein#add('jiangmiao/auto-pairs', {
-    \ 'on_ft': ['ocaml', 'reason', 'javascript', 'vim', 'sql', 'lisp', 'clojure', 'nix', 'json'],
-    \})
-  call dein#add('vim-airline/vim-airline')
-  call dein#add('vim-airline/vim-airline-themes')
-  call dein#add('jordwalke/vim-taste')
-  call dein#add('scrooloose/nerdcommenter')
-  call dein#add('jreybert/vimagit', { 'rev': 'next' })
-  call dein#add('ctrlpvim/ctrlp.vim')
-  call dein#add('tpope/vim-surround', {
-    \ 'on_ft': ['ocaml', 'reason', 'javascript', 'vim', 'sql', 'lisp', 'nix'],
-    \})
-  call dein#add('tpope/vim-fugitive')
+    \ })
+
+  """ Nix
   call dein#add('LnL7/vim-nix', {
     \ 'on_ft': ['nix'],
-    \})
+    \ })
 
   " call dein#add('MartinLafreniere/vim-PairTools', {
     " \ 'on_ft': ['ocaml', 'reason', 'javascript', 'vim', 'sql'],

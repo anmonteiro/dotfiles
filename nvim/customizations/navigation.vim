@@ -15,6 +15,5 @@ let g:ctrlp_root_markers = [
 
 let g:ctrlp_show_hidden = 1
 
-" let g:ctrlp_custom_ignore = {
-  " \ 'dir': '\v[\/]_(opam|build)$',
-  " \ }
+nnoremap ; :
+nmap <silent> <leader>/ :nohlsearch<CR>

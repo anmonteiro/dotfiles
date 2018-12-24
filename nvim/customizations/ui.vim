@@ -69,8 +69,9 @@ let g:airline_theme='taste'
 " Airline already shows the current mode
 set noshowmode
 
-set listchars=tab:▸\ ,eol:¬
 set list
+set listchars=tab:▸\ ,eol:¬
+highlight NonText ctermfg=7 guifg=gray guibg=NONE ctermbg=NONE
 "Invisible character colors
 "4a4a59
 "highlight NonText guifg=#eeeeee
@@ -81,3 +82,8 @@ if !has("gui_vimr")
 endif
 
 autocmd VimEnter * highlight Comment cterm=italic gui=italic
+
+""" Vim-Signify
+let g:signify_vcs_list = [ 'git' ]
+let g:signify_realtime = 1
+highlight SignColumn ctermbg=NONE guibg=NONE
