@@ -20,7 +20,7 @@ if dein#load_state('/Users/anmonteiro/.cache/dein')
   " call dein#add('morhetz/gruvbox')
   """ Theming
   call dein#add('vim-airline/vim-airline')
-  " call dein#add('vim-airline/vim-airline-themes')
+  call dein#add('vim-airline/vim-airline-themes')
   call dein#add('jordwalke/vim-taste')
 
   """ Editing

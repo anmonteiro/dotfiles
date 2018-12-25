@@ -17,3 +17,7 @@ let g:ctrlp_show_hidden = 1
 
 nnoremap ; :
 nmap <silent> <leader>/ :nohlsearch<CR>
+
+
+nnoremap <silent> <leader>n :bn<CR>
+nnoremap <silent> <leader>p :bp<CR>
