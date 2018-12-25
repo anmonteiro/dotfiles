@@ -13,6 +13,7 @@ let
       bs-platform
       openssl
       gmp
+      zshrc
 
       # Nixpkgs index packages
       autoconf
@@ -50,8 +51,12 @@ let
       wget
       yarn
       zsh
+      oh-my-zsh
       zsh-completions
       zsh-syntax-highlighting
+      zsh-history-substring-search
+      zsh-autosuggestions
+      nix-zsh-completions
     ];
 
   ## Some customizations
@@ -66,9 +71,7 @@ let
   bs-platform = pkgs.callPackage ./bs-platform {};
   openssl = import ./openssl { inherit pkgs; };
   gmp = import ./gmp { inherit pkgs; };
-
-  # A custom '.bashrc' (see bashrc/default.nix for details)
-  # bashrc = pkgs.callPackage ./bashrc {};
+  zshrc = pkgs.callPackage ./zshrc {};
 
   # Git with config baked in
   #git = import ./git (
