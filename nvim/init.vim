@@ -22,6 +22,7 @@ if dein#load_state('/Users/anmonteiro/.cache/dein')
   call dein#add('vim-airline/vim-airline')
   " call dein#add('vim-airline/vim-airline-themes')
   call dein#add('jordwalke/vim-taste')
+  call dein#add('thaerkh/vim-indentguides')
 
   """ Editing
   call dein#add('tpope/vim-surround')

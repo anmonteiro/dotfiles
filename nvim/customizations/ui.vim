@@ -132,3 +132,5 @@ let g:signify_sign_add               = '⨁'
 let g:signify_sign_change            = '✎'
 highlight SignColumn ctermbg=NONE guibg=NONE
 
+""" Indent Guides
+let g:indentguides_spacechar = '│'
