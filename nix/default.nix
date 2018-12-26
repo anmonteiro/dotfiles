@@ -24,6 +24,7 @@ let
       emacs
       exa
       ffmpeg
+      fzf
       git
       git-lfs
       go

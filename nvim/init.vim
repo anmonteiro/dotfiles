@@ -27,8 +27,11 @@ if dein#load_state('/Users/anmonteiro/.cache/dein')
   call dein#add('tpope/vim-surround')
   call dein#add('jiangmiao/auto-pairs')
   call dein#add('scrooloose/nerdcommenter')
-  call dein#add('ctrlpvim/ctrlp.vim')
   call dein#add('vim-syntastic/syntastic')
+
+  """ Navigation
+  call dein#add('junegunn/fzf', { 'merged': 0 })
+  call dein#add('junegunn/fzf.vim', { 'depends': 'fzf' })
 
   """ Git
   call dein#add('mhinz/vim-signify')
