@@ -64,14 +64,14 @@ set colorcolumn=80
 set cursorline
 
 """ Airline related settings
-let g:airline_highlighting_cache = 0
+let g:airline_highlighting_cache = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#buffer_nr_show = 1
 
 let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = ' '
 
-let g:airline_theme='wombat'
+let g:airline_theme='taste'
 
 if !exists('g:airline_symbols')
   let g:airline_symbols = {}

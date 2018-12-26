@@ -9,7 +9,11 @@ let g:LanguageClient_serverCommands = {
 autocmd FileType reason silent! call merlin#Register()
 autocmd FileType reason nnoremap <silent> gf :ReasonPrettyPrint<CR>
 
+let g:reasonml_project_airline = 1
+let g:reasonml_syntastic_airline = 1
+let g:reasonml_clean_project_airline = 1
 let g:syntastic_reason = 1
 let g:syntastic_ocaml_checkers = ['merlin']
 let g:syntastic_reason_checkers = ['merlin']
-
+let g:airline#extensions#esy#enabled = 1
+let g:airline#extensions#reason#enabled = 1
