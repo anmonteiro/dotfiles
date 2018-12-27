@@ -45,7 +45,8 @@ let g:magit_discard_untracked_do_delete = 1
 noremap <SPACE> <Nop>
 sunmap <SPACE>
 
-map <Space> <leader>
+let g:mapleader = "\<Space>"
+let g:maplocalleader = ","
 
 """ Filetype associations
 
@@ -67,6 +68,7 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_error_symbol = "✗"
 let g:syntastic_warning_symbol = "⚠"
+highlight link SyntasticWarningSign Typedef
 
 nnoremap <silent> <leader>e :Errors<CR>
 
