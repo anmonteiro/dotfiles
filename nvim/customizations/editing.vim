@@ -45,7 +45,8 @@ let g:magit_discard_untracked_do_delete = 1
 noremap <SPACE> <Nop>
 sunmap <SPACE>
 
-let g:mapleader = "\<Space>"
+map <Space> <leader>
+
 let g:maplocalleader = ","
 
 """ Filetype associations

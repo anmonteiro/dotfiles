@@ -8,6 +8,7 @@ let g:LanguageClient_serverCommands = {
 
 autocmd FileType reason silent! call merlin#Register()
 autocmd FileType reason nnoremap <silent> gf :ReasonPrettyPrint<CR>
+autocmd FileType ocaml,reason nnoremap <silent> <localleader>d :MerlinDocument<CR>
 
 let g:reasonml_project_airline = 1
 let g:reasonml_syntastic_airline = 1

@@ -44,7 +44,6 @@ if dein#load_state('/Users/anmonteiro/.cache/dein')
     \ 'on_ft': ['ocaml', 'opam', 'dune'],
     \ })
   call dein#add('jordwalke/vim-reasonml' , {
-    \ 'rev': 'WIP',
     \ 'on_ft': ['reason', 'ocaml'],
     \ })
   " call dein#add('reasonml-editor/vim-reason-plus')
