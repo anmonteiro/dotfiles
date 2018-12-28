@@ -14,6 +14,7 @@ let
       openssl
       gmp
       zshrc
+      libffi
 
       # Nixpkgs index packages
       autoconf
@@ -72,6 +73,7 @@ let
   bs-platform = pkgs.callPackage ./bs-platform {};
   openssl = import ./openssl { inherit pkgs; };
   gmp = import ./gmp { inherit pkgs; };
+  libffi = import ./libffi { inherit pkgs; };
   zshrc = pkgs.callPackage ./zshrc {};
 
   # Git with config baked in
