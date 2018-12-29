@@ -1,7 +1,7 @@
 set wildmode=longest:list,full
 set wildignore+=*/_opam/*,*/_build/*,*/.svn/*,*/node_modules/*,*/_esy/*
 
-nnoremap ; :
+map ; :
 nmap <silent> <leader>/ :nohlsearch<CR>
 
 nnoremap <silent> <leader>n :bn<CR>
@@ -23,7 +23,13 @@ let g:fzf_buffers_jump = 1
 
 nnoremap <silent> <C-p> <Esc>:Files<CR>
 nnoremap <silent> <C-b> <Esc>:Buffers<CR>
+nnoremap <silent> <C-h> <Esc>:History<CR>
 nnoremap <silent> <C-s> <Esc>:Ag<CR>
+nnoremap <silent> <C-l> <Esc>:BLines<CR>
+nnoremap <silent> <leader><Space> <Esc>:Commands<CR>
+" Because `;` is mapped to `:`
+nnoremap <silent> <leader>; <Esc>:History:<CR>
+" nnoremap <silent> <leader>/ <Esc>:History/<CR>
 
 let g:fzf_colors = {
   \ 'fg':      ['fg', 'Normal'],
