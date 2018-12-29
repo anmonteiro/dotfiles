@@ -3,6 +3,7 @@ let
   pkgs = import <nixpkgs> {};
 
   # The list of packages to be installed
+  # This setup is mostly based on https://github.com/nmattia/homies
   homies = with pkgs;
     [
       # Customized packages
