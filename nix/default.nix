@@ -37,7 +37,7 @@ let
       mongodb
       mpir
       neovim
-      nodejs-10_x
+      nodejs-11_x
       cacert
       nix
       opam
