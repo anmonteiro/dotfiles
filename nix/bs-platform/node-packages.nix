@@ -9,10 +9,10 @@ in
   bs-platform = nodeEnv.buildNodePackage {
     name = "bs-platform";
     packageName = "bs-platform";
-    version = "4.0.17";
+    version = "4.0.18";
     src = fetchurl {
-      url = "https://registry.npmjs.org/bs-platform/-/bs-platform-4.0.17.tgz";
-      sha512 = "ypn2VEAmuVgX+ezKF9HXXzZ9Fe47UMPyt0x9MBBAF/C0Fus9wEIOdRD0gB4p3J9uLabB/MRWWuw7ORnP8w086g==";
+      url = "https://registry.npmjs.org/bs-platform/-/bs-platform-4.0.18.tgz";
+      sha512 = "BwzW0iYHvREqUZIgQxJmdJrxexppLvJxYQ4LLexbhCp7uZU5DIZ5ub4ZHpkCkc8fn8bsXWc+Rrejb3csi+BoAQ==";
     };
     buildInputs = globalBuildInputs;
     meta = {
