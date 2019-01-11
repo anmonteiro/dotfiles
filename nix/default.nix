@@ -16,6 +16,7 @@ let
       gmp
       zshrc
       libffi
+      ffmpeg
 
       # Nixpkgs index packages
       autoconf
@@ -25,7 +26,6 @@ let
       curl
       emacs
       exa
-      ffmpeg
       fzf
       git
       git-lfs
@@ -73,6 +73,7 @@ let
   lumo = pkgs.callPackage ./lumo-cljs {};
   bs-platform = pkgs.callPackage ./bs-platform {};
   openssl = import ./openssl { inherit pkgs; };
+  ffmpeg = import ./ffmpeg { inherit pkgs; };
   gmp = import ./gmp { inherit pkgs; };
   libffi = import ./libffi { inherit pkgs; };
   zshrc = pkgs.callPackage ./zshrc {};
