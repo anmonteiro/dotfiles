@@ -49,6 +49,7 @@ let
       silver-searcher
       terraform
       tmux
+      tree
       vagrant
       watchman
       wget
