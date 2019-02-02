@@ -1,15 +1,14 @@
 --- /tmp/nix-npm-install/esy/node-env.nix	2018-11-22 21:52:47.000000000 +0000
 +++ esy/node-env.nix	2018-11-19 15:08:07.000000000 +0000
-@@ -414,6 +414,13 @@
+@@ -414,6 +414,12 @@
              done
          fi
- 
+
 +        mv $out/lib/node_modules/* $out
 +        if [ -d "$out/lib/node_modules/.bin" ]
 +        then
 +            rm -r $out/bin
 +            mv $out/lib/node_modules/.bin $out/bin
-+            # ln -s $out/.bin $out/bin
 +        fi
          # Run post install hook, if provided
          runHook postInstall

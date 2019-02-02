@@ -28,10 +28,10 @@ in
   esy = nodeEnv.buildNodePackage {
     name = "esy";
     packageName = "esy";
-    version = "0.5.1";
+    version = "0.5.6";
     src = fetchurl {
-      url = "https://registry.npmjs.org/esy/-/esy-0.5.1.tgz";
-      sha512 = "j/N3rjJPbzIRIRT4F6yzO9FJnM3DK4L/fLkGnG+hYuV5V3bTXW9wbm+cNfgar0Ymn73Hq+tKzr4Gp++a8Fe0CQ==";
+      url = "https://registry.npmjs.org/esy/-/esy-0.5.6.tgz";
+      sha512 = "bzzj8fNSParJ0/FVq2O92E8R7DLueSFzzOpsrbWukE9f5Dq1g6iWN2wgQmlv3HsR+/6vGVoxbWxuwe16Dl5BXQ==";
     };
     dependencies = [
       sources."@esy-ocaml/esy-opam-0.0.15"

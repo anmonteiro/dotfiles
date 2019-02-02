@@ -419,7 +419,6 @@ let
         then
             rm -r $out/bin
             mv $out/lib/node_modules/.bin $out/bin
-            # ln -s $out/.bin $out/bin
         fi
         # Run post install hook, if provided
         runHook postInstall

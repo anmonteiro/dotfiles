@@ -17,6 +17,7 @@ let
       zshrc
       libffi
       ffmpeg
+      libpng
 
       # Nixpkgs index packages
       autoconf
@@ -77,6 +78,7 @@ let
   ffmpeg = import ./ffmpeg { inherit pkgs; };
   gmp = import ./gmp { inherit pkgs; };
   libffi = import ./libffi { inherit pkgs; };
+  libpng = import ./libpng { inherit pkgs; };
   zshrc = pkgs.callPackage ./zshrc {};
 
   # Git with config baked in

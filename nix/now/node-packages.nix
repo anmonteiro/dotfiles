@@ -9,10 +9,10 @@ in
   now = nodeEnv.buildNodePackage {
     name = "now";
     packageName = "now";
-    version = "13.0.5";
+    version = "13.1.2";
     src = fetchurl {
-      url = "https://registry.npmjs.org/now/-/now-13.0.5.tgz";
-      sha512 = "8d+FO9PxXx9MP1YuKnqqpXTEyU3L3iQ1ZnU168P0s/U+zmHM5JgcPgsjBQoVL/R9BfFZQEnfAU0nj7jrH5RqFw==";
+      url = "https://registry.npmjs.org/now/-/now-13.1.2.tgz";
+      sha512 = "v6K4141Zcw/EsEC88uQ8DusP5LnbLIYFEblpH9BiQXCx4s4qmk56xxT7AXRCFBMtUFTX0hF8Bd2rqWGs0HzjAQ==";
     };
     buildInputs = globalBuildInputs;
     meta = {
