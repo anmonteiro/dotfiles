@@ -37,6 +37,7 @@ let
       libev
       mongodb
       mpir
+      nghttp2
       neovim
       nodejs-11_x
       cacert
