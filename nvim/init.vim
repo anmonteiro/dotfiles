@@ -30,6 +30,9 @@ if dein#load_state('/Users/anmonteiro/.cache/dein')
   call dein#add('scrooloose/nerdcommenter')
   call dein#add('vim-syntastic/syntastic')
 
+  """ Automatic Formatting
+  call dein#add('sbdchd/neoformat')
+
   """ Navigation
   call dein#add('junegunn/fzf', { 'merged': 0 })
   call dein#add('junegunn/fzf.vim', { 'depends': 'fzf' })

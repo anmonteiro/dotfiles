@@ -78,6 +78,15 @@ highlight link SyntasticWarningSign Typedef
 
 nnoremap <silent> <leader>e :Errors<CR>
 
+""" Automatic formatting
+" Enable trimmming of trailing whitespace
+"let g:neoformat_basic_format_trim = 1
+
+augroup fmt
+  autocmd!
+  autocmd BufWritePre * undojoin | Neoformat
+augroup END
+
 " Snoopy Mode
 " http://vim.wikia.com/wiki/Invert_the_number_row_keys_for_faster_typing
 " map each number to its shift-key character

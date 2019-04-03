@@ -107,7 +107,6 @@ let g:airline_symbols.readonly = ''
 let g:airline_symbols.linenr = '☰'
 let g:airline_symbols.maxlinenr = ''
 
-
 " Airline already shows the current mode
 set noshowmode
 
