@@ -45,6 +45,10 @@ let g:NERDSpaceDelims = 1
 " Vimagit config
 let g:magit_discard_untracked_do_delete = 1
 
+" Set conceal level to 0 on markdown and json files
+autocmd FileType json,markdown
+    \ autocmd BufEnter <buffer> setlocal conceallevel=0
+
 """ leader config
 
 noremap <SPACE> <Nop>
@@ -84,7 +88,8 @@ nnoremap <silent> <leader>e :Errors<CR>
 
 augroup fmt
   autocmd!
-  autocmd BufWritePre * undojoin | Neoformat
+  autocmd BufWritePre * Neoformat
+  "autocmd BufWritePre * undojoin | Neoformat
 augroup END
 
 " Snoopy Mode

@@ -25,7 +25,6 @@ let g:neoformat_ocaml_ocamlformat = {
   \ 'args': ['--disable-outside-detected-project', '--name', '"%:p"', '-'],
   \ 'no_append': 1,
   \ 'stdin': 1,
-  \ 'stderr': 1
   \ }
 
 let g:neoformat_enabled_ocaml = ['ocamlformat']
