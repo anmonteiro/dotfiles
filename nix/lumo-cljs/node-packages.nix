@@ -9,10 +9,10 @@ in
   lumo-cljs = nodeEnv.buildNodePackage {
     name = "lumo-cljs";
     packageName = "lumo-cljs";
-    version = "1.9.0";
+    version = "1.10.1";
     src = fetchurl {
-      url = "https://registry.npmjs.org/lumo-cljs/-/lumo-cljs-1.9.0.tgz";
-      sha512 = "C7sM26P7bBtrAz+pW1TlkjIUXcYHmE3oENQLVe4GsYbX0ePJB4w0KK7Tm0WxVREGMllTcNlDJLqz30/W9vud0A==";
+      url = "https://registry.npmjs.org/lumo-cljs/-/lumo-cljs-1.10.1.tgz";
+      sha512 = "pqgygbEEnzOjFUxejr/jK7gRhuQx0acd3PLyJwkz4ZyVHWyzGGhUxwzgYX/df4wKm7Zixfp73G0S0PFXiNHULQ==";
     };
     buildInputs = globalBuildInputs;
     meta = {
