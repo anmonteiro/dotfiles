@@ -47,7 +47,7 @@ let g:magit_discard_untracked_do_delete = 1
 
 " Set conceal level to 0 on markdown and json files
 autocmd FileType json,markdown
-    \ autocmd BufEnter <buffer> setlocal conceallevel=0
+    \ autocmd BufWinEnter <buffer> setlocal conceallevel=0
 
 """ leader config
 
