@@ -11,7 +11,6 @@ let
       now
       esy
       lumo
-      bs-platform
       openssl
       gmp
       zshrc
