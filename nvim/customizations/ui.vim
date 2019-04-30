@@ -133,4 +133,4 @@ let g:signify_sign_delete = '✖'
 highlight SignColumn ctermbg=NONE guibg=NONE
 
 """ Indent Guides
-let g:indentguides_spacechar = '│'
+let g:indentLine_char = '│'

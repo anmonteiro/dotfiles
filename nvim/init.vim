@@ -22,13 +22,19 @@ if dein#load_state('/Users/anmonteiro/.cache/dein')
   call dein#add('vim-airline/vim-airline')
   " call dein#add('vim-airline/vim-airline-themes')
   call dein#add('jordwalke/vim-taste')
-  call dein#add('thaerkh/vim-indentguides')
+  call dein#add('Yggdroot/indentLine')
 
   """ Editing
   call dein#add('tpope/vim-surround')
   call dein#add('jiangmiao/auto-pairs')
   call dein#add('scrooloose/nerdcommenter')
   call dein#add('vim-syntastic/syntastic')
+  call dein#add('luochen1990/rainbow', {
+    \ 'on_ft': ['lisp', 'dune', 'clojure'],
+    \ })
+  call dein#add('guns/vim-clojure-static', {
+    \ 'on_ft': ['clojure'],
+    \ })
 
   """ Automatic Formatting
   call dein#add('sbdchd/neoformat')

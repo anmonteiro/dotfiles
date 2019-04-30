@@ -82,6 +82,9 @@ highlight link SyntasticWarningSign Typedef
 
 nnoremap <silent> <leader>e :Errors<CR>
 
+""" Rainbow Parens
+let g:rainbow_active = 1
+
 """ Automatic formatting
 " Enable trimmming of trailing whitespace
 "let g:neoformat_basic_format_trim = 1
