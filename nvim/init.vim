@@ -27,6 +27,8 @@ if dein#load_state('/Users/anmonteiro/.cache/dein')
   """ Editing
   call dein#add('tpope/vim-surround')
   call dein#add('jiangmiao/auto-pairs')
+  call dein#add('guns/vim-sexp')
+  call dein#add('tpope/vim-sexp-mappings-for-regular-people')
   call dein#add('scrooloose/nerdcommenter')
   call dein#add('vim-syntastic/syntastic')
   call dein#add('luochen1990/rainbow', {
