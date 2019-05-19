@@ -47,11 +47,11 @@ let g:fzf_colors = {
   \ 'header':  ['fg', 'Comment']
   \ }
 
-let s:preview_opts = fzf#vim#with_preview('right:40%')
+let s:preview_opts = 'right:40%'
 
 command! -bang -nargs=* Ag
   \ call fzf#vim#ag(<q-args>,
-  \                 s:preview_opts,
+  \                 fzf#vim#with_preview(s:preview_opts),
   \                 <bang>0)
 
 """ TODO: bang support
@@ -63,7 +63,7 @@ function! Agg_with_one_opt( ... )
   let s:opt = remove(s:args, 0)
   call fzf#vim#ag(join(s:args, ' '),
   \               s:opt,
-  \               s:preview_opts,
+  \               fzf#vim#with_preview(s:preview_opts),
   \               0)
 endfunction
 
@@ -71,7 +71,7 @@ function! Agg_with_opts( ... )
   let s:args = copy(a:000)
   call fzf#vim#ag('',
   \               join(a:000, ' '),
-  \               s:preview_opts,
+  \               fzf#vim#with_preview(s:preview_opts),
   \               0)
 endfunction
 
