@@ -38,7 +38,7 @@ let
       mpir
       nghttp2
       neovim
-      nodejs-11_x
+      nodejs-12_x
       cacert
       nix
       opam
