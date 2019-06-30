@@ -45,6 +45,7 @@ let
       pkgconfig
       python
       pythonPackages.pywatchman
+      procps
       rlwrap
       rustup
       silver-searcher
