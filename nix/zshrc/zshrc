@@ -105,12 +105,14 @@ export BOOT_JVM_OPTIONS="-client
 -XX:+CMSClassUnloadingEnabled
 -Xverify:none"
 
-alias sed=gsed
+# alias sed=gsed
 
 export V8_HOME="$HOME/.bin/v8"
 export SPIDERMONKEY_HOME="$HOME/.bin/spidermonkey"
 export DYLD_FRAMEWORK_PATH=/Applications/WebKit.app/Contents/Frameworks/10.12/
 export PATH=$PATH:~/.bin:/Applications/WebKit.app/Contents/Frameworks/10.12/JavaScriptCore.framework/Resources
+
+export JAVA_HOME=$(/usr/libexec/java_home)
 
 alias realpath=grealpath
 
@@ -144,3 +146,11 @@ capture() {
 }
 
 export PATH="$HOME/.wasmer/bin:$PATH"
+
+function changeMac() {
+  local mac=$(openssl rand -hex 6 | sed 's/\(..\)/\1:/g; s/.$//')
+  sudo ifconfig en0 ether $mac
+  sudo ifconfig en0 down
+  sudo ifconfig en0 up
+  echo "Your new physical address is $mac"
+}

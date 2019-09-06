@@ -22,7 +22,7 @@ let g:airline#extensions#reason#enabled = 1
 " Neoformat
 let g:neoformat_ocaml_ocamlformat = {
   \ 'exe': 'ocamlformat',
-  \ 'args': ['--disable-outside-detected-project', '--name', '"%:p"', '-'],
+  \ 'args': ['--name', '"%:p"', '-'],
   \ 'no_append': 1,
   \ 'stdin': 1,
   \ }

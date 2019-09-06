@@ -21,6 +21,7 @@ let
       # Nixpkgs index packages
       autoconf
       awscli
+      aws-iam-authenticator
       bat
       boot
       curl
@@ -49,7 +50,7 @@ let
       rlwrap
       rustup
       silver-searcher
-      terraform
+      terraform_0_12
       tmux
       tree
       vagrant
