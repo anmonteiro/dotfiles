@@ -11,3 +11,7 @@
 	gpgsign = true
 [gpg]
 	program = /Users/anmonteiro/.nix-profile/bin/gpg
+[color "diff"]
+	whitespace = bold red reverse
+[diff]
+	wserrorhighlight = all
