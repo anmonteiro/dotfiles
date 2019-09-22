@@ -9,15 +9,15 @@ in
   now = nodeEnv.buildNodePackage {
     name = "now";
     packageName = "now";
-    version = "16.1.2";
+    version = "16.2.0";
     src = fetchurl {
-      url = "https://registry.npmjs.org/now/-/now-16.1.2.tgz";
-      sha512 = "Wqbox4tfh1kglgKOOHRE49bsZoy1TMHsVSnrnEbC98LU+aXmuh853kKheyDXckqIaTGDAgs7HYV12ONgppLwUw==";
+      url = "https://registry.npmjs.org/now/-/now-16.2.0.tgz";
+      sha512 = "yzPtLJj7O1ngH3uNqEN6Eq3pR4rfBvq9qYRzG+whfhhQ8NA8molLwLVTPIlCLJuPu8zQnv48bJs2+EYs+n1NOA==";
     };
     buildInputs = globalBuildInputs;
     meta = {
       description = "The command-line interface for Now";
-      homepage = "https://github.com/zeit/now-cli#readme";
+      homepage = https://zeit.co/;
       license = "Apache-2.0";
     };
     production = true;
