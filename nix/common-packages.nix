@@ -57,11 +57,11 @@ let
   now = pkgs.callPackage ./now { inherit pkgs; };
   esy = pkgs.callPackage ./esy { inherit pkgs; };
   lumo = pkgs.callPackage ./lumo-cljs { inherit pkgs; };
-  openssl = import ./openssl { inherit pkgs; };
-  ffmpeg = import ./ffmpeg { inherit pkgs; };
-  gmp = import ./gmp { inherit pkgs; };
-  libffi = import ./libffi { inherit pkgs; };
-  libpng = import ./libpng { inherit pkgs; };
+  openssl = import ./openssl pkgs;
+  ffmpeg = import ./ffmpeg pkgs;
+  gmp = import ./gmp pkgs;
+  libffi = import ./libffi pkgs;
+  libpng = import ./libpng pkgs;
   zshrc = pkgs.callPackage ./zshrc { inherit pkgs; };
 
   # Git with config baked in
