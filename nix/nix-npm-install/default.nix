@@ -1,3 +1,4 @@
+# http://nicknovitski.com/nix-npm-install
 {writeScriptBin, pkgs}:
 let
   nix-npm-install = writeScriptBin "nix-npm-install" ''

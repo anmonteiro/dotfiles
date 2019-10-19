@@ -126,7 +126,6 @@ ppr() {
 
 alias vim=nvim
 alias ls=exa
-alias grep=egrep
 alias cat=bat
 
 export LADDER_LOG_LEVEL=error
@@ -144,8 +143,6 @@ capture() {
         }
     '
 }
-
-export PATH="$HOME/.wasmer/bin:$PATH"
 
 function changeMac() {
   local mac=$(openssl rand -hex 6 | sed 's/\(..\)/\1:/g; s/.$//')
