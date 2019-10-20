@@ -50,8 +50,8 @@ in
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; 
-    (import ./homies/common-packages.nix pkgs) ++ 
+  environment.systemPackages = with pkgs;
+    (import ./homies/common-packages.nix pkgs) ++
     [
       dmenu
       xlibs.xmodmap
@@ -70,6 +70,9 @@ in
     '';
     promptInit = "";
   };
+
+  programs.light.enable = true;
+
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -102,7 +105,7 @@ in
     enable = true;
     layout = "us";
     xkbOptions = "ctrl:nocaps";
-    
+
     windowManager = {
       xmonad = {
         enable = true;
@@ -117,7 +120,7 @@ in
     };
 
     displayManager = {
-      sessionCommands = with pkgs; lib.mkAfter 
+      sessionCommands = with pkgs; lib.mkAfter
         ''
 	xmodmap $HOME/.Xmodmap
 	'';
@@ -125,7 +128,15 @@ in
 
     desktopManager.default = "none";
   };
-  # services.xserver.xkbOptions = "eurosign:e";
+
+  services.actkbd = {
+    enable = true;
+    bindings = [
+      { keys = [ 224 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/light -U 10"; }
+      { keys = [ 225 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/light -A 10"; }
+    ];
+  };
+
 
   # Enable touchpad support.
   # services.xserver.libinput.enable = true;
@@ -139,7 +150,7 @@ in
      isNormalUser = true;
      home = "/home/anmonteiro";
      description = "Antonio Monteiro";
-     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+     extraGroups = [ "wheel" "video" ]; # Enable ‘sudo’ for the user.
      hashedPassword = "$6$FsHUqlBu4PPnYyA$e3uGB9b8gNIAE/D2II8o4pcdUFrSXhXYxtfVkrSZoE4KY.j1pZbEmXFn73/S8GWZPo7dNgCYobZWsbHMhsFdv1";
      shell = pkgs.zsh;
    };
