@@ -7,12 +7,12 @@ endif
 set runtimepath+=~/.cache/dein/repos/github.com/Shougo/dein.vim
 
 " Required:
-if dein#load_state('/Users/anmonteiro/.cache/dein')
-  call dein#begin('/Users/anmonteiro/.cache/dein')
+if dein#load_state($HOME . '/.cache/dein')
+  call dein#begin($HOME . '/.cache/dein')
 
   " Let dein manage dein
   " Required:
-  call dein#add('/Users/anmonteiro/.cache/dein/repos/github.com/Shougo/dein.vim')
+  call dein#add($HOME . '/.cache/dein/repos/github.com/Shougo/dein.vim')
 
   " Add or remove your plugins here:
   "  call dein#add('Shougo/neosnippet.vim')
@@ -108,7 +108,7 @@ function! SourceDirectory(file)
 endfunction
 " }
 
-call SourceDirectory('~/.config/nvim/customizations/')
+call SourceDirectory($HACK_CUSTOMIZATIONS_PATH)
 
 if has("gui_vimr")
   source ~/.config/nvim/ginit.vim

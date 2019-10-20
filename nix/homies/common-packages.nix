@@ -8,7 +8,7 @@ let
       nix-npm-install
       now.now
       esy.esy
-      lumo.lumo-cljs
+      # lumo.lumo-cljs
       openssl
       gmp
       libffi
@@ -40,6 +40,10 @@ let
       yarn
       zsh
       nix-zsh-completions
+
+      # GUIs
+      kitty
+      brave
     ];
 
   ## Some customizations
@@ -64,16 +68,30 @@ let
   #  });
 
   # Tmux with a custom tmux.conf baked in
-  #tmux = import ./tmux (with pkgs;
-  #  { inherit
-  #      makeWrapper
-  #      symlinkJoin
-  #      writeText
-  #      ;
-  #    tmux = pkgs.tmux;
-  #  });
+  tmux = import ./tmux (with pkgs;
+    { inherit
+        makeWrapper
+        symlinkJoin;
+      tmux = pkgs.tmux;
+    });
 
-  #snack = (import (fetch "snack")).snack-exe;
+  # Kitty with a custom kitty.conf baked in
+  kitty = import ./kitty (with pkgs;
+    { inherit
+        makeWrapper
+        symlinkJoin;
+      kitty = pkgs.kitty;
+    });
+
+  # Neovim with a custom configuration baked in the derivation
+  neovim = import ./nvim (with pkgs;
+    { inherit
+        makeWrapper
+        symlinkJoin
+	copyPathToStore;
+      neovim = pkgs.neovim;
+    });
+
 
   # Vim with a custom vimrc and set of packages
   #vim = import ./vim (with pkgs;
