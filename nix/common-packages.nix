@@ -11,7 +11,6 @@ let
       lumo.lumo-cljs
       openssl
       gmp
-      zshrc
       libffi
       ffmpeg
       libpng
@@ -40,11 +39,6 @@ let
       wget
       yarn
       zsh
-      oh-my-zsh
-      zsh-completions
-      zsh-syntax-highlighting
-      zsh-history-substring-search
-      zsh-autosuggestions
       nix-zsh-completions
     ];
 
@@ -62,7 +56,6 @@ let
   gmp = import ./gmp pkgs;
   libffi = import ./libffi pkgs;
   libpng = import ./libpng pkgs;
-  zshrc = pkgs.callPackage ./zshrc { inherit pkgs; };
 
   # Git with config baked in
   #git = import ./git (
