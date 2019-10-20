@@ -19,10 +19,15 @@ in
     ];
 
   # Use the systemd-boot EFI boot loader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.kernelPackages = pkgs.linuxPackages_latest;
-  boot.blacklistedKernelModules = [ "nouveau" ];
+  boot = {
+    loader = {
+      systemd-boot.enable = true;
+      efi.canTouchEfiVariables = true;
+
+    };
+    kernelPackages = pkgs.linuxPackages_latest;
+    blacklistedKernelModules = [ "nouveau" ];
+  };
 
   networking.hostName = "nixpad"; # Define your hostname.
   networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -94,8 +99,8 @@ in
   # services.printing.enable = true;
 
   # Enable sound.
-  # sound.enable = true;
-  # hardware.pulseaudio.enable = true;
+  sound.enable = true;
+  sound.mediaKeys.enable = true;
 
   # Clipboard
   services.clipmenu.enable = true;
@@ -109,12 +114,12 @@ in
     windowManager = {
       xmonad = {
         enable = true;
-	enableContribAndExtras = true;
-	extraPackages = haskellPackages: [
-	  haskellPackages.xmonad-contrib
-	  haskellPackages.xmonad-extras
-	  haskellPackages.xmonad
-	];
+        enableContribAndExtras = true;
+        extraPackages = haskellPackages: [
+          haskellPackages.xmonad-contrib
+          haskellPackages.xmonad-extras
+          haskellPackages.xmonad
+        ];
       };
       default = "xmonad";
     };
@@ -122,8 +127,8 @@ in
     displayManager = {
       sessionCommands = with pkgs; lib.mkAfter
         ''
-	xmodmap $HOME/.Xmodmap
-	'';
+          xmodmap $HOME/.Xmodmap
+        '';
     };
 
     desktopManager.default = "none";
@@ -132,8 +137,13 @@ in
   services.actkbd = {
     enable = true;
     bindings = [
-      { keys = [ 224 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/light -U 10"; }
-      { keys = [ 225 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/light -A 10"; }
+      # Brightness
+      { keys = [ 224 ];
+        events = [ "key" "rep" ];
+        command = "/run/current-system/sw/bin/light -U 10"; }
+      { keys = [ 225 ];
+        events = [ "key" "rep" ];
+        command = "/run/current-system/sw/bin/light -A 10"; }
     ];
   };
 
@@ -150,7 +160,7 @@ in
      isNormalUser = true;
      home = "/home/anmonteiro";
      description = "Antonio Monteiro";
-     extraGroups = [ "wheel" "video" ]; # Enable ‘sudo’ for the user.
+     extraGroups = [ "wheel" "audio" "video" ]; # Enable ‘sudo’ for the user.
      hashedPassword = "$6$FsHUqlBu4PPnYyA$e3uGB9b8gNIAE/D2II8o4pcdUFrSXhXYxtfVkrSZoE4KY.j1pZbEmXFn73/S8GWZPo7dNgCYobZWsbHMhsFdv1";
      shell = pkgs.zsh;
    };
