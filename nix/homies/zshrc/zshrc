@@ -112,7 +112,9 @@ export SPIDERMONKEY_HOME="$HOME/.bin/spidermonkey"
 export DYLD_FRAMEWORK_PATH=/Applications/WebKit.app/Contents/Frameworks/10.12/
 export PATH=$PATH:~/.bin:/Applications/WebKit.app/Contents/Frameworks/10.12/JavaScriptCore.framework/Resources
 
-export JAVA_HOME=$(/usr/libexec/java_home)
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  export JAVA_HOME=$(/usr/libexec/java_home)
+fi
 
 alias realpath=grealpath
 

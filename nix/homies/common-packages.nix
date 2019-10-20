@@ -43,7 +43,6 @@ let
 
       # GUIs
       kitty
-      brave
     ];
 
   ## Some customizations

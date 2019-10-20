@@ -55,6 +55,8 @@ in
     [
       dmenu
       xlibs.xmodmap
+
+      brave
     ];
 
   nixpkgs.config.allowUnfree = true;
