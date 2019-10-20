@@ -27,6 +27,7 @@ in
     };
     kernelPackages = pkgs.linuxPackages_latest;
     blacklistedKernelModules = [ "nouveau" ];
+    earlyVconsoleSetup = true;
   };
 
   networking.hostName = "nixpad"; # Define your hostname.
@@ -44,11 +45,12 @@ in
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
   # Select internationalisation properties.
-  # i18n = {
-  #   consoleFont = "Lat2-Terminus16";
-  #   consoleKeyMap = "us";
-  #   defaultLocale = "en_US.UTF-8";
-  # };
+  i18n = {
+    consoleFont = "Lat2-Terminus16";
+    consolePackages = with pkgs; [ terminus_font ];
+    consoleKeyMap = "us";
+    defaultLocale = "en_US.UTF-8";
+  };
 
   # Set your time zone.
   time.timeZone = "America/Los_Angeles";
@@ -58,6 +60,10 @@ in
   environment.systemPackages = with pkgs;
     (import ./homies/common-packages.nix pkgs) ++
     [
+      gcc
+      gnumake
+      binutils
+
       dmenu
       xlibs.xmodmap
 
@@ -111,6 +117,12 @@ in
     layout = "us";
     xkbOptions = "ctrl:nocaps";
 
+    # monitorSection = ''
+      # Modeline "2560x1440_60.00"  312.25  2560 2752 3024 3488  1440 1443 1448 1493 -hsync +vsync
+      # Option   "PreferredMode" "2560x1440_60.00"
+      # '';
+    dpi = 75;
+
     windowManager = {
       xmonad = {
         enable = true;
@@ -132,6 +144,25 @@ in
     };
 
     desktopManager.default = "none";
+  };
+
+  fonts = {
+    enableDefaultFonts = true;
+    fonts = with pkgs; [
+      fira-code
+      fira-code-symbols
+      noto-fonts
+      noto-fonts-cjk
+      noto-fonts-emoji
+      noto-fonts-extra
+    ];
+    fontconfig = {
+      defaultFonts = {
+        serif = ["Noto Serif"];
+        sansSerif = ["Noto Sans"];
+        monospace = [ "Fira Code" ];
+      };
+    };
   };
 
   services.actkbd = {
@@ -156,15 +187,15 @@ in
   # services.xserver.desktopManager.plasma5.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-   users.users.anmonteiro = {
-     isNormalUser = true;
-     home = "/home/anmonteiro";
-     description = "Antonio Monteiro";
-     extraGroups = [ "wheel" "audio" "video" ]; # Enable ‘sudo’ for the user.
-     hashedPassword = "$6$FsHUqlBu4PPnYyA$e3uGB9b8gNIAE/D2II8o4pcdUFrSXhXYxtfVkrSZoE4KY.j1pZbEmXFn73/S8GWZPo7dNgCYobZWsbHMhsFdv1";
-     shell = pkgs.zsh;
-   };
-   users.mutableUsers = false;
+  users.users.anmonteiro = {
+    isNormalUser = true;
+    home = "/home/anmonteiro";
+    description = "Antonio Monteiro";
+    extraGroups = [ "wheel" "audio" "video" ]; # Enable ‘sudo’ for the user.
+    hashedPassword = "$6$FsHUqlBu4PPnYyA$e3uGB9b8gNIAE/D2II8o4pcdUFrSXhXYxtfVkrSZoE4KY.j1pZbEmXFn73/S8GWZPo7dNgCYobZWsbHMhsFdv1";
+    shell = pkgs.zsh;
+  };
+  users.mutableUsers = false;
 
   # This value determines the NixOS release with which your system is to be
   # compatible, in order to avoid breaking some software such as database
@@ -174,3 +205,10 @@ in
 
 }
 
+# TODOs:
+# - suspend / hibernate
+# - bluetooth?
+# - webcam
+# - xmobar (+ conky?)
+# - screen lock
+# -
