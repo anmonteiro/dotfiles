@@ -1,4 +1,4 @@
-pkgs:
+{ pkgs, config ? null }:
 let
   # The list of packages to be installed
   # This setup is mostly based on https://github.com/nmattia/homies
@@ -86,9 +86,14 @@ let
   neovim = import ./nvim (with pkgs;
     { inherit
         makeWrapper
+        fetchurl
         symlinkJoin
-	copyPathToStore;
+        copyPathToStore
+        git
+        cacert
+        stdenv;
       neovim = pkgs.neovim;
+      inherit config;
     });
 
 

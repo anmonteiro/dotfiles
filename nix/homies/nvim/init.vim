@@ -3,16 +3,18 @@ if &compatible
   set nocompatible               " Be iMproved
 endif
 
-" Required:
-set runtimepath+=~/.cache/dein/repos/github.com/Shougo/dein.vim
+let b:cachePath = $NVIM_CONFIG_DEIN_CACHE
 
 " Required:
-if dein#load_state($HOME . '/.cache/dein')
-  call dein#begin($HOME . '/.cache/dein')
+exe 'set runtimepath+=' . b:cachePath . '/repos/github.com/Shougo/dein.vim'
+
+" Required:
+if dein#load_state(b:cachePath)
+  call dein#begin(b:cachePath)
 
   " Let dein manage dein
   " Required:
-  call dein#add($HOME . '/.cache/dein/repos/github.com/Shougo/dein.vim')
+  call dein#add(b:cachePath . '/repos/github.com/Shougo/dein.vim')
 
   " Add or remove your plugins here:
   "  call dein#add('Shougo/neosnippet.vim')
@@ -108,8 +110,5 @@ function! SourceDirectory(file)
 endfunction
 " }
 
-call SourceDirectory($HACK_CUSTOMIZATIONS_PATH)
+call SourceDirectory($NVIM_CONFIG_CUSTOMIZATIONS_PATH)
 
-if has("gui_vimr")
-  source ~/.config/nvim/ginit.vim
-endif
