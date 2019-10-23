@@ -7,10 +7,26 @@
 , copyPathToStore
 , fzf
 , fetchurl
-, config }:
+, config
+}:
 
 let
+  homeDir = if stdenv.isLinux then
+    config.users.users.anmonteiro.home
+  else
+    "/Users/anmonteiro";
   customizations = copyPathToStore ./customizations;
+
+  ftPlugin = stdenv.mkDerivation {
+    name = "ftPlugin";
+    src = ./ftplugin;
+    dontConfigure = true;
+    dontBuild = true;
+    installPhase = ''
+      mkdir -p $out/ftplugin
+      cp $src/* $out/ftplugin
+    '';
+  };
 
   vimPlug = stdenv.mkDerivation {
     name = "vim-plug";
@@ -35,15 +51,13 @@ let
 in
   symlinkJoin {
     name = "nvim";
-    buildInputs = [ makeWrapper cacert git ];
+    buildInputs = [ makeWrapper ];
     paths = [ neovim ];
-    NVIM_RPLUGIN_MANIFEST = "NONE";
     postBuild = ''
       wrapProgram "$out/bin/nvim" \
-        --add-flags "--cmd 'set rtp+=${vimPlug}' -u ${./init.vim}" \
+        --add-flags "--cmd 'set rtp+=${vimPlug},${ftPlugin}' -u ${./init.vim}" \
         --set NVIM_CONFIG_CUSTOMIZATIONS_PATH "${customizations}" \
-        --set NVIM_CONFIG_PLUGINS_PATH "$out/.config/nvim/plugged" \
+        --set NVIM_CONFIG_PLUGINS_PATH "${homeDir}/.config/nvim/plugged" \
         --set NVIM_CONFIG_FZF_PATH "${fzf}"
-      $out/bin/nvim --headless -i NONE -n +PlugInstall +qall
     '';
   }
