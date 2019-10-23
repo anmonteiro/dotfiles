@@ -89,6 +89,7 @@ let
         fetchurl
         symlinkJoin
         copyPathToStore
+        fzf
         git
         cacert
         stdenv;

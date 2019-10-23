@@ -5,57 +5,45 @@
 , makeWrapper
 , stdenv
 , copyPathToStore
+, fzf
 , fetchurl
 , config }:
 
 let
-  homeDir =
-    if stdenv.system == "x86_64-darwin" then
-      "/Users/anmonteiro"
-    else
-      config.users.users.anmonteiro.home;
+  customizations = copyPathToStore ./customizations;
 
-  cachePath = "${homeDir}/.cache/dein";
-
-  deinInstaller = stdenv.mkDerivation {
-    name = "dein";
+  vimPlug = stdenv.mkDerivation {
+    name = "vim-plug";
     src = fetchurl {
-      url = https://raw.githubusercontent.com/Shougo/dein.vim/916f755/bin/installer.sh;
-      sha256 = "605e0f86a1c7f6f63112c38973de4a3411eddec2c899d009d648548bb7a7a962";
-      executable = true;
+      url = https://raw.githubusercontent.com/junegunn/vim-plug/eee50c5/plug.vim;
+      sha256 = "161lkcdjgy2lbg2ld89p4h1pawd4m8s8rllvsp68rq0457ahynpl";
     };
-    buildInputs = [ git cacert ];
     unpackPhase = ''
-      mkdir -p $out/bin
-      cp $src $out/bin/installer.sh
+      mkdir -p $out/autoload
+      cp $src $out/autoload/plug.vim
     '';
     dontConfigure = true;
-    buildPhase = ''
-      mkdir $out/cache
-      env
-      pwd
-      ls $out/bin
-      $out/bin/installer.sh $out/cache
-    '';
-    installPhase = ''
-      rm -rf ${cachePath}
-      mkdir -p ${cachePath}
-
-      cp -R $out/cache/* ${cachePath}
-    '';
+    dontBuild = true;
+    dontInstall = true;
   };
 
-  customizations = copyPathToStore ./customizations;
+  # myNeovim = neovim.override {
+    # vimAlias = true;
+    # withPython = true;
+  # };
 
 in
   symlinkJoin {
     name = "nvim";
-    buildInputs = [ makeWrapper deinInstaller ];
+    buildInputs = [ makeWrapper cacert git ];
     paths = [ neovim ];
+    NVIM_RPLUGIN_MANIFEST = "NONE";
     postBuild = ''
       wrapProgram "$out/bin/nvim" \
-        --add-flags "-u ${./init.vim}" \
+        --add-flags "--cmd 'set rtp+=${vimPlug}' -u ${./init.vim}" \
         --set NVIM_CONFIG_CUSTOMIZATIONS_PATH "${customizations}" \
-        --set NVIM_CONFIG_DEIN_CACHE "${cachePath}"
+        --set NVIM_CONFIG_PLUGINS_PATH "$out/.config/nvim/plugged" \
+        --set NVIM_CONFIG_FZF_PATH "${fzf}"
+      $out/bin/nvim --headless -i NONE -n +PlugInstall +qall
     '';
   }

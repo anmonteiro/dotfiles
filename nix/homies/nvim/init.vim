@@ -1,104 +1,57 @@
-"dein Scripts-----------------------------
 if &compatible
   set nocompatible               " Be iMproved
 endif
 
-let b:cachePath = $NVIM_CONFIG_DEIN_CACHE
-
-" Required:
-exe 'set runtimepath+=' . b:cachePath . '/repos/github.com/Shougo/dein.vim'
-
-" Required:
-if dein#load_state(b:cachePath)
-  call dein#begin(b:cachePath)
-
-  " Let dein manage dein
-  " Required:
-  call dein#add(b:cachePath . '/repos/github.com/Shougo/dein.vim')
-
-  " Add or remove your plugins here:
-  "  call dein#add('Shougo/neosnippet.vim')
-  "  call dein#add('Shougo/neosnippet-snippets')
-  " call dein#add('morhetz/gruvbox')
+call plug#begin($NVIM_CONFIG_PLUGINS_PATH)
   """ Theming
-  call dein#add('vim-airline/vim-airline')
-  " call dein#add('vim-airline/vim-airline-themes')
-  call dein#add('jordwalke/vim-taste')
-  call dein#add('Yggdroot/indentLine')
+  Plug 'vim-airline/vim-airline'
+  " Plug 'vim-airline/vim-airline-themes'
+  Plug 'jordwalke/vim-taste'
+  Plug 'Yggdroot/indentLine'
 
   """ Editing
-  call dein#add('tpope/vim-surround')
-  call dein#add('jiangmiao/auto-pairs')
-  call dein#add('guns/vim-sexp')
-  call dein#add('tpope/vim-sexp-mappings-for-regular-people')
-  call dein#add('scrooloose/nerdcommenter')
-  call dein#add('vim-syntastic/syntastic')
-  call dein#add('luochen1990/rainbow', {
-    \ 'on_ft': ['lisp', 'dune', 'clojure'],
-    \ })
-  call dein#add('guns/vim-clojure-static', {
-    \ 'on_ft': ['clojure'],
-    \ })
+  Plug 'tpope/vim-surround'
+  Plug 'jiangmiao/auto-pairs'
+  Plug 'guns/vim-sexp'
+  Plug 'tpope/vim-sexp-mappings-for-regular-people'
+  Plug 'scrooloose/nerdcommenter'
+  Plug 'vim-syntastic/syntastic'
+  Plug 'luochen1990/rainbow', { 'for': ['lisp', 'dune', 'clojure'] }
+  Plug 'guns/vim-clojure-static', { 'for': 'clojure' }
 
   """ Automatic Formatting
-  call dein#add('sbdchd/neoformat')
+  Plug 'sbdchd/neoformat'
 
   """ Navigation
-  call dein#add('junegunn/fzf', { 'merged': 0 })
-  call dein#add('junegunn/fzf.vim', { 'depends': 'fzf' })
+  Plug $NVIM_CONFIG_FZF_PATH . '/share/vim-plugins/*'
+  Plug 'junegunn/fzf.vim'
 
   """ Git
-  call dein#add('mhinz/vim-signify')
-  call dein#add('jreybert/vimagit', { 'rev': 'next' })
-  call dein#add('tpope/vim-fugitive')
+  Plug 'mhinz/vim-signify'
+  Plug 'jreybert/vimagit', { 'branch': 'next' }
+  Plug 'tpope/vim-fugitive'
 
   """ OCaml / Reason
-  call dein#add('rgrinberg/vim-ocaml' , {
-    \ 'on_ft': ['ocaml', 'opam', 'dune'],
-    \ })
-  call dein#add('jordwalke/vim-reasonml' , {
-    \ 'on_ft': ['reason', 'ocaml'],
-    \ })
-  " call dein#add('reasonml-editor/vim-reason-plus')
-    " \ 'on_ft': ['reason', 'ocaml'],
-  " call dein#add('autozimu/LanguageClient-neovim', {
-    " \ 'rev': 'next',
-    " \ 'build': 'bash install.sh',
-    " \ 'on_ft': ['reason', 'ocaml'],
-    " \ })
+  Plug 'rgrinberg/vim-ocaml', {'for': ['ocaml', 'opam', 'dune'] }
+  Plug 'jordwalke/vim-reasonml', {'for': ['reason', 'ocaml'] }
 
   """ Clojure
-  call dein#add('tpope/vim-fireplace', {
-    \ 'on_ft': ['clojure'],
-    \ })
+  Plug 'tpope/vim-fireplace', {'for': 'clojure' }
 
   """ Nix
-  call dein#add('LnL7/vim-nix', {
-    \ 'on_ft': ['nix'],
-    \ })
+  Plug 'LnL7/vim-nix', { 'for': 'nix' }
+
+  """ MDX
+  Plug 'jxnblk/vim-mdx-js', { 'for': 'mdx' }
 
   " call dein#add('MartinLafreniere/vim-PairTools', {
     " \ 'on_ft': ['ocaml', 'reason', 'javascript', 'vim', 'sql'],
     " \})
-
-  " You can specify revision/branch/tag.
-  "call dein#add('Shougo/deol.nvim', { 'rev': '01203d4c9' })
-
-  " Required:
-  call dein#end()
-  call dein#save_state()
-endif
+call plug#end()
 
 " Required:
 filetype plugin indent on
 syntax enable
-
-" If you want to install not installed plugins on startup.
-if dein#check_install()
-  call dein#install()
-endif
-
-"End dein Scripts-------------------------
 
 " Function to source all .vim files in directory
 " (https://devel.tech/snippets/n/vIMvi29n/include-all-vim-files-in-a-directory)

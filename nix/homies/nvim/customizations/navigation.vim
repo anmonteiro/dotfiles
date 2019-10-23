@@ -47,6 +47,10 @@ let g:fzf_colors = {
   \ 'header':  ['fg', 'Comment']
   \ }
 
+" Don't show the status line when inside fzf
+autocmd! FileType fzf
+autocmd  FileType fzf set laststatus=0 noshowmode noruler
+  \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
 let s:preview_opts = 'right:40%'
 
 command! -bang -nargs=* Ag
