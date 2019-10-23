@@ -15,7 +15,8 @@ in
       ./hardware-configuration.nix
 
       # Include NixOS hardware quirks
-      "${nixos-hardware}/lenovo/thinkpad"
+      "${nixos-hardware}/lenovo/thinkpad/t480s"
+      "${nixos-hardware}/common/pc/laptop/ssd"
     ];
 
   # Use the systemd-boot EFI boot loader.
@@ -59,16 +60,7 @@ in
   # $ nix search wget
   environment.systemPackages = with pkgs;
     (import ./homies/common-packages.nix { inherit pkgs config; }) ++
-    [
-      gcc
-      gnumake
-      binutils
-
-      dmenu
-      xlibs.xmodmap
-
-      brave
-    ];
+    (import ./system-packages pkgs);
 
   nixpkgs.config.allowUnfree = true;
 
@@ -127,13 +119,15 @@ in
       xmonad = {
         enable = true;
         enableContribAndExtras = true;
-        extraPackages = haskellPackages: [
-          haskellPackages.xmonad-contrib
-          haskellPackages.xmonad-extras
-          haskellPackages.xmonad
+        extraPackages = haskellPackages: with haskellPackages; [
+          xmonad
+          xmonad-contrib
+          xmonad-extras
+          xmobar
         ];
+        config = builtins.readFile ./xmonad/xmonad.hs;
       };
-      default = "xmonad";
+    default = "xmonad";
     };
 
     displayManager = {
@@ -206,9 +200,11 @@ in
 }
 
 # TODOs:
-# - suspend / hibernate
 # - bluetooth?
 # - webcam
-# - xmobar (+ conky?)
+# - xmobar (+ conky? -- at least battery life)
 # - screen lock
-# -
+# - better wifi setup (nm-applet?)
+# - hibernation?
+# - f.lux lighting thing
+# - nvim with clipboard support

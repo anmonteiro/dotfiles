@@ -1,0 +1,21 @@
+Config
+  { border      = FullB
+  , borderColor = "#202020"
+  , font        = "xft:Fira Code:size=12:bold:antialias=true"
+  , position    = Top
+  -- Static { xpos = 0, ypos = 0, width = 2545, height = 20 }
+  , template    = "}%StdinReader%{%battery% %date%  "
+  , textOffset  = 14
+  , commands =
+    [ Run StdinReader
+    , Run BatteryP
+        ["BAT0", "BAT1"]
+        ["-t", "<acstatus>", "--"
+        ,"-O", "<left>%+ <fc=#aaffaa>|</fc>"
+        ,"-o", "<left>%- <fc=#aaffaa>|</fc>"
+        ,"-i", ""
+        ]
+        100
+    , Run Date "%A, %d %B %H:%M" "date" 100
+    ]
+}
