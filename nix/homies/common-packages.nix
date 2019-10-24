@@ -7,7 +7,7 @@ let
       # Customized packages
       nix-npm-install
       now.now
-      esy.esy
+      esy
       # lumo.lumo-cljs
       openssl
       gmp
@@ -51,9 +51,9 @@ let
   # command to install npm packages in the nix sandbox:
   nix-npm-install = pkgs.callPackage ./nix-npm-install {};
 
-  now = pkgs.callPackage ./now { inherit pkgs; };
-  esy = pkgs.callPackage ./esy { inherit pkgs; };
-  lumo = pkgs.callPackage ./lumo-cljs { inherit pkgs; };
+  now = pkgs.callPackage ./now { };
+  esy = pkgs.callPackage ./esy { };
+  lumo = pkgs.callPackage ./lumo-cljs { };
   openssl = import ./openssl pkgs;
   ffmpeg = import ./ffmpeg pkgs;
   gmp = import ./gmp pkgs;

@@ -23,9 +23,7 @@ let
     dontConfigure = true;
     dontBuild = true;
     installPhase = ''
-      ls $src
       mkdir -p $out/ftplugin
-      ls $out
       cp $src/* $out/ftplugin
     '';
   };
