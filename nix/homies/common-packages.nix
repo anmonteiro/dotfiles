@@ -52,7 +52,13 @@ let
   nix-npm-install = pkgs.callPackage ./nix-npm-install {};
 
   now = pkgs.callPackage ./now { };
-  esy = pkgs.callPackage ./esy { };
+  esy = pkgs.callPackage (pkgs.callPackage ./esy { }) {
+    githubInfo = {
+      owner = "anmonteiro";
+      rev= "2f40f56";
+      sha256="0bn2p5ac1nsmbb0yxb3sq75kd25003k5qgikjyafkvhmlgh03xih";
+    };
+  };
   lumo = pkgs.callPackage ./lumo-cljs { };
   openssl = import ./openssl pkgs;
   ffmpeg = import ./ffmpeg pkgs;

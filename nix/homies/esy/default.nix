@@ -1,8 +1,37 @@
-# nix-build -E 'with import <nixpkgs> { }; import ./nix/esy { inherit fetchFromGitHub opaline ocamlPackages stdenv perl; }'
+# nix-build -E  \
+#   'with import <nixpkgs> { };
+#    let esy = callPackage ./nix/esy{};
+#    in
+#    callPackage esy {
+#      githubInfo = {
+#        owner = "anmonteiro";
+#        rev= "2f40f56";
+#        sha256="0bn2p5ac1nsmbb0yxb3sq75kd25003k5qgikjyafkvhmlgh03xih";
+#      };
+#      npmInfo = {
+#        url = "https://registry.npmjs.org/@esy-nightly/0.6.0-8b3dfe";
+#        sha256 = "0rhbbg7rav68z5xwppx1ni8gjm6pcqf564nn1z6yrag3wgjgs63c";
+#      };
+#    }' \
+#  --pure
+
 { stdenv, fetchFromGitHub, ocamlPackages, opaline, perl }:
 
 let
-  esyVersion = "0.5.8";
+  currentVersion = "0.5.8";
+
+  currentGithubInfo = {
+    owner = "esy";
+    rev    = "v${currentVersion}";
+    sha256 = "0n2606ci86vqs7sm8icf6077h5k6638909rxyj43lh55ah33l382";
+  };
+
+in
+
+{ githubInfo ? currentGithubInfo, version ? currentVersion }:
+
+let
+  esyVersion = version;
 
   esyOcamlPkgs = ocamlPackages.overrideScope' (self: super: {
     cmdliner = super.cmdliner.overrideDerivation (old: {
@@ -157,6 +186,12 @@ let
     };
   };
 
+  # XXX(anmonteiro): The NPM registry doesn't allow us to fetch version
+  # information for scoped packages, and `@esy-nightly/esy` is scoped. It also
+  # seems that Esy only uses the `package.json` file to display the version
+  # information in `esy --version`, so we can kinda ignore this for now. We're
+  # able to build and install nightly releases but it'll always display the
+  # current version information.
   esyNpm = builtins.fetchurl {
     url = "https://registry.npmjs.org/esy/${esyVersion}";
     sha256 = "0rhbbg7rav68z5xwppx1ni8gjm6pcqf564nn1z6yrag3wgjgs63c";
@@ -170,15 +205,15 @@ let
 in
   esyOcamlPkgs.buildDunePackage rec {
     pname = "esy";
-    version = "0.5.8";
+    version = esyVersion;
 
     minimumOCamlVersion = "4.06";
 
     src = fetchFromGitHub {
-      owner  = "esy";
+      owner  = githubInfo.owner;
       repo   = pname;
-      rev    = "v${version}";
-      sha256 = "0n2606ci86vqs7sm8icf6077h5k6638909rxyj43lh55ah33l382";
+      rev    = githubInfo.rev;
+      sha256 = githubInfo.sha256;
     };
 
     propagatedBuildInputs = with esyOcamlPkgs; [
