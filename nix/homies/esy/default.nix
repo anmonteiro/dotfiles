@@ -1,21 +1,17 @@
 # nix-build -E  \
 #   'with import <nixpkgs> { };
-#    let esy = callPackage ./nix/esy{};
+#    let esy = callPackage ./nix/esy {};
 #    in
 #    callPackage esy {
 #      githubInfo = {
 #        owner = "anmonteiro";
-#        rev= "2f40f56";
-#        sha256="0bn2p5ac1nsmbb0yxb3sq75kd25003k5qgikjyafkvhmlgh03xih";
-#      };
-#      npmInfo = {
-#        url = "https://registry.npmjs.org/@esy-nightly/0.6.0-8b3dfe";
-#        sha256 = "0rhbbg7rav68z5xwppx1ni8gjm6pcqf564nn1z6yrag3wgjgs63c";
+#        rev= "42291a9";
+#        sha256="0mpjlbplhwgnhd12hykh1m5pjqsclax24dywhyl2nsgqlwchghs3";
 #      };
 #    }' \
 #  --pure
 
-{ stdenv, fetchFromGitHub, ocamlPackages, opaline, perl }:
+{ bash, binutils, coreutils, makeWrapper, stdenv, fetchFromGitHub, ocamlPackages, opaline, perl }:
 
 let
   currentVersion = "0.5.8";
@@ -216,7 +212,16 @@ in
       sha256 = githubInfo.sha256;
     };
 
-    propagatedBuildInputs = with esyOcamlPkgs; [
+    nativeBuildInputs = [
+      makeWrapper
+    ];
+
+    propagatedBuildInputs = [
+      coreutils
+      bash
+    ];
+
+    buildInputs = with esyOcamlPkgs; [
       angstrom
       cmdliner
       reason
@@ -279,6 +284,9 @@ in
     cp ${esySolveCudfNpm} $out/lib/node_modules/esy-solve-cudf/package.json
     cp ${esy-solve-cudf}/bin/esy-solve-cudf $out/lib/node_modules/esy-solve-cudf/esySolveCudfCommand.exe
 
+    # wrapProgram \
+      # $out/bin/esy \
+      # --set ESY__GLOBAL_PATH /usr/bin:${binutils}/bin:${coreutils}/bin:${bash}/bin
   '';
 
   meta = {
