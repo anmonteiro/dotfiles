@@ -53,7 +53,7 @@ myConfig = def
 
 myWorkspaces = ["1:work", "2:web", "3:etc", "4"]
 
-myXmobarPP xmobarPipe = defaultPP
+myXmobarPP xmobarPipe = def
   { ppCurrent         = pad . xmobarColor foregroundColor  ""
   , ppHidden          = pad . xmobarColor middleColor ""
   , ppHiddenNoWindows = pad . xmobarColor middleColor ""
@@ -75,7 +75,8 @@ xmobarCommand =
       where stringed x = "\"" ++ x ++ "\""
 
 -- with spacing
-myLayoutHook = (spacing 8 $ avoidStruts (tall ||| GridRatio (4/3) ||| Full )) ||| smartBorders Full
-                   where tall = Tall 1 (3/100) (1/2)
+myLayoutHook = ((spacingRaw False (Border 30 0 0 0) True (Border 0 0 0 0) False)
+                $ avoidStruts (tall ||| GridRatio (4/3) ||| Full ))
+  where tall = Tall 1 (3/100) (1/2)
 
 

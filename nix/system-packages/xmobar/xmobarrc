@@ -1,21 +1,76 @@
 Config
   { border      = FullB
   , borderColor = "#202020"
-  , font        = "xft:Fira Code:size=12:bold:antialias=true"
-  , position    = Top
-  -- Static { xpos = 0, ypos = 0, width = 2545, height = 20 }
-  , template    = "}%StdinReader%{%battery% %date%  "
-  , textOffset  = 14
-  , commands =
-    [ Run StdinReader
-    , Run BatteryP
-        ["BAT0", "BAT1"]
-        ["-t", "<acstatus>", "--"
-        ,"-O", "<left>%+ <fc=#aaffaa>|</fc>"
-        ,"-o", "<left>%- <fc=#aaffaa>|</fc>"
-        ,"-i", ""
-        ]
-        100
-    , Run Date "%A, %d %B %H:%M" "date" 100
+  , font        = "xft:Fira Code:size=14:bold:antialias=true"
+  , position    = TopSize C 100 30
+  template = "%StdinReader% }{ %enp0s31f6%%wlp4s0% %cpu% | %memory% | %bat0% %bat1% | Lum: %bright% | Vol: %voly% | <fc=#e6744c>%date%</fc>"
+  -- template = "%StdinReader% }{ %enp0s31f6%%wlp4s0% | %battery% | %cpu% | %memory% | %myvolume% | Lum: %mybright% | <fc=#e6744c>%date%</fc>"
+  , textOffset  = 20
+  , commands = [
+  -- Gather and format CPU usage information.
+    -- If it's above 50%, we consider it high usage and make it red.
+    Run Cpu [
+    "--template", "CPU: <total>%",
+    "-L", "3",
+    "-H", "50",
+    "--normal", "green",
+    "--high","red"
     ]
+    10,
+
+    Run Network "enp0s31f6" ["-L","0","-H","32","--normal","green","--high","red"] 10,
+    Run Network "wlp4s0" ["-L","0","-H","32","--normal","green","--high","red"] 10,
+
+    -- Gather and format memory usage information
+      Run Memory [
+      "-t","Mem: <usedratio>%"
+      ] 10,
+
+     Run Date "%A, %d %B %H:%M" "date" 100,
+
+     Run BatteryN ["BAT0"] [ "--template" , "Bat0: <acstatus>"
+       , "--Low"      , "10"        -- units: %
+       , "--High"     , "80"        -- units: %
+       , "--low"      , "darkred"
+       , "--normal"   , "darkorange"
+       , "--high"     , "darkgreen"
+
+       , "--" -- battery specific options
+       -- discharging status
+       , "-o", "<left>% (<timeleft>)"
+       -- AC "on" status
+       , "-O", "<fc=#dAA520>Charging <left>%</fc>"
+       -- charged status
+       , "-i", "<fc=#006000>Charged</fc>"
+     ] 50 "bat0",
+     Run BatteryN ["BAT1"] [ "--template" , "Bat1: <acstatus>"
+       , "--Low"      , "10"        -- units: %
+       , "--High"     , "80"        -- units: %
+       , "--low"      , "darkred"
+       , "--normal"   , "darkorange"
+       , "--high"     , "darkgreen"
+
+       , "--" -- battery specific options
+       -- discharging status
+       , "-o"	, "<left>% (<timeleft>)"
+       -- AC "on" status
+       , "-O"	, "<fc=#dAA520>Charging <left>%</fc>"
+       -- charged status
+       , "-i"	, "<fc=#006000>Charged</fc>"
+     ] 50 "bat1",
+        -- To get volume information, we run a custom bash script.
+        -- This is because the built-in volume support in xmobar is disabled
+        -- in Debian and derivatives like Ubuntu.
+        --Run Com "~/bin/get-volume.sh" [] "myvolume" 10,
+        -- /!\ https://github.com/jaor/xmobar/issues/127
+          -- Run Com "/bin/bash" ["-c", "~/.xmonad/get-volume.sh"]  "myvolume" 1,
+
+        Run Com "/bin/sh" ["-c", "echo `amixer sget Master | awk -F\"[][]\" '/dB/ { print $2 }'` `amixer sget Master | awk -F\"[][]\" '/dB/ { print $6 }'`"] "voly" 1,
+
+        Run Com "/bin/sh" ["-c", "echo `light -G | grep -oE '^.[0-9]{0,3}'`%"] "bright" 1,
+
+        -- This line tells xmobar to read input from stdin. That's how we
+        -- get the information that xmonad is sending it for display.
+        Run StdinReader
+  ]
 }

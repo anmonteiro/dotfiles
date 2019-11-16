@@ -165,10 +165,10 @@ in
       # Brightness
       { keys = [ 224 ];
         events = [ "key" "rep" ];
-        command = "/run/current-system/sw/bin/light -U 10"; }
+        command = "/run/current-system/sw/bin/light -U 5"; }
       { keys = [ 225 ];
         events = [ "key" "rep" ];
-        command = "/run/current-system/sw/bin/light -A 10"; }
+        command = "/run/current-system/sw/bin/light -A 5"; }
     ];
   };
 
