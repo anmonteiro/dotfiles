@@ -9,7 +9,10 @@ let
     xlibs.xmodmap
     xmobar
 
+    htop
+
     brave
+    discord
   ];
 
   xmobar = import ./xmobar (with pkgs;

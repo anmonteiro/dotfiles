@@ -31,15 +31,23 @@ in
     earlyVconsoleSetup = true;
   };
 
-  networking.hostName = "nixpad"; # Define your hostname.
-  networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+  networking = {
+    hostName = "nixpad";
+    wicd.enable = true;
+    # The global useDHCP flag is deprecated, therefore explicitly set to false
+    # here.  Per-interface useDHCP will be mandatory in the future, so this
+    # generated config replicates the default behaviour.
+    useDHCP = false;
 
-  # The global useDHCP flag is deprecated, therefore explicitly set to false here.
-  # Per-interface useDHCP will be mandatory in the future, so this generated config
-  # replicates the default behaviour.
-  networking.useDHCP = false;
-  networking.interfaces.enp0s31f6.useDHCP = true;
-  networking.interfaces.wlp4s0.useDHCP = true;
+    interfaces = {
+      # TODO(anmonteiro): not sure if this needs to be enabled, haven't
+      # connected an ethernet cable yet.
+      enp0s31f6.useDHCP = false;
+
+      # Disable DHCP for the WLAN interface, wicd takes care of it
+      wlp4s0.useDHCP = false;
+    };
+  };
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
@@ -201,10 +209,7 @@ in
 
 # TODOs:
 # - bluetooth?
-# - webcam
-# - xmobar (+ conky? -- at least battery life)
 # - screen lock
-# - better wifi setup (nm-applet?)
 # - hibernation?
 # - f.lux lighting thing
-# - nvim with clipboard support
+# - fingerprint sensor
