@@ -11,7 +11,29 @@ let
       ''
       source ${pkgs.zsh-syntax-highlighting}/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
       source ${pkgs.zsh-autosuggestions}/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-      #source ${pkgs.zsh-history-substring-search}/share/zsh-history-substring-search/zsh-history-substring-search.zsh
+      source ${pkgs.fzf}/share/fzf/key-bindings.zsh
+
+      # Only show 10 lines of results in FZF reverse-i-search
+      # FZF_DEFAULT_OPTS='--hidden'
+      for i in FZF_CTRL_R_OPTS FZF_ALT_C_OPTS FZF_CTRL_T_OPTS; do
+        export $i='--height 12'
+      done
+
+      # https://github.com/junegunn/fzf/blob/master/shell/key-bindings.zsh
+      for i in FZF_ALT_C_COMMAND FZF_CTRL_T_COMMAND; do
+        export $i="command find -L . -mindepth 1 \
+          \\( -path '*/\\.svn' \
+              -o -path '*/\\.git' \
+              -o -path '*/\\.hg' \
+              -o -fstype 'sysfs' \
+              -o -fstype 'devfs' \
+              -o -fstype 'devtmpfs' \
+              -o -fstype 'proc' \\) \
+          -prune \
+          -o -type f -print \
+          -o -type d -print \
+          -o -type l -print 2> /dev/null | cut -b3-"
+      done
       ''
     ]
     );
