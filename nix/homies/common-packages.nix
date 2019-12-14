@@ -28,7 +28,7 @@ let
       libev
       mpir
       neovim
-      nodejs-12_x
+      nodejs-13_x
       cacert
       opam
       pkgconfig
