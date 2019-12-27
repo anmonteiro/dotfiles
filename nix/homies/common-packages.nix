@@ -54,9 +54,9 @@ let
   now = pkgs.callPackage ./now { };
   esy = pkgs.callPackage (pkgs.callPackage ./esy { }) {
     githubInfo = {
-      owner = "anmonteiro";
-      rev= "2f40f56";
-      sha256="0bn2p5ac1nsmbb0yxb3sq75kd25003k5qgikjyafkvhmlgh03xih";
+      owner = "esy";
+      rev    = "95f9244";
+      sha256 = "128qbjad9583dssgw1mrpshbd9w6armjjg933pkhi0xaa7v0crqg";
     };
   };
   lumo = pkgs.callPackage ./lumo-cljs { };

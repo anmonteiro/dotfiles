@@ -1,11 +1,12 @@
+"
 " Language:     Reason
 " Description:  Vim ftplugin file for Reason
 
-if exists("b:finished_activating_merlin_for_buffer_successfully")
+if exists("b:finished_activating_merlin_for_buffer_successfully") && b:finished_activating_merlin_for_buffer_successfully
   finish
 endif
 
-if exists("b:doing_ftplugin")
+if exists("b:doing_ftplugin") && b:doing_ftplugin
   " Something had set ft=reason during the loading of this ftplugin/reason.vim
   " file! This happens if we lazily load plugins.
   finish
@@ -28,7 +29,8 @@ call esy#SetGlobalEsy()
 let b:doing_ftplugin = 1
 let b:merlin_env = {}
 
-let b:finished_activating_merlin_for_buffer_successfully = reason#LoadBuffer()
+" Don't need output from this function in case we're not in an Esy project.
+silent let b:finished_activating_merlin_for_buffer_successfully = reason#LoadBuffer()
 
 if !b:finished_activating_merlin_for_buffer_successfully
   if exists("*MerlinSelectBinary")
