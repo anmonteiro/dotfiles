@@ -14,7 +14,7 @@ autocmd InsertLeave * match ExtraWhitespace /\s\+$/
 autocmd BufWritePre * :%s/\s\+$//e
 
 " Share the system clipboard with yank / paste
-set clipboard=unnamed
+set clipboard^=unnamed,unnamedplus
 
 " Don't create swap files
 set noswapfile

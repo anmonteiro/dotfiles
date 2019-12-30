@@ -117,11 +117,14 @@ in
     layout = "us";
     xkbOptions = "ctrl:nocaps";
 
-    # monitorSection = ''
-      # Modeline "2560x1440_60.00"  312.25  2560 2752 3024 3488  1440 1443 1448 1493 -hsync +vsync
-      # Option   "PreferredMode" "2560x1440_60.00"
-      # '';
-    dpi = 75;
+    monitorSection = ''
+      Modeline "2432x1368_60.00"  280.25  2432 2608 2864 3296  1368 1371 1376 1418 -hsync +vsync
+      Modeline "2560x1440_60.00"  312.25  2560 2752 3024 3488  1440 1443 1448 1493 -hsync +vsync
+
+      Option   "PreferredMode" "2432x1368_60.00"
+      '';
+    # More is less
+    dpi = 100;
 
     windowManager = {
       xmonad = {
