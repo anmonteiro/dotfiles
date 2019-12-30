@@ -28,7 +28,13 @@ in
     };
     kernelPackages = pkgs.linuxPackages_latest;
     blacklistedKernelModules = [ "nouveau" ];
-    earlyVconsoleSetup = true;
+  };
+
+  console = {
+    earlySetup = true;
+    font = "Lat2-Terminus16";
+    packages = with pkgs; [ terminus_font ];
+    keyMap = "us";
   };
 
   networking = {
@@ -55,9 +61,6 @@ in
 
   # Select internationalisation properties.
   i18n = {
-    consoleFont = "Lat2-Terminus16";
-    consolePackages = with pkgs; [ terminus_font ];
-    consoleKeyMap = "us";
     defaultLocale = "en_US.UTF-8";
   };
 
@@ -138,7 +141,6 @@ in
         ];
         config = builtins.readFile ./xmonad/xmonad.hs;
       };
-    default = "xmonad";
     };
 
     displayManager = {
@@ -146,9 +148,9 @@ in
         ''
           xmodmap $HOME/.Xmodmap
         '';
-    };
 
-    desktopManager.default = "none";
+      defaultSession = "none+xmonad";
+    };
   };
 
   fonts = {
