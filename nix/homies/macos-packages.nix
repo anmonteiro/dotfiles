@@ -5,6 +5,8 @@ let
     git-lfs
     kubernetes
     nix
+    opam
+    pkgconfig
     python
     pythonPackages.pywatchman
     terraform_0_12

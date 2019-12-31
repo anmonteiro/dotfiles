@@ -25,13 +25,10 @@ let
       go
       gnupg
       jq
-      libev
       mpir
       neovim
       nodejs-13_x
       cacert
-      opam
-      pkgconfig
       procps
       silver-searcher
       tmux

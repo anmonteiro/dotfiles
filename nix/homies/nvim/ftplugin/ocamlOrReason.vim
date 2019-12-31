@@ -36,12 +36,22 @@ if !b:finished_activating_merlin_for_buffer_successfully
   if exists("*MerlinSelectBinary")
     delfunction MerlinSelectBinary
   endif
-  let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
-  let ocamlmerlinRtp = g:opamshare . "/merlin/vim"
-  let g:plugs_reasonPluginLoader={}
-  let g:plugs_reasonPluginLoader['merlin'] = {'dir': (ocamlmerlinRtp)}
-  call call(function("ReasonPluginLoaderLoad"), keys(g:plugs_reasonPluginLoader))
-  execute "set rtp+=".ocamlmerlinRtp
+
+  if executable('opam')
+    let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
+    let b:ocamlmerlinRtp = g:opamshare . "/merlin/vim"
+  elseif executable('ocamlmerlin')
+    let merlinBin = substitute(system('which ocamlmerlin'),'\n$','','''')
+    let merlinBase = fnamemodify(merlinBin, ':p:h:h')
+    let b:ocamlmerlinRtp = merlinBase . "/share/merlin/vim"
+  endif
+
+  if exists("b:ocamlmerlinRtp")
+    let g:plugs_reasonPluginLoader={}
+    let g:plugs_reasonPluginLoader['merlin'] = {'dir': (b:ocamlmerlinRtp)}
+    call call(function("ReasonPluginLoaderLoad"), keys(g:plugs_reasonPluginLoader))
+    execute "set rtp+=".b:ocamlmerlinRtp
+  endif
 endif
 
 " WARNING DO NOT EARLY RETURN
