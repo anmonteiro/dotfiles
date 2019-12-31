@@ -74,7 +74,7 @@ in
   # $ nix search wget
   environment.systemPackages = with pkgs;
     (import ./homies/common-packages.nix { inherit pkgs config; }) ++
-    (import ./system-packages pkgs);
+    (import ./system-packages { inherit pkgs; });
 
   programs.zsh = {
     enable = true;
