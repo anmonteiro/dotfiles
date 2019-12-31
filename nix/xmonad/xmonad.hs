@@ -51,7 +51,7 @@ myConfig = def
   , workspaces         = myWorkspaces
   }
 
-myWorkspaces = ["1:work", "2:web", "3:etc", "4"]
+myWorkspaces = ["1:work", "2:web", "3:msg", "4", "5", "6"]
 
 myXmobarPP xmobarPipe = def
   { ppCurrent         = pad . xmobarColor foregroundColor  ""
@@ -78,5 +78,4 @@ xmobarCommand =
 myLayoutHook = ((spacingRaw False (Border 30 0 0 0) True (Border 0 0 0 0) False)
                 $ avoidStruts (tall ||| GridRatio (4/3) ||| Full ))
   where tall = Tall 1 (3/100) (1/2)
-
 

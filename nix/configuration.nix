@@ -2,12 +2,13 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, system, ... }:
+{ config, options, pkgs, system, ... }:
 
-let nixos-hardware = builtins.fetchTarball {
-  url = "https://github.com/NixOS/nixos-hardware/archive/master/master.tar.gz";
-};
-
+let
+  nixos-hardware =
+    builtins.fetchTarball https://github.com/NixOS/nixos-hardware/archive/master/master.tar.gz;
+  overlays =
+    builtins.fetchTarball https://github.com/anmonteiro/nix-overlays/archive/master.tar.gz;
 in
 {
   imports =
@@ -18,6 +19,12 @@ in
       "${nixos-hardware}/lenovo/thinkpad/t480s"
       "${nixos-hardware}/common/pc/laptop/ssd"
     ];
+
+  nixpkgs = {
+    config.allowUnfree = true;
+
+    overlays = [ (import overlays) ];
+  };
 
   # Use the systemd-boot EFI boot loader.
   boot = {
@@ -55,10 +62,6 @@ in
     };
   };
 
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-
   # Select internationalisation properties.
   i18n = {
     defaultLocale = "en_US.UTF-8";
@@ -72,8 +75,6 @@ in
   environment.systemPackages = with pkgs;
     (import ./homies/common-packages.nix { inherit pkgs config; }) ++
     (import ./system-packages pkgs);
-
-  nixpkgs.config.allowUnfree = true;
 
   programs.zsh = {
     enable = true;
@@ -121,13 +122,15 @@ in
     xkbOptions = "ctrl:nocaps";
 
     monitorSection = ''
+      Modeline "2176x1224_60.00"  222.75  2176 2320 2552 2928  1224 1227 1232 1269 -hsync +vsync
       Modeline "2432x1368_60.00"  280.25  2432 2608 2864 3296  1368 1371 1376 1418 -hsync +vsync
       Modeline "2560x1440_60.00"  312.25  2560 2752 3024 3488  1440 1443 1448 1493 -hsync +vsync
 
-      Option   "PreferredMode" "2432x1368_60.00"
+      Option   "PreferredMode" "2176x1224_60.00"
       '';
-    # More is less
-    dpi = 100;
+
+    # More is bigger
+    dpi = 75;
 
     windowManager = {
       xmonad = {
@@ -209,7 +212,29 @@ in
   # servers. You should change this only after NixOS release notes say you
   # should.
   system.stateVersion = "19.09"; # Did you read the comment?
+  system.autoUpgrade.channel = "https://nixos.org/channels/nixos-unstable";
 
+  environment.etc."nixos/overlays-compat/overlays.nix" = {
+    text = ''
+self: super:
+with super.lib;
+let
+  # Using the nixos plumbing that's used to evaluate the config...
+  eval = import <nixpkgs/nixos/lib/eval-config.nix>;
+  # Evaluate the config,
+  paths = (eval {modules = [(import <nixos-config>)];})
+    # then get the `nixpkgs.overlays` option.
+    .config.nixpkgs.overlays
+  ;
+in
+foldl' (flip extends) (_: super) paths self
+    '';
+  };
+  nix.nixPath =
+    # Prepend default nixPath values.
+    options.nix.nixPath.default ++
+    # Append our nixpkgs-overlays.
+    [ "nixpkgs-overlays=/etc/nixos/overlays-compat/" ];
 }
 
 # TODOs:
