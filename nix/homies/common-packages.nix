@@ -7,13 +7,8 @@ let
       # Customized packages
       nix-npm-install
       now.now
-      esy
       # lumo.lumo-cljs
-      openssl
-      gmp
-      libffi
       ffmpeg
-      libpng
 
       # Nixpkgs index packages
       awscli
@@ -49,13 +44,6 @@ let
   nix-npm-install = pkgs.callPackage ./nix-npm-install {};
 
   now = pkgs.callPackage ./now { };
-  esy = pkgs.callPackage (pkgs.callPackage ./esy { }) {
-    githubInfo = {
-      owner = "esy";
-      rev    = "95f9244";
-      sha256 = "128qbjad9583dssgw1mrpshbd9w6armjjg933pkhi0xaa7v0crqg";
-    };
-  };
   lumo = pkgs.callPackage ./lumo-cljs { };
   openssl = import ./openssl pkgs;
   ffmpeg = import ./ffmpeg pkgs;
