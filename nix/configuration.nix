@@ -22,7 +22,6 @@ in
 
   nixpkgs = {
     config.allowUnfree = true;
-
     overlays = [ (import overlays) ];
   };
 
@@ -230,11 +229,15 @@ in
 foldl' (flip extends) (_: super) paths self
     '';
   };
-  nix.nixPath =
+
+  nix = {
+    trustedUsers = [ "root" "@wheel" ];
+    nixPath =
     # Prepend default nixPath values.
     options.nix.nixPath.default ++
     # Append our nixpkgs-overlays.
     [ "nixpkgs-overlays=/etc/nixos/overlays-compat/" ];
+  };
 }
 
 # TODOs:

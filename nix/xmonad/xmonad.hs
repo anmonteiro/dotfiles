@@ -18,7 +18,10 @@ import XMonad.Layout.MultiToggle
 import XMonad.Util.CustomKeys
 import XMonad.Util.Run
 
+import Graphics.X11.Types (xK_Print)
+
 import Data.List
+import qualified Data.Map as M
 
 main :: IO ()
 main = do
@@ -49,9 +52,15 @@ myConfig = def
   , manageHook         = manageDocks
   -- , normalBorderColor  = middleColor
   , workspaces         = myWorkspaces
+  , keys          = \c -> myKeys c `M.union` keys def c
   }
 
 myWorkspaces = ["1:work", "2:web", "3:msg", "4", "5", "6"]
+
+myKeys (XConfig {modMask = modm}) = M.fromList $
+  [ ((0, xK_Print), spawn "maim -s \"/tmp/screenshot-$(date -Iseconds).png\"")
+  -- ((modm , xK_x), spawn "xlock")
+  ]
 
 myXmobarPP xmobarPipe = def
   { ppCurrent         = pad . xmobarColor foregroundColor  ""
