@@ -117,18 +117,11 @@ in
   # Enable the X11 windowing system.
   services.xserver = {
     enable = true;
+    videoDrivers = [ "intel" ];
     layout = "us";
     xkbOptions = "ctrl:nocaps";
 
-    monitorSection = ''
-      Modeline "2176x1224_60.00"  222.75  2176 2320 2552 2928  1224 1227 1232 1269 -hsync +vsync
-      Modeline "2432x1368_60.00"  280.25  2432 2608 2864 3296  1368 1371 1376 1418 -hsync +vsync
-      Modeline "2560x1440_60.00"  312.25  2560 2752 3024 3488  1440 1443 1448 1493 -hsync +vsync
-
-      Option   "PreferredMode" "2176x1224_60.00"
-      '';
-
-    # More is bigger
+    # Higher is bigger
     dpi = 75;
 
     windowManager = {
@@ -153,6 +146,14 @@ in
 
       defaultSession = "none+xmonad";
     };
+  };
+
+  systemd.user.services.scaleDispaly = {
+    script = ''
+      ${pkgs.xorg.xrandr}/bin/xrandr --output eDP1 --scale-from 2176x1224
+    '';
+    wantedBy = [ "graphical-session.target" ];
+    partOf = [ "graphical-session.target" ];
   };
 
   fonts = {
@@ -231,6 +232,11 @@ foldl' (flip extends) (_: super) paths self
   };
 
   nix = {
+    gc = {
+      automatic = true;
+      options = "--delete-older-than 3d";
+    };
+
     trustedUsers = [ "root" "@wheel" ];
     nixPath =
     # Prepend default nixPath values.

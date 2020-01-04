@@ -52,11 +52,11 @@ Config
 
        , "--" -- battery specific options
        -- discharging status
-       , "-o"	, "<left>% (<timeleft>)"
+       , "-o", "<left>% (<timeleft>)"
        -- AC "on" status
-       , "-O"	, "<fc=#dAA520>Charging <left>%</fc>"
+       , "-O", "<fc=#dAA520>Charging <left>%</fc>"
        -- charged status
-       , "-i"	, "<fc=#006000>Charged</fc>"
+       , "-i", "<fc=#006000>Charged</fc>"
      ] 50 "bat1",
         -- To get volume information, we run a custom bash script.
         -- This is because the built-in volume support in xmobar is disabled
