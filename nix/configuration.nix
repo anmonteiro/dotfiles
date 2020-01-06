@@ -5,15 +5,24 @@
 { config, options, pkgs, system, ... }:
 
 let
-  nixos-hardware =
-    builtins.fetchTarball https://github.com/NixOS/nixos-hardware/archive/master/master.tar.gz;
-  overlays =
-    builtins.fetchTarball https://github.com/anmonteiro/nix-overlays/archive/master.tar.gz;
+  nixos-hardware = builtins.fetchTarball {
+    url = https://github.com/NixOS/nixos-hardware/archive/89c4ddb.tar.gz;
+    sha256 = "1a0mplnj0zx33f4lm7kwg6z6iwgdkg2pxy58plkj6w59ibfl2l27";
+  };
+
+  overlays = builtins.fetchTarball {
+    url = https://github.com/anmonteiro/nix-overlays/archive/d2d883d84.tar.gz;
+    sha256 = "1raq4wnv8h0v23kar79hra6xffkfl281zw4vzvyfr1fwgwwk7bx3";
+  };
+
 in
 {
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+
+      # Cachix config for anmonteiro.cachix.org
+      ./cachix.nix
 
       # Include NixOS hardware quirks
       "${nixos-hardware}/lenovo/thinkpad/t480s"
