@@ -25,6 +25,7 @@ call plug#begin($NVIM_CONFIG_PLUGINS_PATH)
   """ Navigation
   Plug $NVIM_CONFIG_FZF_PATH . '/share/vim-plugins/*'
   Plug 'junegunn/fzf.vim'
+  Plug 'christoomey/vim-tmux-navigator'
 
   """ Git
   Plug 'mhinz/vim-signify'
