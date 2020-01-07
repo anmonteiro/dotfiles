@@ -10,8 +10,20 @@ highlight ExtraWhitespace ctermbg=red guibg=red
 match ExtraWhitespace /\s\+$/
 autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
 autocmd InsertLeave * match ExtraWhitespace /\s\+$/
+
 " Delete trailing whitespace on save
-autocmd BufWritePre * :%s/\s\+$//e
+function! <SID>StripTrailingWhitespaces()
+    let l = line(".")
+    let c = col(".")
+    %s/\s\+$//e
+    " Delete the last entry from the search history, which is the substitution
+    " command
+    call histdel("search", -1)
+    let @/ = histget("search", -1)
+    call cursor(l, c)
+endfun
+
+autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
 
 " Share the system clipboard with yank / paste
 set clipboard^=unnamed,unnamedplus
