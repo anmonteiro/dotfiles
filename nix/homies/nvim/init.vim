@@ -18,6 +18,7 @@ call plug#begin($NVIM_CONFIG_PLUGINS_PATH)
   Plug 'vim-syntastic/syntastic'
   Plug 'luochen1990/rainbow', { 'for': ['lisp', 'dune', 'clojure'] }
   Plug 'guns/vim-clojure-static', { 'for': 'clojure' }
+  Plug 'vim-scripts/ShowTrailingWhitespace'
 
   """ Automatic Formatting
   Plug 'sbdchd/neoformat'

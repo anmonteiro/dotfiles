@@ -5,12 +5,6 @@ set hidden
 "   logical, but not Vi-compatible) use ":map Y y$".
 map Y y$
 
-" highlight trailing whitespace
-highlight ExtraWhitespace ctermbg=red guibg=red
-match ExtraWhitespace /\s\+$/
-autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
-autocmd InsertLeave * match ExtraWhitespace /\s\+$/
-
 " Delete trailing whitespace on save
 function! <SID>StripTrailingWhitespaces()
     let l = line(".")

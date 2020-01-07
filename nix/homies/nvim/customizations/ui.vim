@@ -134,3 +134,8 @@ highlight SignColumn ctermbg=NONE guibg=NONE
 
 """ Indent Guides
 let g:indentLine_char = '│'
+
+" ShowTrailingWhitespace plugin config. Set the trailing whitespace matchin to
+" red
+highlight TrailingWhitespaceError ctermbg=red cterm=bold guibg=red
+highlight! link ShowTrailingWhitespace TrailingWhitespaceError
