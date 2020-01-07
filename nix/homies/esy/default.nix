@@ -11,10 +11,15 @@
 #    }' \
 #  --pure
 
-{ bash, binutils, coreutils, makeWrapper, stdenv, fetchFromGitHub, ocamlPackages, opaline, perl }:
+{ callPackage, bash, binutils, coreutils, makeWrapper, lib, fetchFromGitHub, ocamlPackages }:
 
 let
   currentVersion = "0.5.8";
+
+  overlays = builtins.fetchTarball {
+    url = https://github.com/anmonteiro/nix-overlays/archive/4526c2d.tar.gz;
+    sha256 = "10ij9cxb3k3yrhp41gwra69c3z3yr59an2avvchjdlqjkrgzy45n";
+  };
 
   currentGithubInfo = {
     owner = "esy";
@@ -29,7 +34,9 @@ in
 let
   esyVersion = version;
 
-  esyOcamlPkgs = ocamlPackages.overrideScope' (self: super: {
+  esyOcamlPkgs = ocamlPackages.overrideScope'  (self: super:
+  ((callPackage "${overlays}/ocaml" {}) self super) //
+  {
     cmdliner = super.cmdliner.overrideDerivation (old: {
       src = builtins.fetchurl {
         url = https://github.com/esy-ocaml/cmdliner/archive/8500634a96019c4d29b1751628025b693f2b97d6.tar.gz;
@@ -38,115 +45,6 @@ let
       createFindlibDestdir = true;
     });
   });
-
-  opam-lib = { pname, deps }: stdenv.mkDerivation rec {
-    name = pname;
-    version = "2.0.5";
-    buildInputs = with esyOcamlPkgs; [
-      ocaml
-      findlib
-      dune
-    ];
-    propagatedBuildInputs = deps;
-    src = fetchFromGitHub {
-      owner  = "ocaml";
-      repo   = "opam";
-      rev    = "${version}";
-      sha256 = "0pf2smq2sdcxryq5i87hz3dv05pb3zasb1is3kxq1pi1s4cn55mx";
-    };
-    configurePhase = ''
-      ./configure --disable-checks
-    '';
-    buildPhase = ''
-      make ${name}.install
-    '';
-    installPhase = ''
-      runHook preInstall
-      ${opaline}/bin/opaline -prefix $out -libdir $OCAMLFIND_DESTDIR
-      runHook postInstall
-    '';
-  };
-
-  opam-core = opam-lib {
-    pname= "opam-core";
-    deps = with esyOcamlPkgs; [
-      ocamlgraph
-      re
-      cppo
-    ];
-  };
-
-  opam-format = opam-lib {
-    pname = "opam-format";
-    deps = with esyOcamlPkgs; [
-      opam-file-format
-      opam-core
-    ];
-  };
-
-  opam-repository = opam-lib {
-    pname = "opam-repository";
-    deps = with esyOcamlPkgs; [
-      opam-format
-    ];
-  };
-
-  opam-state = opam-lib {
-    pname = "opam-state";
-    deps = with esyOcamlPkgs; [
-      opam-repository
-    ];
-  };
-
-  cudf = stdenv.mkDerivation rec {
-    name = "cudf";
-    buildInputs = with esyOcamlPkgs; [
-      ocaml
-      ocamlbuild
-      # for pod2man
-      perl
-      findlib
-    ];
-    propagatedBuildInputs = with esyOcamlPkgs; [ ocaml_extlib ];
-    src = builtins.fetchTarball {
-      url = https://gforge.inria.fr/frs/download.php/36602/cudf-0.9.tar.gz;
-      sha256 = "12p8aap34qsg1hcjkm79ak3n4b8fm79iwapi1jzjpw32jhwn6863";
-    };
-    buildPhase = ''
-      make all opt
-    '';
-    patchPhase = "sed -i s@/usr/@$out/@ Makefile.config";
-    createFindlibDestdir = true;
-  };
-
-  dose3 = stdenv.mkDerivation {
-    name = "dose";
-    src = builtins.fetchurl {
-      url = "http://gforge.inria.fr/frs/download.php/file/36063/dose3-5.0.1.tar.gz";
-      sha256 = "00yvyfm4j423zqndvgc1ycnmiffaa2l9ab40cyg23pf51qmzk2jm";
-    };
-    buildInputs = with esyOcamlPkgs; [
-      ocaml
-      findlib
-      ocamlbuild
-      cppo
-      perl
-    ];
-    propagatedBuildInputs = with esyOcamlPkgs; [
-      cudf
-      ocaml_extlib
-      ocamlgraph
-      re
-    ];
-    createFindlibDestdir = true;
-    patches = [
-      ./patches/0001-Install-mli-cmx-etc.patch
-      ./patches/0002-dont-make-printconf.patch
-      ./patches/0003-Fix-for-ocaml-4.06.patch
-      ./patches/0004-Add-unix-as-dependency-to-dose3.common-in-META.in.patch
-      ./patches/dose.diff
-    ];
-  };
 
   esy-solve-cudf = esyOcamlPkgs.buildDunePackage rec {
     pname = "esy-solve-cudf";
@@ -178,7 +76,7 @@ let
     meta = {
       homepage = https://github.com/andreypopp/esy-solve-cudf;
       description = "package.json workflow for native development with Reason/OCaml";
-      license = stdenv.lib.licenses.gpl3;
+      license = lib.licenses.gpl3;
     };
   };
 
@@ -292,6 +190,6 @@ in
   meta = {
     homepage = https://github.com/esy/esy;
     description = "package.json workflow for native development with Reason/OCaml";
-    license = stdenv.lib.licenses.bsd2;
+    license = lib.licenses.bsd2;
   };
 }
