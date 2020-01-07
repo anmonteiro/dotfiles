@@ -85,7 +85,6 @@ function! Agg_with_one_opt( ... )
 endfunction
 
 function! Agg_with_opts( ... )
-  let s:args = copy(a:000)
   call fzf#vim#ag('',
   \               join(a:000, ' '),
   \               fzf#vim#with_preview(s:preview_opts),
@@ -93,3 +92,13 @@ function! Agg_with_opts( ... )
 endfunction
 
 nnoremap <silent> <C-x> <Esc>:Agg<space>
+
+" git push --set-upstream origin `current_branch`
+function! Gpsup()
+  let l:symbolicRef = substitute(system('git symbolic-ref --quiet HEAD'),'\n$','','''')
+  let l:currentBranch = substitute(g:symbolicRef, '^refs/heads/', '', '''')
+
+  execute 'Gpush --set-upstream origin ' . l:currentBranch
+endfunction
+
+command! Gpsup call Gpsup()
