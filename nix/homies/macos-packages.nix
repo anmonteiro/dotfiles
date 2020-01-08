@@ -15,6 +15,7 @@ let
     zshrc # Installed via `configuration.nix` with native support on Linux
 
     esy
+    cachix
 
     openssl
     gmp
@@ -22,6 +23,9 @@ let
     libpng
   ];
 
+  cachixSource = fetchTarball { url = "https://cachix.org/api/v1/install"; };
+
+  cachix = (import cachixSource {}).cachix;
   zshrc = pkgs.callPackage ./zshrc { inherit pkgs; };
   esy = pkgs.callPackage (pkgs.callPackage ./esy { }) {
     githubInfo = {
