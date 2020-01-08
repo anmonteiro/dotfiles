@@ -96,7 +96,7 @@ nnoremap <silent> <C-x> <Esc>:Agg<space>
 " git push --set-upstream origin `current_branch`
 function! Gpsup()
   let l:symbolicRef = substitute(system('git symbolic-ref --quiet HEAD'),'\n$','','''')
-  let l:currentBranch = substitute(g:symbolicRef, '^refs/heads/', '', '''')
+  let l:currentBranch = substitute(l:symbolicRef, '^refs/heads/', '', '''')
 
   execute 'Gpush --set-upstream origin ' . l:currentBranch
 endfunction
