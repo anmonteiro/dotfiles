@@ -11,6 +11,8 @@ let
     xmobar
 
     htop
+    unrar
+    mpv
 
     brave
     discord

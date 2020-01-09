@@ -157,14 +157,6 @@ in
     };
   };
 
-  systemd.user.services.scaleDispaly = {
-    script = ''
-      ${pkgs.xorg.xrandr}/bin/xrandr --output eDP1 --scale-from 2176x1224
-    '';
-    wantedBy = [ "graphical-session.target" ];
-    partOf = [ "graphical-session.target" ];
-  };
-
   fonts = {
     enableDefaultFonts = true;
     fonts = with pkgs; [
@@ -176,6 +168,9 @@ in
       noto-fonts-extra
     ];
     fontconfig = {
+      # This sets Xft.dpi, which kitty reads from.
+      # https://github.com/kovidgoyal/kitty/issues/109#issuecomment-320554447
+      dpi = 75;
       defaultFonts = {
         serif = ["Noto Serif"];
         sansSerif = ["Noto Sans"];
