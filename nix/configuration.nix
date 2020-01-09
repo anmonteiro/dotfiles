@@ -218,6 +218,9 @@ in
   system.stateVersion = "19.09"; # Did you read the comment?
   system.autoUpgrade.channel = "https://nixos.org/channels/nixos-unstable";
 
+  # Only use 1GB of logs max for journald
+  services.journald.extraConfig = "SystemMaxUse=1G";
+
   environment.etc."nixos/overlays-compat/overlays.nix" = {
     text = ''
 self: super:
