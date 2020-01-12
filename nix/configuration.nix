@@ -10,13 +10,9 @@ let
     sha256 = "1a0mplnj0zx33f4lm7kwg6z6iwgdkg2pxy58plkj6w59ibfl2l27";
   };
 
-  # For some reason just using path concatenation started failing with "not
-  # allowed to refer to a store path". Should revisit this.
-  nixos-hardware-path = builtins.unsafeDiscardStringContext "${nixos-hardware}";
-
   overlays = builtins.fetchTarball {
-    url = https://github.com/anmonteiro/nix-overlays/archive/d2d883d84.tar.gz;
-    sha256 = "1raq4wnv8h0v23kar79hra6xffkfl281zw4vzvyfr1fwgwwk7bx3";
+    url = https://github.com/anmonteiro/nix-overlays/archive/5f01eb1.tar.gz;
+    sha256 = "16yp2y2qxpxx5wwyj9n1ihzyncj621mdmy0g6l33fpnz9ag8qh21";
   };
 
 in
@@ -29,8 +25,8 @@ in
       ./cachix.nix
 
       # Include NixOS hardware quirks
-      "${nixos-hardware-path}/lenovo/thinkpad/t480s"
-      "${nixos-hardware-path}/common/pc/laptop/ssd"
+      "${nixos-hardware}/lenovo/thinkpad/t480s"
+      "${nixos-hardware}/common/pc/laptop/ssd"
     ];
 
   nixpkgs = {
