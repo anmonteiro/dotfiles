@@ -10,11 +10,6 @@ let
     sha256 = "1a0mplnj0zx33f4lm7kwg6z6iwgdkg2pxy58plkj6w59ibfl2l27";
   };
 
-  overlays = builtins.fetchTarball {
-    url = https://github.com/anmonteiro/nix-overlays/archive/5f01eb1.tar.gz;
-    sha256 = "16yp2y2qxpxx5wwyj9n1ihzyncj621mdmy0g6l33fpnz9ag8qh21";
-  };
-
 in
 {
   imports =
@@ -31,7 +26,6 @@ in
 
   nixpkgs = {
     config.allowUnfree = true;
-    overlays = [ (import overlays) ];
   };
 
   # Use the systemd-boot EFI boot loader.
@@ -221,23 +215,6 @@ in
   # Only use 1GB of logs max for journald
   services.journald.extraConfig = "SystemMaxUse=1G";
 
-  environment.etc."nixos/overlays-compat/overlays.nix" = {
-    text = ''
-self: super:
-with super.lib;
-let
-  # Using the nixos plumbing that's used to evaluate the config...
-  eval = import <nixpkgs/nixos/lib/eval-config.nix>;
-  # Evaluate the config,
-  paths = (eval {modules = [(import <nixos-config>)];})
-    # then get the `nixpkgs.overlays` option.
-    .config.nixpkgs.overlays
-  ;
-in
-foldl' (flip extends) (_: super) paths self
-    '';
-  };
-
   nix = {
     gc = {
       automatic = true;
@@ -245,11 +222,6 @@ foldl' (flip extends) (_: super) paths self
     };
 
     trustedUsers = [ "root" "@wheel" ];
-    nixPath =
-    # Prepend default nixPath values.
-    options.nix.nixPath.default ++
-    # Append our nixpkgs-overlays.
-    [ "nixpkgs-overlays=/etc/nixos/overlays-compat/" ];
   };
 }
 

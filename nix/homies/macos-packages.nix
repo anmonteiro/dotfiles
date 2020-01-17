@@ -34,5 +34,6 @@ let
       sha256 = "128qbjad9583dssgw1mrpshbd9w6armjjg933pkhi0xaa7v0crqg";
     };
   };
+  lumo = pkgs.callPackage ./lumo-cljs { };
 
 in macOSPkgs

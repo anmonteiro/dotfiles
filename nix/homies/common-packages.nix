@@ -6,8 +6,6 @@ let
     [
       # Customized packages
       nix-npm-install
-      now.now
-      # lumo.lumo-cljs
       ffmpeg
 
       # Nixpkgs index packages
@@ -43,8 +41,6 @@ let
   # command to install npm packages in the nix sandbox:
   nix-npm-install = pkgs.callPackage ./nix-npm-install {};
 
-  now = pkgs.callPackage ./now { };
-  lumo = pkgs.callPackage ./lumo-cljs { };
   openssl = import ./openssl pkgs;
   ffmpeg = import ./ffmpeg pkgs;
   gmp = import ./gmp pkgs;
