@@ -31,7 +31,34 @@ let $FZF_DEFAULT_COMMAND = 'ag -l
       \ --ignore node_modules
       \ -g ""'
 
-let g:fzf_layout = { 'down': '~30%' }
+" TODO: draw top border to separate FZF buffer. Workaround here:
+" https://github.com/neovim/neovim/issues/9718#issuecomment-559573308
+function! FloatingFZF()
+  let width = float2nr(winwidth(0) - 6)
+  let win_height = winheight(0)
+  let height = float2nr(win_height * 0.3)
+  " 7 is totally random but looks nice
+  if height < 7
+    if win_height >= 7
+      let height = 7
+    endif
+  endif
+  let screenpos = win_screenpos(0)
+  let pos_x = screenpos[1]
+  let pos_y = screenpos[0]
+  let opts = { 'relative': 'editor',
+             \ 'row': (pos_y + win_height - height),
+             \ 'col': (pos_x + 5),
+             \ 'width': width,
+             \ 'height': height,
+             \ 'style': 'minimal'}
+
+  call nvim_open_win(nvim_create_buf(v:false, v:true), v:true, opts)
+endfunction
+
+highlight def link NormalFloat Normal
+
+let g:fzf_layout = { 'window': 'call FloatingFZF()' }
 let g:fzf_buffers_jump = 1
 
 nnoremap <silent> <C-p> <Esc>:Files<CR>
