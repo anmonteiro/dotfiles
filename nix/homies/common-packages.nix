@@ -11,25 +11,24 @@ let
       # Nixpkgs index packages
       awscli
       bat
+      cacert
       curl
       exa
       fzf
       git
-      go
       gnupg
+      go
       jq
       mpir
       neovim
+      nix-zsh-completions
       nodejs-13_x
-      cacert
       procps
       silver-searcher
       tmux
       tree
       wget
-      yarn
       zsh
-      nix-zsh-completions
 
       # GUIs
       kitty

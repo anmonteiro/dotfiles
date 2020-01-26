@@ -36,7 +36,6 @@ in
 
     };
     kernelPackages = pkgs.linuxPackages_latest;
-    blacklistedKernelModules = [ "nouveau" ];
   };
 
   console = {

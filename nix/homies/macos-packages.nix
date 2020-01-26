@@ -2,25 +2,24 @@ pkgs:
 let
   macOSPkgs = with pkgs; [
     aws-iam-authenticator
+    cachix
+    esy
     git-lfs
+    gmp
     kubernetes
+    libffi
+    libpng
     nix
     opam
+    openssl
     pkgconfig
     python
     pythonPackages.pywatchman
     terraform_0_12
     vagrant
     watchman
+    yarn
     zshrc # Installed via `configuration.nix` with native support on Linux
-
-    esy
-    cachix
-
-    openssl
-    gmp
-    libffi
-    libpng
   ];
 
   cachixSource = fetchTarball { url = "https://cachix.org/api/v1/install"; };
