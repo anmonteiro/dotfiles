@@ -37,10 +37,7 @@ if !b:finished_activating_merlin_for_buffer_successfully
     delfunction MerlinSelectBinary
   endif
 
-  if executable('opam')
-    let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
-    let b:ocamlmerlinRtp = g:opamshare . "/merlin/vim"
-  elseif executable('ocamlmerlin')
+  if executable('ocamlmerlin')
     let merlinBin = substitute(system('which ocamlmerlin'),'\n$','','''')
     let merlinBase = fnamemodify(merlinBin, ':p:h:h')
     let b:ocamlmerlinRtp = merlinBase . "/share/merlin/vim"
