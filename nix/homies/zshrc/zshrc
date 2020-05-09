@@ -97,26 +97,7 @@ mov2gif() {
     convert -delay 10 -layers Optimize -loop 0 - "$2"
 }
 
-export BOOT_JVM_OPTIONS="-client
--XX:+TieredCompilation
--XX:TieredStopAtLevel=1
--Xmx2g
--XX:+UseConcMarkSweepGC
--XX:+CMSClassUnloadingEnabled
--Xverify:none"
-
-# alias sed=gsed
-
-export V8_HOME="$HOME/.bin/v8"
-export SPIDERMONKEY_HOME="$HOME/.bin/spidermonkey"
 export DYLD_FRAMEWORK_PATH=/Applications/WebKit.app/Contents/Frameworks/10.12/
-export PATH=$PATH:~/.bin:/Applications/WebKit.app/Contents/Frameworks/10.12/JavaScriptCore.framework/Resources
-
-if [[ "$OSTYPE" == "darwin"* ]]; then
-  export JAVA_HOME=$(/usr/libexec/java_home)
-fi
-
-alias realpath=grealpath
 
 # opam configuration
 test -r /Users/anmonteiro/.opam/opam-init/init.zsh && . /Users/anmonteiro/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
@@ -133,9 +114,6 @@ alias cat=bat
 export LADDER_LOG_LEVEL=error
 export GOPATH="/Users/anmonteiro/Documents/github/go"
 export PATH="$HOME/bin:$PATH:/usr/local/opt/coreutils/libexec/gnubin:$GOPATH/bin"
-
-# added by travis gem
-[ -f /Users/anmonteiro/.travis/travis.sh ] && source /Users/anmonteiro/.travis/travis.sh
 
 capture() {
   sudo dtrace -p "$1" -qn '
