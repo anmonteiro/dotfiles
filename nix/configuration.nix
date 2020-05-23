@@ -45,6 +45,8 @@ in
     keyMap = "us";
   };
 
+  hardware.bluetooth.enable = true;
+
   networking = {
     hostName = "nixpad";
     wicd.enable = true;
@@ -225,7 +227,6 @@ in
 }
 
 # TODOs:
-# - bluetooth?
 # - screen lock
 # - hibernation?
 # - f.lux lighting thing
