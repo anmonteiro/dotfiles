@@ -3,7 +3,7 @@ Config
   , borderColor = "#202020"
   , font        = "xft:Fira Code:size=14:bold:antialias=true"
   , position    = TopSize C 100 30
-  template = "%StdinReader% }{ %enp0s31f6%%wlp4s0% %cpu% | %memory% | %bat0% %bat1% | Lum: %bright% | Vol: %voly% | <fc=#e6744c>%date%</fc>"
+  template = "%StdinReader% }{ %enp0s31f6%%wlp4s0% | BT: %bluetooth% | %cpu% | %memory% | %bat0% %bat1% | Lum: %bright% | Vol: %vol% | <fc=#e6744c>%date%</fc>"
   -- template = "%StdinReader% }{ %enp0s31f6%%wlp4s0% | %battery% | %cpu% | %memory% | %myvolume% | Lum: %mybright% | <fc=#e6744c>%date%</fc>"
   , textOffset  = 20
   , commands = [
@@ -65,9 +65,11 @@ Config
         -- /!\ https://github.com/jaor/xmobar/issues/127
           -- Run Com "/bin/bash" ["-c", "~/.xmonad/get-volume.sh"]  "myvolume" 1,
 
-        Run Com "/bin/sh" ["-c", "echo `amixer sget Master | awk -F\"[][]\" '/dB/ { print $2 }'` `amixer sget Master | awk -F\"[][]\" '/dB/ { print $6 }'`"] "voly" 1,
+        Run Com "/bin/sh" ["-c", "echo `amixer sget Master | awk -F\"[][]\" '/dB/ { print $2 }'` `amixer sget Master | awk -F\"[][]\" '/dB/ { print $6 }'`"] "vol" 1,
 
         Run Com "/bin/sh" ["-c", "echo `light -G | grep -oE '^.[0-9]{0,3}'`%"] "bright" 1,
+
+        Run Com "/bin/sh" ["-c", "if [[ $(bluetoothctl show | awk -F': ' '/Powered:/ { print $2 }') == 'yes' ]]; then echo on; else echo off; fi" ] "bluetooth" 1,
 
         -- This line tells xmobar to read input from stdin. That's how we
         -- get the information that xmonad is sending it for display.
