@@ -45,6 +45,7 @@ in
     keyMap = "us";
   };
 
+  # https://nixos.wiki/wiki/Bluetooth#Pairing_devices_from_the_command_line
   hardware.bluetooth.enable = true;
 
   networking = {
