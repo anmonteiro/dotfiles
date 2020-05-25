@@ -131,3 +131,6 @@ function changeMac() {
   sudo ifconfig en0 up
   echo "Your new physical address is $mac"
 }
+
+alias npf='nix-prefetch-url --type sha256'
+alias npfu='nix-prefetch-url --type sha256 --unpack'

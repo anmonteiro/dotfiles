@@ -66,7 +66,7 @@ togglevga = do
   screencount <- countScreens
   if screencount > 1
    then spawn "xrandr --output DP1 --off"
-   else spawn "xrandr --output DP1 --auto --above eDP1"
+   else spawn "xrandr --output DP1 --mode '2560x1440' --above eDP1"
    -- "xrandr --output VGA1 --auto --right-of LVDS1"
 
 toggleBluetooth = do
