@@ -2,12 +2,10 @@ pkgs:
 let
   macOSPkgs = with pkgs; [
     cachix
-    esy
     gmp
     libffi
     libpng
     nix
-    opam
     openssl
     pkgconfig
     vagrant
