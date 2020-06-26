@@ -15,3 +15,5 @@
 	whitespace = bold red reverse
 [diff]
 	wserrorhighlight = all
+[pull]
+	rebase = false
