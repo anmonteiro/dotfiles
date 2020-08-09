@@ -114,6 +114,12 @@ let g:neoformat_css_prettier = {
   \ 'stdin': 1,
   \ }
 
+let g:neoformat_sql_pg_format = {
+  \ 'exe': 'pg_format',
+  \ 'args': ['-B', '-s', '2', '-w', '80', '-'],
+  \ 'stdin': 1,
+  \ }
+
 let g:neoformat_scss_prettier = g:neoformat_css_prettier
 
 " Snoopy Mode
