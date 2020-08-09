@@ -55,7 +55,8 @@ in
 
   networking = {
     hostName = "nixpad";
-    wicd.enable = true;
+    networkmanager.enable = false;
+    wireless.enable = true;
     # The global useDHCP flag is deprecated, therefore explicitly set to false
     # here.  Per-interface useDHCP will be mandatory in the future, so this
     # generated config replicates the default behaviour.
@@ -64,10 +65,9 @@ in
     interfaces = {
       # TODO(anmonteiro): not sure if this needs to be enabled, haven't
       # connected an ethernet cable yet.
-      enp0s31f6.useDHCP = false;
+      # enp0s31f6.useDHCP = false;
 
-      # Disable DHCP for the WLAN interface, wicd takes care of it
-      wlp4s0.useDHCP = false;
+      wlp4s0.useDHCP = true;
     };
   };
 
