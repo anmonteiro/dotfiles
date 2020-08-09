@@ -6,8 +6,12 @@
 
 let
   nixos-hardware = builtins.fetchTarball {
-    url = https://github.com/NixOS/nixos-hardware/archive/2f2c2d9e.tar.gz;
-    sha256 = "159qnxmy720jqhg4zm8di0my1r56ya94m6kd117n8kng8hdsmvgi";
+    url = https://github.com/NixOS/nixos-hardware/archive/55f9eb6a73b2f932a9958810c5927feca02ce208.tar.gz;
+    sha256 = "020i7jhvb66r9ddx463r2qcql25annfmhriy9higbkygl7g937zk";
+  };
+  overlays = builtins.fetchTarball {
+    url = https://github.com/anmonteiro/nix-overlays/archive/6c714559bfb56aa5acb7fc00f09109b769fa520a.tar.gz;
+    sha256 = "1jyymczaw7i9rmsskxbpa27qzr63bxyf7sbsmnngjz9y159m7mj9";
   };
 
 in
@@ -26,6 +30,7 @@ in
 
   nixpkgs = {
     config.allowUnfree = true;
+    overlays = [ (import overlays) ];
   };
 
   # Use the systemd-boot EFI boot loader.

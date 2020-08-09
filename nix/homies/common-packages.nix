@@ -13,6 +13,7 @@ let
       bat
       cacert
       curl
+      ocamlPackages.carl
       exa
       fzf
       git
@@ -22,7 +23,7 @@ let
       mpir
       neovim
       nix-zsh-completions
-      nodejs-13_x
+      nodejs-14_x
       procps
       silver-searcher
       tmux
