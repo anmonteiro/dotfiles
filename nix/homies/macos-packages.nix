@@ -2,14 +2,8 @@ pkgs:
 let
   macOSPkgs = with pkgs; [
     cachix
-    gmp
-    libffi
-    libpng
     nix
-    openssl
-    pkgconfig
-    vagrant
-    yarn
+    # vagrant
     zshrc # Installed via `configuration.nix` with native support on Linux
   ];
 
