@@ -5,6 +5,7 @@ let
     nix
     # vagrant
     zshrc # Installed via `configuration.nix` with native support on Linux
+    git-lfs
   ];
 
   cachixSource = fetchTarball { url = "https://cachix.org/api/v1/install"; };
