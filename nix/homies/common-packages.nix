@@ -18,7 +18,7 @@ let
       fzf
       git
       gnupg
-      go
+      htop
       jq
       mpir
       neovim
