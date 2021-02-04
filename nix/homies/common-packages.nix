@@ -22,6 +22,7 @@ let
       jq
       mpir
       neovim
+      nixpkgs-fmt
       nix-zsh-completions
       nodejs-14_x
       procps
@@ -39,7 +40,7 @@ let
 
   # A custom `nix-npm-install` (see `nix-npm-install/defaul.nix` for details)
   # command to install npm packages in the nix sandbox:
-  nix-npm-install = pkgs.callPackage ./nix-npm-install {};
+  nix-npm-install = pkgs.callPackage ./nix-npm-install { };
 
   openssl = import ./openssl pkgs;
   ffmpeg = import ./ffmpeg pkgs;
@@ -55,7 +56,8 @@ let
 
   # Tmux with a custom tmux.conf baked in
   tmux = import ./tmux (with pkgs;
-    { inherit
+    {
+      inherit
         makeWrapper
         symlinkJoin;
       tmux = pkgs.tmux;
@@ -63,7 +65,8 @@ let
 
   # Kitty with a custom kitty.conf baked in
   kitty = import ./kitty (with pkgs;
-    { inherit
+    {
+      inherit
         makeWrapper
         symlinkJoin;
       kitty = pkgs.kitty;
@@ -71,7 +74,8 @@ let
 
   # Neovim with a custom configuration baked in the derivation
   neovim = import ./nvim (with pkgs;
-    { inherit
+    {
+      inherit
         makeWrapper
         fetchurl
         symlinkJoin
@@ -97,7 +101,7 @@ let
   #  });
 
 in
-  #if pkgs.lib.inNixShell
+#if pkgs.lib.inNixShell
   #then pkgs.mkShell
   #  { buildInputs = homies;
   #    shellHook = ''
@@ -105,4 +109,4 @@ in
   #      '';
   #  }
   #else homies
-  homies
+homies
