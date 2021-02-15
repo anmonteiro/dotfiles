@@ -46,6 +46,9 @@ call plug#begin($NVIM_CONFIG_PLUGINS_PATH)
   """ MDX
   Plug 'jxnblk/vim-mdx-js', { 'for': 'mdx' }
 
+  """ GraphQL
+  Plug 'jparise/vim-graphql'
+
   " call dein#add('MartinLafreniere/vim-PairTools', {
     " \ 'on_ft': ['ocaml', 'reason', 'javascript', 'vim', 'sql'],
     " \})
