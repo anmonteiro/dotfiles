@@ -9,7 +9,6 @@ let
       ffmpeg
 
       # Nixpkgs index packages
-      awscli
       bat
       cacert
       curl
@@ -20,7 +19,6 @@ let
       gnupg
       htop
       jq
-      mpir
       neovim
       nixpkgs-fmt
       nix-zsh-completions
@@ -29,7 +27,6 @@ let
       silver-searcher
       tmux
       tree
-      wget
       zsh
 
       # GUIs
