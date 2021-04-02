@@ -13,7 +13,8 @@ let
 in
 {
   imports =
-    [ # Include the results of the hardware scan.
+    [
+      # Include the results of the hardware scan.
       ./hardware-configuration.nix
 
       # Cachix config for anmonteiro.cachix.org
@@ -59,9 +60,7 @@ in
     useDHCP = false;
 
     interfaces = {
-      # TODO(anmonteiro): not sure if this needs to be enabled, haven't
-      # connected an ethernet cable yet.
-      # enp0s31f6.useDHCP = false;
+      enp0s31f6.useDHCP = true;
 
       wlp4s0.useDHCP = true;
     };
@@ -169,8 +168,8 @@ in
       # https://github.com/kovidgoyal/kitty/issues/109#issuecomment-320554447
       dpi = 75;
       defaultFonts = {
-        serif = ["Noto Serif"];
-        sansSerif = ["Noto Sans"];
+        serif = [ "Noto Serif" ];
+        sansSerif = [ "Noto Sans" ];
         monospace = [ "Fira Code" ];
       };
     };
@@ -180,12 +179,16 @@ in
     enable = true;
     bindings = [
       # Brightness
-      { keys = [ 224 ];
+      {
+        keys = [ 224 ];
         events = [ "key" "rep" ];
-        command = "/run/current-system/sw/bin/light -U 5"; }
-      { keys = [ 225 ];
+        command = "/run/current-system/sw/bin/light -U 5";
+      }
+      {
+        keys = [ 225 ];
         events = [ "key" "rep" ];
-        command = "/run/current-system/sw/bin/light -A 5"; }
+        command = "/run/current-system/sw/bin/light -A 5";
+      }
     ];
   };
 
