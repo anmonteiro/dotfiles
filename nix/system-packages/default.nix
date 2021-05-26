@@ -20,15 +20,14 @@ let
     xfce4-14.thunar
     xfce4-14.thunar-volman
     xfce4-14.xfce4-icon-theme
-    xfce.gvfs
   ];
 
   xmobar = import ./xmobar ({
     inherit
-    makeWrapper
-    symlinkJoin;
+      makeWrapper
+      symlinkJoin;
     xmobar = haskellPackages.xmobar;
   });
 
 in
-  packages
+packages
