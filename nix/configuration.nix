@@ -55,7 +55,7 @@ in
     networkmanager.enable = false;
     wireless.enable = true;
     # The global useDHCP flag is deprecated, therefore explicitly set to false
-    # here.  Per-interface useDHCP will be mandatory in the future, so this
+    # here. Per-interface useDHCP will be mandatory in the future, so this
     # generated config replicates the default behaviour.
     useDHCP = false;
 
@@ -127,6 +127,8 @@ in
     xkbOptions = "ctrl:nocaps";
 
     # Higher is bigger
+    # This sets Xft.dpi, which kitty reads from.
+    # https://github.com/kovidgoyal/kitty/issues/109#issuecomment-320554447
     dpi = 75;
 
     windowManager = {
@@ -164,9 +166,6 @@ in
       noto-fonts-extra
     ];
     fontconfig = {
-      # This sets Xft.dpi, which kitty reads from.
-      # https://github.com/kovidgoyal/kitty/issues/109#issuecomment-320554447
-      dpi = 75;
       defaultFonts = {
         serif = [ "Noto Serif" ];
         sansSerif = [ "Noto Sans" ];
