@@ -113,8 +113,8 @@ in
   # services.printing.enable = true;
 
   # Enable sound.
-  sound.enable = true;
-  sound.mediaKeys.enable = true;
+  hardware.pulseaudio.enable = true;
+  hardware.pulseaudio.package = pkgs.pulseaudioFull;
 
   # Clipboard
   services.clipmenu.enable = true;
