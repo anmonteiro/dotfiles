@@ -9,6 +9,7 @@ let
     dmenu
     xlibs.xmodmap
     xmobar
+    pulsemixer
 
     htop
     unrar

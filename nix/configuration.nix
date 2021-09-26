@@ -9,7 +9,7 @@ let
     url = https://github.com/NixOS/nixos-hardware/archive/55f9eb6a73b2f932a9958810c5927feca02ce208.tar.gz;
     sha256 = "020i7jhvb66r9ddx463r2qcql25annfmhriy9higbkygl7g937zk";
   };
-
+  overlays = import ./sources.nix;
 in
 {
   imports =
@@ -26,9 +26,18 @@ in
     ];
 
   nixpkgs = {
-    config.allowUnfree = true;
-    overlays = [ (import ./overlays.nix) ];
+    config = {
+      allowUnfree = true;
+
+      packageOverrides = _: import "${overlays}/boot.nix" {
+        # I'm dumb but `config.nixpkgs.config` causes a stack overflow
+        config = {
+          allowUnfree = true;
+        };
+      };
+    };
   };
+
 
   # Use the systemd-boot EFI boot loader.
   boot = {
