@@ -1,7 +1,7 @@
 {
   tarball = builtins.fetchTarball {
-    url = https://github.com/anmonteiro/nix-overlays/archive/4a3392d.tar.gz;
-    sha256 = "1n943k9x5936dgc25d56l6y3j6fkgmfxmvwb3jsb2kmm21gqs6rr";
+    url = https://github.com/anmonteiro/nix-overlays/archive/07ff41ac9.tar.gz;
+    sha256 = "0k3vcq15raj75z9khijhwfv0ppzw9msm64dnb9spk05prvvaaixr";
   };
 
   local = /home/anmonteiro/projects/nix-overlays;

@@ -6,8 +6,8 @@
 
 let
   nixos-hardware = builtins.fetchTarball {
-    url = https://github.com/NixOS/nixos-hardware/archive/55f9eb6a73b2f932a9958810c5927feca02ce208.tar.gz;
-    sha256 = "020i7jhvb66r9ddx463r2qcql25annfmhriy9higbkygl7g937zk";
+    url = https://github.com/NixOS/nixos-hardware/archive/fd6f34afcf062761fb5035230f6297752bfedcba.tar.gz;
+    sha256 = "0x5bk4l52r3jfa8kih7vhbh29sysn2x2m2273agrj7s6zfz1cmxv";
   };
   overlays = import ./sources.nix;
 in
@@ -132,8 +132,8 @@ in
   services.xserver = {
     enable = true;
     videoDrivers = [ "intel" ];
-    layout = "us";
-    xkbOptions = "ctrl:nocaps";
+    layout = "us,pt";
+    xkbOptions = "ctrl:nocaps, grp:alt_space_toggle";
 
     # Higher is bigger
     # This sets Xft.dpi, which kitty reads from.
@@ -200,24 +200,18 @@ in
     ];
   };
 
-
-  # Enable touchpad support.
-  # services.xserver.libinput.enable = true;
-
-  # Enable the KDE Desktop Environment.
-  # services.xserver.displayManager.sddm.enable = true;
-  # services.xserver.desktopManager.plasma5.enable = true;
-
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.anmonteiro = {
-    isNormalUser = true;
-    home = "/home/anmonteiro";
-    description = "Antonio Monteiro";
-    extraGroups = [ "wheel" "audio" "video" ]; # Enable ‘sudo’ for the user.
-    hashedPassword = "$6$FsHUqlBu4PPnYyA$e3uGB9b8gNIAE/D2II8o4pcdUFrSXhXYxtfVkrSZoE4KY.j1pZbEmXFn73/S8GWZPo7dNgCYobZWsbHMhsFdv1";
-    shell = pkgs.zsh;
+  users = {
+    users.anmonteiro = {
+      isNormalUser = true;
+      home = "/home/anmonteiro";
+      description = "Antonio Monteiro";
+      extraGroups = [ "wheel" "audio" "video" ]; # Enable ‘sudo’ for the user.
+      hashedPassword = "$6$FsHUqlBu4PPnYyA$e3uGB9b8gNIAE/D2II8o4pcdUFrSXhXYxtfVkrSZoE4KY.j1pZbEmXFn73/S8GWZPo7dNgCYobZWsbHMhsFdv1";
+      shell = pkgs.zsh;
+    };
+    mutableUsers = false;
   };
-  users.mutableUsers = false;
 
   # This value determines the NixOS release with which your system is to be
   # compatible, in order to avoid breaking some software such as database
@@ -244,3 +238,4 @@ in
 # - hibernation?
 # - f.lux lighting thing
 # - fingerprint sensor
+# - keyboard layout indicator in status bar
