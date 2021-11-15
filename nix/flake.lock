@@ -5,14 +5,17 @@
         "flake-utils": "flake-utils"
       },
       "locked": {
-        "lastModified": 1636947476,
+        "lastModified": 1636952479,
         "narHash": "sha256-DjpkxjYmR666b4mEHBX++S87bqrXM49Xj0coJccQHoc=",
-        "type": "git",
-        "url": "file:///home/anmonteiro/projects/nix-overlays"
+        "owner": "anmonteiro",
+        "repo": "nix-overlays",
+        "rev": "c1871d0b97bf13bc5a8afa6e6c6657bed0e729ae",
+        "type": "github"
       },
       "original": {
-        "type": "git",
-        "url": "file:///home/anmonteiro/projects/nix-overlays"
+        "owner": "anmonteiro",
+        "repo": "nix-overlays",
+        "type": "github"
       }
     },
     "flake-utils": {
@@ -47,11 +50,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1636945010,
-        "narHash": "sha256-4EoqZOkNIpuCNT3iVQtOaVzvZkeExG0jOm6Z5KiGEuY=",
+        "lastModified": 1636950975,
+        "narHash": "sha256-kQfpSChIm6YBHycIhadHhsXRzDRbVd24fZnmfO/TNPY=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "f22d2c44a53c5bb96f317a75cf3e820c97fc34e8",
+        "rev": "b83e188dfdefadd38e6bb267ae21cc6cc409b421",
         "type": "github"
       },
       "original": {
