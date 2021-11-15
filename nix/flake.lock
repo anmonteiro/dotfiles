@@ -1,0 +1,72 @@
+{
+  "nodes": {
+    "anmonteiro": {
+      "inputs": {
+        "flake-utils": "flake-utils"
+      },
+      "locked": {
+        "lastModified": 1636947476,
+        "narHash": "sha256-DjpkxjYmR666b4mEHBX++S87bqrXM49Xj0coJccQHoc=",
+        "type": "git",
+        "url": "file:///home/anmonteiro/projects/nix-overlays"
+      },
+      "original": {
+        "type": "git",
+        "url": "file:///home/anmonteiro/projects/nix-overlays"
+      }
+    },
+    "flake-utils": {
+      "locked": {
+        "lastModified": 1634851050,
+        "narHash": "sha256-N83GlSGPJJdcqhUxSCS/WwW5pksYf3VP1M13cDRTSVA=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "c91f3de5adaf1de973b797ef7485e441a65b8935",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
+    "nixos-hardware": {
+      "locked": {
+        "lastModified": 1636877509,
+        "narHash": "sha256-0c2fnIlpNqcgxg8JK6Qa3iY4r93MFn2TQ4/3y9W5B7g=",
+        "owner": "NixOS",
+        "repo": "nixos-hardware",
+        "rev": "4045d5f43aff4440661d8912fc6e373188d15b5b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "repo": "nixos-hardware",
+        "type": "github"
+      }
+    },
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1636945010,
+        "narHash": "sha256-4EoqZOkNIpuCNT3iVQtOaVzvZkeExG0jOm6Z5KiGEuY=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "f22d2c44a53c5bb96f317a75cf3e820c97fc34e8",
+        "type": "github"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "type": "indirect"
+      }
+    },
+    "root": {
+      "inputs": {
+        "anmonteiro": "anmonteiro",
+        "nixos-hardware": "nixos-hardware",
+        "nixpkgs": "nixpkgs"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}

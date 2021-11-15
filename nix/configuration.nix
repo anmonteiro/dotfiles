@@ -2,42 +2,9 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, options, pkgs, system, ... }:
+{ config, options, pkgs, system, lib, ... }:
 
-let
-  nixos-hardware = builtins.fetchTarball {
-    url = https://github.com/NixOS/nixos-hardware/archive/fd6f34afcf062761fb5035230f6297752bfedcba.tar.gz;
-    sha256 = "0x5bk4l52r3jfa8kih7vhbh29sysn2x2m2273agrj7s6zfz1cmxv";
-  };
-  overlays = import ./sources.nix;
-in
 {
-  imports =
-    [
-      # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-
-      # Cachix config for anmonteiro.cachix.org
-      ./cachix.nix
-
-      # Include NixOS hardware quirks
-      "${nixos-hardware}/lenovo/thinkpad/t480s"
-      "${nixos-hardware}/common/pc/laptop/ssd"
-    ];
-
-  nixpkgs = {
-    config = {
-      allowUnfree = true;
-
-      packageOverrides = _: import "${overlays}/boot.nix" {
-        # I'm dumb but `config.nixpkgs.config` causes a stack overflow
-        config = {
-          allowUnfree = true;
-        };
-      };
-    };
-  };
-
 
   # Use the systemd-boot EFI boot loader.
   boot = {
@@ -230,6 +197,10 @@ in
     };
 
     trustedUsers = [ "root" "@wheel" ];
+    package = pkgs.nixUnstable;
+    extraOptions = ''
+      experimental-features = nix-command flakes
+    '';
   };
 }
 
