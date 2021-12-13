@@ -173,7 +173,7 @@
       isNormalUser = true;
       home = "/home/anmonteiro";
       description = "Antonio Monteiro";
-      extraGroups = [ "wheel" "audio" "video" ]; # Enable ‘sudo’ for the user.
+      extraGroups = [ "wheel" "audio" "video" "wireshark" ]; # Enable ‘sudo’ for the user.
       hashedPassword = "$6$FsHUqlBu4PPnYyA$e3uGB9b8gNIAE/D2II8o4pcdUFrSXhXYxtfVkrSZoE4KY.j1pZbEmXFn73/S8GWZPo7dNgCYobZWsbHMhsFdv1";
       shell = pkgs.zsh;
     };

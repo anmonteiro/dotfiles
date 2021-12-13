@@ -11,9 +11,14 @@ let
     xmobar
     pulsemixer
 
+    pciutils
     htop
     unrar
     mpv
+    vlc
+    pinentry-curses
+    wireshark
+    zoom-us
 
     brave
     discord
