@@ -1,7 +1,21 @@
-{ pkgs, config ? null }:
+{ pkgs, lib, stdenv, config ? null }:
 let
   # The list of packages to be installed
   # This setup is mostly based on https://github.com/nmattia/homies
+  inherit (pkgs) kitty darwin librsync callPackage;
+
+  kittyPatched = kitty.overrideAttrs (o: {
+    src = builtins.fetchurl {
+      url = https://github.com/kovidgoyal/kitty/archive/f17d71454af7e704c9fff5059a2b9dd4f5653b79.tar.gz;
+      sha256 = "1rzf7qja2yn5gndz76hwqqrha6fnxgjidlhx58aaqg9w698m6rya";
+    };
+    buildInputs = o.buildInputs ++
+      lib.optionals stdenv.isDarwin [ librsync ] ++
+      lib.optionals (stdenv.isDarwin && (builtins.hasAttr "UserNotifications" darwin.apple_sdk.frameworks)) [ darwin.apple_sdk.frameworks.UserNotifications ];
+  });
+  # Kitty with a custom kitty.conf baked in
+  kittyWrapped = callPackage ./kitty { kitty = kittyPatched; };
+
   homies = with pkgs;
     [
       # Customized packages
@@ -26,11 +40,10 @@ let
       procps
       silver-searcher
       tmux
-      tree
       zsh
 
       # GUIs
-      kitty
+      kittyWrapped
     ];
 
   ## Some customizations
@@ -58,15 +71,6 @@ let
         makeWrapper
         symlinkJoin;
       tmux = pkgs.tmux;
-    });
-
-  # Kitty with a custom kitty.conf baked in
-  kitty = import ./kitty (with pkgs;
-    {
-      inherit
-        makeWrapper
-        symlinkJoin;
-      kitty = pkgs.kitty;
     });
 
   # Neovim with a custom configuration baked in the derivation
