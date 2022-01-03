@@ -5,6 +5,7 @@ let
     gcc
     gnumake
     binutils
+    tree
 
     dmenu
     xlibs.xmodmap

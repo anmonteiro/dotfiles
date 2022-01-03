@@ -1,11 +1,11 @@
 let
   # The (pinned) Nixpkgs where the original packages are sourced from
-  pkgs = import <nixpkgs> {
-    overlays = [ (import ./overlays.nix) ];
-  };
+  src = import ./overlays.nix;
+  pkgs = import "${src}/boot.nix" { };
+  inherit (pkgs) callPackage;
 
-  commonPkgs = import ./homies/common-packages.nix { inherit pkgs; };
-  macOSPkgs = import ./homies/macos-packages.nix pkgs;
+  commonPkgs = callPackage ./homies/common-packages.nix { };
+  macOSPkgs = callPackage ./homies/macos-packages.nix pkgs;
 
 in
-  commonPkgs ++ macOSPkgs
+commonPkgs ++ macOSPkgs
