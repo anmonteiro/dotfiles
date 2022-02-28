@@ -1,7 +1,6 @@
 let
   # The (pinned) Nixpkgs where the original packages are sourced from
-  src = import ./overlays.nix;
-  pkgs = import "${src}/boot.nix" { };
+  pkgs = import ../../nix-overlays/boot.nix { };
   inherit (pkgs) callPackage;
 
   commonPkgs = callPackage ./homies/common-packages.nix { };

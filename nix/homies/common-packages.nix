@@ -4,17 +4,8 @@ let
   # This setup is mostly based on https://github.com/nmattia/homies
   inherit (pkgs) kitty darwin librsync callPackage;
 
-  kittyPatched = kitty.overrideAttrs (o: {
-    src = builtins.fetchurl {
-      url = https://github.com/kovidgoyal/kitty/archive/f17d71454af7e704c9fff5059a2b9dd4f5653b79.tar.gz;
-      sha256 = "1rzf7qja2yn5gndz76hwqqrha6fnxgjidlhx58aaqg9w698m6rya";
-    };
-    buildInputs = o.buildInputs ++
-      lib.optionals stdenv.isDarwin [ librsync ] ++
-      lib.optionals (stdenv.isDarwin && (builtins.hasAttr "UserNotifications" darwin.apple_sdk.frameworks)) [ darwin.apple_sdk.frameworks.UserNotifications ];
-  });
   # Kitty with a custom kitty.conf baked in
-  kittyWrapped = callPackage ./kitty { kitty = kittyPatched; };
+  kittyWrapped = callPackage ./kitty { };
 
   homies = with pkgs;
     [
@@ -26,7 +17,7 @@ let
       bat
       cacert
       curl
-      ocamlPackages.carl
+      ocaml-ng.ocamlPackages_multicore.carl
       exa
       fzf
       git
@@ -36,7 +27,7 @@ let
       neovim
       nixpkgs-fmt
       nix-zsh-completions
-      nodejs-14_x
+      nodejs_latest
       procps
       silver-searcher
       tmux
