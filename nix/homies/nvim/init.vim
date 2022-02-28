@@ -49,6 +49,9 @@ call plug#begin($NVIM_CONFIG_PLUGINS_PATH)
   """ GraphQL
   Plug 'jparise/vim-graphql'
 
+  """ HCL / Terraform
+  Plug 'hashivim/vim-terraform', {'for': ['terraform', 'hcl']}
+
   " call dein#add('MartinLafreniere/vim-PairTools', {
     " \ 'on_ft': ['ocaml', 'reason', 'javascript', 'vim', 'sql'],
     " \})
