@@ -8,7 +8,7 @@ let
     tree
 
     dmenu
-    xlibs.xmodmap
+    xorg.xmodmap
     xmobar
     pulsemixer
 

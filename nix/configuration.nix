@@ -53,8 +53,8 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs;
-    (import ./homies/common-packages.nix { inherit pkgs config; }) ++
-    (import ./system-packages { inherit pkgs; });
+    (callPackage ./homies/common-packages.nix { inherit config; }) ++
+    (callPackage ./system-packages { });
 
   programs.zsh = {
     enable = true;
@@ -77,7 +77,7 @@
   # List services that you want to enable:
 
   # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
+  services.openssh.enable = true;
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
@@ -169,13 +169,21 @@
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users = {
-    users.anmonteiro = {
-      isNormalUser = true;
-      home = "/home/anmonteiro";
-      description = "Antonio Monteiro";
-      extraGroups = [ "wheel" "audio" "video" "wireshark" ]; # Enable ‘sudo’ for the user.
-      hashedPassword = "$6$FsHUqlBu4PPnYyA$e3uGB9b8gNIAE/D2II8o4pcdUFrSXhXYxtfVkrSZoE4KY.j1pZbEmXFn73/S8GWZPo7dNgCYobZWsbHMhsFdv1";
-      shell = pkgs.zsh;
+    users = {
+      root.openssh.authorizedKeys.keys = [
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKhezaZPIx4/UkbTm27qaTqOwlfmVNovc33p6L1p+dHG anmonteiro@gmail.com"
+      ];
+      anmonteiro = {
+        isNormalUser = true;
+        home = "/home/anmonteiro";
+        description = "Antonio Monteiro";
+        extraGroups = [ "wheel" "audio" "video" "wireshark" ]; # Enable ‘sudo’ for the user.
+        hashedPassword = "$6$FsHUqlBu4PPnYyA$e3uGB9b8gNIAE/D2II8o4pcdUFrSXhXYxtfVkrSZoE4KY.j1pZbEmXFn73/S8GWZPo7dNgCYobZWsbHMhsFdv1";
+        openssh.authorizedKeys.keys = [
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKhezaZPIx4/UkbTm27qaTqOwlfmVNovc33p6L1p+dHG anmonteiro@gmail.com"
+        ];
+        shell = pkgs.zsh;
+      };
     };
     mutableUsers = false;
   };
@@ -196,7 +204,9 @@
       options = "--delete-older-than 3d";
     };
 
-    trustedUsers = [ "root" "@wheel" ];
+    settings = {
+      trusted-users = [ "root" "@wheel" ];
+    };
     package = pkgs.nixUnstable;
     extraOptions = ''
       experimental-features = nix-command flakes
