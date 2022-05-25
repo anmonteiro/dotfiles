@@ -30,7 +30,6 @@ call plug#begin($NVIM_CONFIG_PLUGINS_PATH)
 
   """ Git
   Plug 'mhinz/vim-signify'
-  Plug 'jreybert/vimagit', { 'branch': 'next' }
   Plug 'tpope/vim-fugitive'
 
   """ OCaml / Reason
