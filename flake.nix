@@ -8,6 +8,7 @@
     let system = "x86_64-linux";
     in
     {
+      legacyPackages = nixpkgs.legacyPackages;
       nixosConfigurations = import ./nixos-configurations.nix
         {
           inherit nixos-hardware;
