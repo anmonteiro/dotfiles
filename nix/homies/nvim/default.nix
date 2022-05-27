@@ -11,20 +11,21 @@
 }:
 
 let
-  homeDir = if stdenv.isLinux then
-    config.users.users.anmonteiro.home
-  else
-    "/Users/anmonteiro";
+  homeDir =
+    if stdenv.isLinux then
+      config.users.users.anmonteiro.home
+    else
+      "/Users/anmonteiro";
   customizations = copyPathToStore ./customizations;
 
-  ftPlugin = stdenv.mkDerivation {
-    name = "ftPlugin";
-    src = ./ftplugin;
+  ocaml-plugin = stdenv.mkDerivation {
+    name = "ocaml-plugin";
+    src = ./ocaml-plugin;
     dontConfigure = true;
     dontBuild = true;
     installPhase = ''
-      mkdir -p $out/ftplugin
-      cp $src/* $out/ftplugin
+      mkdir -p $out
+      cp -r $src/* $out/
     '';
   };
 
@@ -44,20 +45,20 @@ let
   };
 
   # myNeovim = neovim.override {
-    # vimAlias = true;
-    # withPython = true;
+  # vimAlias = true;
+  # withPython = true;
   # };
 
 in
-  symlinkJoin {
-    name = "nvim";
-    buildInputs = [ makeWrapper ];
-    paths = [ neovim ];
-    postBuild = ''
-      wrapProgram "$out/bin/nvim" \
-        --add-flags "--cmd 'set rtp+=${vimPlug},${ftPlugin}' -u ${./init.vim}" \
-        --set NVIM_CONFIG_CUSTOMIZATIONS_PATH "${customizations}" \
-        --set NVIM_CONFIG_PLUGINS_PATH "${homeDir}/.config/nvim/plugged" \
-        --set NVIM_CONFIG_FZF_PATH "${fzf}"
-    '';
-  }
+symlinkJoin {
+  name = "nvim";
+  buildInputs = [ makeWrapper ];
+  paths = [ neovim ];
+  postBuild = ''
+    wrapProgram "$out/bin/nvim" \
+      --add-flags "--cmd 'set rtp+=${vimPlug},${ocaml-plugin}' -u ${./init.vim}" \
+      --set NVIM_CONFIG_CUSTOMIZATIONS_PATH "${customizations}" \
+      --set NVIM_CONFIG_PLUGINS_PATH "${homeDir}/.config/nvim/plugged" \
+      --set NVIM_CONFIG_FZF_PATH "${fzf}"
+  '';
+}

@@ -33,8 +33,7 @@ call plug#begin($NVIM_CONFIG_PLUGINS_PATH)
   Plug 'tpope/vim-fugitive'
 
   """ OCaml / Reason
-  Plug 'rgrinberg/vim-ocaml', {'for': ['ocaml', 'opam', 'dune'] }
-  Plug 'jordwalke/vim-reasonml', {'for': ['reason', 'ocaml'] }
+  Plug 'rgrinberg/vim-ocaml', {'for': ['ocaml', 'reason', 'opam', 'dune'] }
 
   """ Clojure
   Plug 'tpope/vim-fireplace', {'for': 'clojure' }
