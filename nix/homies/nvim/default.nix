@@ -44,11 +44,18 @@ let
     dontInstall = true;
   };
 
-  # myNeovim = neovim.override {
-  # vimAlias = true;
-  # withPython = true;
-  # };
+  lua-modules = stdenv.mkDerivation {
+    name = "lua-modules";
+    src = ./lua;
+    dontConfigure = true;
+    dontBuild = true;
 
+    # Lua modules are found inside a lua/ folder in your 'runtimepath'
+    installPhase = ''
+      mkdir -p $out/lua
+      cp -r $src/* $out/lua/
+    '';
+  };
 in
 symlinkJoin {
   name = "nvim";
@@ -56,7 +63,7 @@ symlinkJoin {
   paths = [ neovim ];
   postBuild = ''
     wrapProgram "$out/bin/nvim" \
-      --add-flags "--cmd 'set rtp+=${vimPlug},${ocaml-plugin}' -u ${./init.vim}" \
+      --add-flags "--cmd 'set rtp+=${vimPlug},${ocaml-plugin},${lua-modules}' -u ${./init.vim}" \
       --set NVIM_CONFIG_CUSTOMIZATIONS_PATH "${customizations}" \
       --set NVIM_CONFIG_PLUGINS_PATH "${homeDir}/.config/nvim/plugged" \
       --set NVIM_CONFIG_FZF_PATH "${fzf}"

@@ -17,9 +17,6 @@
         # Include the results of the hardware scan.
         ./hardware-configuration.nix
 
-        # Cachix config for anmonteiro.cachix.org
-        ./cachix.nix
-
         # Include NixOS hardware quirks
         "${nixos-hardware}/lenovo/thinkpad/t480s"
         "${nixos-hardware}/common/pc/laptop/ssd"

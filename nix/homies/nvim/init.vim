@@ -19,6 +19,7 @@ call plug#begin($NVIM_CONFIG_PLUGINS_PATH)
   Plug 'luochen1990/rainbow', { 'for': ['lisp', 'dune', 'clojure'] }
   Plug 'guns/vim-clojure-static', { 'for': 'clojure' }
   Plug 'vim-scripts/ShowTrailingWhitespace'
+  Plug 'neovim/nvim-lspconfig'
 
   """ Automatic Formatting
   Plug 'sbdchd/neoformat'
@@ -68,6 +69,8 @@ function! SourceDirectory(file)
   endfor
 endfunction
 " }
+
+lua require('lsp')
 
 call SourceDirectory($NVIM_CONFIG_CUSTOMIZATIONS_PATH)
 

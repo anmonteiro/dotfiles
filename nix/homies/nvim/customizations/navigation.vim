@@ -125,7 +125,7 @@ function! Gpsup(...)
   let l:symbolicRef = substitute(system('git symbolic-ref --quiet HEAD'),'\n$','','''')
   let l:currentBranch = substitute(l:symbolicRef, '^refs/heads/', '', '''')
 
-  execute 'Gpush --set-upstream origin ' . l:currentBranch . ' ' . join(a:000, " ")
+  execute 'Git push --set-upstream origin ' . l:currentBranch . ' ' . join(a:000, " ")
 endfunction
 
 command! -nargs=* Gpsup call Gpsup(<q-args>)

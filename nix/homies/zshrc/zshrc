@@ -11,6 +11,8 @@ ZSH_THEME="agnoster"
 
 DEFAULT_USER=`whoami`
 
+HISTSIZE=1000000
+
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
 
