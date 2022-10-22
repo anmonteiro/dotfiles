@@ -29,14 +29,19 @@
   networking = {
     hostName = "nixpad";
     networkmanager.enable = false;
-    wireless.enable = true;
-    # The global useDHCP flag is deprecated, therefore explicitly set to false
-    # here. Per-interface useDHCP will be mandatory in the future, so this
-    # generated config replicates the default behaviour.
-    useDHCP = false;
+    wireless.enable = false;
 
+    defaultGateway = "192.168.0.1";
+    nameservers = [ "8.8.8.8" "8.8.4.4" ];
     interfaces = {
-      enp0s31f6.useDHCP = true;
+      enp0s31f6 = {
+        useDHCP = false;
+        ipv4.addresses = [{
+          address = "192.168.0.42";
+          prefixLength = 24;
+        }];
+
+      };
 
       wlp4s0.useDHCP = true;
     };
@@ -206,6 +211,7 @@
 
     settings = {
       trusted-users = [ "root" "@wheel" ];
+      max-jobs = lib.mkDefault 12;
     };
     package = pkgs.nixUnstable;
     extraOptions = ''
