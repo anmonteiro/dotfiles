@@ -42,6 +42,9 @@ set ignorecase smartcase
 " Behavior when completing a command
 set completeopt=menuone,preview,noinsert,noselect
 
+" Disable mouse interactions
+set mouse=
+
 " Check if the buffer is open in another tab / window before switching to it
 " set switchbuf=usetab,useopen
 
