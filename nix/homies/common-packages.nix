@@ -27,7 +27,6 @@ let
       neovim
       nixpkgs-fmt
       nix-zsh-completions
-      nodejs_latest
       procps
       silver-searcher
       tmux

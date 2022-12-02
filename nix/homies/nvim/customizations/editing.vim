@@ -105,17 +105,17 @@ augroup fmt
 augroup END
 
 " Neoformat JS
+
 let g:neoformat_javascript_prettier = {
   \ 'exe': './node_modules/.bin/prettier',
   \ 'args': ['--single-quote', '--stdin', '--stdin-filepath', '"%:p"'],
   \ 'stdin': 1,
   \ }
 
-let g:neoformat_css_prettier = {
-  \ 'exe': './node_modules/.bin/prettier',
-  \ 'args': ['--stdin', '--stdin-filepath', '"%:p"', '--parser', 'css'],
-  \ 'stdin': 1,
-  \ }
+let g:neoformat_typescript_prettier = g:neoformat_javascript_prettier
+let g:neoformat_typescriptreact_prettier = g:neoformat_javascript_prettier
+let g:neoformat_css_prettier = g:neoformat_javascript_prettier
+let g:neoformat_scss_prettier = g:neoformat_javascript_prettier
 
 let g:neoformat_sql_pg_format = {
   \ 'exe': 'pg_format',
@@ -123,7 +123,6 @@ let g:neoformat_sql_pg_format = {
   \ 'stdin': 1,
   \ }
 
-let g:neoformat_scss_prettier = g:neoformat_css_prettier
 
 " Snoopy Mode
 " http://vim.wikia.com/wiki/Invert_the_number_row_keys_for_faster_typing

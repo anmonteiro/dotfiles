@@ -55,7 +55,6 @@ lspconfig['tsserver'].setup({
       "javascriptreact",
       "javascript.jsx"
     },
-    hostInfo = "neovim",
     preferences = {
       includeInlayParameterNameHints = "none",
       includeInlayParameterNameHintsWhenArgumentMatchesName = false,
@@ -66,7 +65,7 @@ lspconfig['tsserver'].setup({
       includeInlayEnumMemberValueHints = true,
     },
   },
-  cmd = { './node_modules/.bin/typescript-language-server', '--stdio' },
+  cmd = { 'yarn', 'typescript-language-server', '--stdio' },
 
   on_attach = on_attach,
 })
