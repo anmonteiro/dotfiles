@@ -10,6 +10,7 @@ let
     dmenu
     xorg.xmodmap
     xmobar
+    xclip
     pulsemixer
 
     pciutils
