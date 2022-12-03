@@ -1,6 +1,13 @@
 { pkgs }:
 with pkgs;
 let
+  xmobar = import ./xmobar ({
+    inherit
+      makeWrapper
+      symlinkJoin;
+    xmobar = haskellPackages.xmobar;
+  });
+
   packages = [
     gcc
     gnumake
@@ -29,13 +36,6 @@ let
     xfce4-14.thunar-volman
     xfce4-14.xfce4-icon-theme
   ];
-
-  xmobar = import ./xmobar ({
-    inherit
-      makeWrapper
-      symlinkJoin;
-    xmobar = haskellPackages.xmobar;
-  });
 
 in
 packages

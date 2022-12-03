@@ -6,10 +6,12 @@ import XMonad
 
 import XMonad.Actions.Navigation2D
 import XMonad.Config
-import XMonad.Hooks.DynamicBars
+import XMonad.Hooks.StatusBar
+import XMonad.Hooks.StatusBar.PP
+import XMonad.Hooks.EwmhDesktops
+
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
--- import XMonad.Layout.BinarySpacePartition
 import XMonad.Layout.FixedColumn
 import XMonad.Layout.Spacing
 import XMonad.Layout.Grid
@@ -27,12 +29,18 @@ import qualified Data.Map as M
 
 main :: IO ()
 main = do
-  xmonad myConfig
+  xmonad
+  . ewmhFullscreen
+  . ewmh
+  . withEasySB (statusBarProp xmobarArgs (pure myXmobarPP)) toggleStrutsKey
+  $ myConfig
+ where
+    toggleStrutsKey :: XConfig Layout -> (KeyMask, KeySym)
+    toggleStrutsKey XConfig { modMask = m } = (m, xK_b)
 
--- TODO: Get these colors from xrdb
--- backgroundColor   = "#FEFEFE"
--- middleColor       = "#AEAEAE"
--- foregroundColor   = "#0E0E0E"
+xmobarArgs = "xmobar -d -B " ++ stringed backgroundColor
+  ++ " -F " ++ stringed middleColor
+  where stringed x = "\"" ++ x ++ "\""
 
 backgroundColor   = "#202020"
 middleColor       = "#AEAEAE"
@@ -43,20 +51,9 @@ myConfig = def
   , focusFollowsMouse  = False
   , modMask = mod4Mask
   , terminal = "kitty"
-  -- { focusedBorderColor = foregroundColor
-  , handleEventHook    = docksEventHook
-                         <+> dynStatusBarEventHook xmobarCreate xmobarDestroy
-                         <+> handleEventHook def
-
-  , logHook            = myLogHook
   , layoutHook         = myLayoutHook
-  , manageHook         = manageDocks
-  -- , normalBorderColor  = middleColor
   , workspaces         = myWorkspaces
   , keys          = \c -> myKeys c `M.union` keys def c
-  , startupHook   = docksStartupHook
-                    >> dynStatusBarStartup xmobarCreate xmobarDestroy
-                    >> startupHook def
   }
 
 myWorkspaces = ["1:work", "2:web", "3:msg", "4", "5", "6"]
@@ -82,8 +79,6 @@ myKeys (XConfig {modMask = modm}) = M.fromList $
   -- ((modm , xK_x), spawn "xlock")
   ]
 
-myLogHook = multiPP myXmobarPP myXmobarPP
-
 myXmobarPP = def
   { ppCurrent         = pad . xmobarColor foregroundColor  ""
   , ppHidden          = pad . xmobarColor middleColor ""
@@ -94,21 +89,6 @@ myXmobarPP = def
   , ppWsSep           = " "
   }
 
-xmobarCreate :: DynamicStatusBar
-xmobarCreate (S sid) = spawnPipe $ intercalate " "
-    [ "xmobar"
-    , "-d"
-    , "-B", stringed backgroundColor
-    , "-F", stringed middleColor
-    , "--screen", stringed (show sid)
-    ]
-      where stringed x = "\"" ++ x ++ "\""
-
-xmobarDestroy :: DynamicStatusBarCleanup
-xmobarDestroy = return ()
-
--- with spacing
-myLayoutHook = ((spacingRaw False (Border 30 0 0 0) True (Border 0 0 0 0) False)
-                $ avoidStruts (tall ||| GridRatio (4/3) ||| Full ))
+myLayoutHook = (avoidStruts (tall ||| GridRatio (4/3) ||| Full ))
   where tall = Tall 1 (3/100) (1/2)
 

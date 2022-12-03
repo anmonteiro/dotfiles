@@ -1,11 +1,17 @@
 Config
   { border      = FullB
   , borderColor = "#202020"
-  , font        = "xft:Fira Code:size=14:bold:antialias=true"
+  , font        = "xft:Fira Code-14:bold:antialias=true"
   , position    = TopSize C 100 30
-  template = "%StdinReader% }{ %enp0s31f6%%wlp4s0% | BT: %bluetooth% | %cpu% | %memory% | %bat0% %bat1% | Lum: %bright% | Vol: %vol% | <fc=#e6744c>%date%</fc>"
+  , lowerOnStart =     True    -- send to bottom of window stack on start
+  , hideOnStart =      False   -- start with window unmapped (hidden)
+  , allDesktops =      True    -- show on all desktops
+  , overrideRedirect = True    -- set the Override Redirect flag (Xlib)
+  , pickBroadest =     False   -- choose widest display (multi-monitor)
+  , persistent =       True    -- enable/disable hiding (True = disabled)
+
+  , template = "%XMonadLog% }{ %enp0s31f6%%wlp4s0% | BT: %bluetooth% | %cpu% | %memory% | %bat0% %bat1% | Lum: %bright% | Vol: %vol% | <fc=#e6744c>%date%</fc>"
   -- template = "%StdinReader% }{ %enp0s31f6%%wlp4s0% | %battery% | %cpu% | %memory% | %myvolume% | Lum: %mybright% | <fc=#e6744c>%date%</fc>"
-  , textOffset  = 20
   , commands = [
   -- Gather and format CPU usage information.
     -- If it's above 50%, we consider it high usage and make it red.
@@ -73,6 +79,6 @@ Config
 
         -- This line tells xmobar to read input from stdin. That's how we
         -- get the information that xmonad is sending it for display.
-        Run StdinReader
+        Run XMonadLog
   ]
 }
