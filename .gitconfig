@@ -7,10 +7,6 @@
 	name = Antonio Nuno Monteiro
 	email = anmonteiro@gmail.com
 	signingkey = D3FF992B411EF867
-[commit]
-	gpgsign = true
-[gpg]
-	program = /Users/anmonteiro/.nix-profile/bin/gpg
 [color "diff"]
 	whitespace = bold red reverse
 [diff]
