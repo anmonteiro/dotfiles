@@ -65,13 +65,13 @@ lspconfig['tsserver'].setup({
       includeInlayEnumMemberValueHints = true,
     },
   },
-  cmd = { 'yarn', 'typescript-language-server', '--stdio' },
+  cmd = { 'typescript-language-server', '--stdio' },
 
   on_attach = on_attach,
 })
 
--- require('lspconfig')['ocamllsp'].setup {
+require('lspconfig')['ocamllsp'].setup {
   -- cmd = { '/Users/anmonteiro/monorepo/relay-play/ocamllsp.exe', '--fallback-read-dot-merlin' },
-  -- on_attach = on_attach
--- }
+  on_attach = on_attach
+}
 

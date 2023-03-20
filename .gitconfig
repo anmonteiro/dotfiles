@@ -6,7 +6,6 @@
 [user]
 	name = Antonio Nuno Monteiro
 	email = anmonteiro@gmail.com
-	signingkey = D3FF992B411EF867
 [color "diff"]
 	whitespace = bold red reverse
 [diff]

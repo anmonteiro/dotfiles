@@ -29,6 +29,10 @@ call plug#begin($NVIM_CONFIG_PLUGINS_PATH)
   Plug 'junegunn/fzf.vim'
   Plug 'christoomey/vim-tmux-navigator'
 
+  Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+  Plug 'nvim-lua/plenary.nvim'
+  Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.1' }
+
   """ Git
   Plug 'mhinz/vim-signify'
   Plug 'tpope/vim-fugitive'

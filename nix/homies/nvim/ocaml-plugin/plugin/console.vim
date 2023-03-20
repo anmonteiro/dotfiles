@@ -22,13 +22,13 @@ if !exists('g:polyfilled_v_type')
   let g:polyfilled_v_type=1
   let g:v_t_number = type(0)
   let g:v_t_string = type("")
-  let g:v_t_func = type(function("tr")) 
-  let g:v_t_list = type([]) 
-  let g:v_t_dict = type({}) 
-  let g:v_t_float = type(0.0) 
+  let g:v_t_func = type(function("tr"))
+  let g:v_t_list = type([])
+  let g:v_t_dict = type({})
+  let g:v_t_float = type(0.0)
   if has("patch-8.0.0")
-    let g:v_t_bool = type(v:false) 
-    let g:v_t_none = type(v:none) 
+    let g:v_t_bool = type(v:false)
+    " let g:v_t_none = type(v:none)
   endif
 endif
 

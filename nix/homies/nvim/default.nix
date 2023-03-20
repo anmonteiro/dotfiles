@@ -32,8 +32,8 @@ let
   vimPlug = stdenv.mkDerivation {
     name = "vim-plug";
     src = fetchurl {
-      url = https://raw.githubusercontent.com/junegunn/vim-plug/eee50c5/plug.vim;
-      sha256 = "161lkcdjgy2lbg2ld89p4h1pawd4m8s8rllvsp68rq0457ahynpl";
+      url = https://raw.githubusercontent.com/junegunn/vim-plug/034e8445908e828351da6e428022d8487c57ce99/plug.vim;
+      sha256 = "1vcx8cn8y9v5zrl63par0w22pv0kk3c7avpwc7ca77qsr2p0nz5r";
     };
     unpackPhase = ''
       mkdir -p $out/autoload

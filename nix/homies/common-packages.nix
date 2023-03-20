@@ -32,6 +32,10 @@ let
       tmux
       zsh
 
+      # for nvim
+      ripgrep
+      fd
+
       # GUIs
       kittyWrapped
     ];
