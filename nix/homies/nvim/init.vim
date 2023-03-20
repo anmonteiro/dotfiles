@@ -75,6 +75,7 @@ endfunction
 " }
 
 lua require('lsp')
+lua require('telescope')
 
 call SourceDirectory($NVIM_CONFIG_CUSTOMIZATIONS_PATH)
 
