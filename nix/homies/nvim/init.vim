@@ -39,6 +39,8 @@ call plug#begin($NVIM_CONFIG_PLUGINS_PATH)
 
   """ OCaml / Reason
   Plug 'rgrinberg/vim-ocaml', {'for': ['ocaml', 'reason', 'opam', 'dune'] }
+  Plug 'tjdevries/ocaml.nvim', {'do': ':lua require(\"ocaml\").update()'}
+  Plug 'nvim-treesitter/playground'
 
   """ Clojure
   Plug 'tpope/vim-fireplace', {'for': 'clojure' }
@@ -75,7 +77,8 @@ endfunction
 " }
 
 lua require('lsp')
-lua require('telescope')
+lua require('editing')
+lua require('plugins.telescope')
 
 call SourceDirectory($NVIM_CONFIG_CUSTOMIZATIONS_PATH)
 

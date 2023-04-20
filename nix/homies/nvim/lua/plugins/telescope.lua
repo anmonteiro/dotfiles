@@ -16,17 +16,27 @@ telescope.setup({
 				["<C-e>"] = actions.preview_scrolling_down,
 			},
 		},
-		vimgrep_arguments = {
-			"rg",
-			"--color=never",
-			"-H",
-			"--no-heading",
-			"-n",
-			"--column",
-			"-S",
-			"--hidden",
-			"--trim",
-		},
+    -- ripgrep_arguments = {
+      -- 'rg',
+      -- '--hidden',
+      -- '--no-heading',
+      -- '--with-filename',
+      -- '--line-number',
+      -- '--column',
+      -- '--smart-case'
+    -- },
+
+		-- vimgrep_arguments = {
+			-- "rg",
+			-- "--color=never",
+			-- "-H",
+			-- "--no-heading",
+			-- "-n",
+			-- "--column",
+			-- "-S",
+			-- "--hidden",
+			-- "--trim",
+		-- },
 		-- vimgrep_arguments = {
 		-- 	"rg",
 		-- 	"--color=never",
@@ -58,7 +68,7 @@ telescope.setup({
 			preview_cutoff = 20,
 		},
 		file_sorter = require("telescope.sorters").get_fuzzy_file,
-		file_ignore_patterns = { "node_modules", ".git", ".next" },
+    file_ignore_patterns = { ".git/" },
 		generic_sorter = require("telescope.sorters").get_generic_fuzzy_sorter,
 		path_display = { "truncate" },
 		winblend = 0,
@@ -73,7 +83,11 @@ telescope.setup({
 		-- Developer configurations: Not meant for general override
 		buffer_previewer_maker = require("telescope.previewers").buffer_previewer_maker,
 	},
-	-- pickers = {
+  pickers = {
+    buffers = {
+      sort_lastused = true,
+      sort_mru = true,
+    },
 	-- 	-- live_grep = {
 	-- 	-- 	additional_args = function(opts)
 	-- 	-- 		return { "--hidden" }
@@ -82,7 +96,7 @@ telescope.setup({
 	-- 	find_files = {
 	-- 		find_command = { "fd", "-I", "--type", "f", "--strip-cwd-prefix" },
 	-- 	},
-	-- },
+  },
 	extensions = {
 		fzf = {
 			fuzzy = true,
@@ -109,3 +123,9 @@ nnoremap("<leader>tr", "<cmd>lua require('telescope').extensions.live_grep_raw.l
 nnoremap("<leader>te", "<cmd>Telescope find_files hidden=true <cr>")
 nnoremap("<leader>tp", "<cmd>Telescope live_grep hidden=true <cr>")
 nnoremap("<leader>th", "<cmd>Telescope help_tags<cr>")
+
+
+nnoremap("<C-p>", "<cmd>Telescope find_files hidden=true<cr>")
+nnoremap("<C-b>", "<cmd>Telescope buffers<cr>")
+nnoremap("<leader>;", "<cmd>Telescope command_history<cr>")
+
