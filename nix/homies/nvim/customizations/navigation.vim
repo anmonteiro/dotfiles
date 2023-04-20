@@ -61,14 +61,14 @@ highlight def link NormalFloat Normal
 let g:fzf_layout = { 'window': 'call FloatingFZF()' }
 let g:fzf_buffers_jump = 1
 
-nnoremap <silent> <C-p> <Esc>:Files<CR>
-nnoremap <silent> <C-b> <Esc>:Buffers<CR>
-nnoremap <silent> <C-h> <Esc>:History<CR>
+" nnoremap <silent> <C-p> <Esc>:Files<CR>
+" nnoremap <silent> <C-b> <Esc>:Buffers<CR>
+" nnoremap <silent> <C-h> <Esc>:History<CR>
 nnoremap <silent> <C-s> <Esc>:Ag<CR>
 nnoremap <silent> <C-l> <Esc>:BLines<CR>
 nnoremap <silent> <leader><Space> <Esc>:Commands<CR>
 " Because `;` is mapped to `:`
-nnoremap <silent> <leader>; <Esc>:History:<CR>
+" nnoremap <silent> <leader>; <Esc>:History:<CR>
 " nnoremap <silent> <leader>/ <Esc>:History/<CR>
 
 let g:fzf_colors = {
