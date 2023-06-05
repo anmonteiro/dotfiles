@@ -81,4 +81,3 @@ lua require('editing')
 lua require('plugins.telescope')
 
 call SourceDirectory($NVIM_CONFIG_CUSTOMIZATIONS_PATH)
-

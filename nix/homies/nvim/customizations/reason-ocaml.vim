@@ -32,3 +32,6 @@ let g:neoformat_enabled_ocaml = ['ocamlformat']
 " Use Python 3 for Merlin
 " https://github.com/ocaml/merlin/issues/1050
 let g:merlin_python_version = 3
+
+au BufNewFile,BufRead *.mli set filetype=ocaml.interface
+
