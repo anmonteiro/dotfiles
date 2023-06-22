@@ -176,7 +176,7 @@
   users = {
     users = {
       root.openssh.authorizedKeys.keys = [
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKhezaZPIx4/UkbTm27qaTqOwlfmVNovc33p6L1p+dHG anmonteiro@gmail.com"
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA483NKFZXAOUZY1dTy3GUYlWWQM1Z6qrh+ajCK8bCS/ anmonteiro@gmail.com"
       ];
       anmonteiro = {
         isNormalUser = true;
@@ -185,7 +185,7 @@
         extraGroups = [ "wheel" "audio" "video" "wireshark" ]; # Enable ‘sudo’ for the user.
         hashedPassword = "$6$FsHUqlBu4PPnYyA$e3uGB9b8gNIAE/D2II8o4pcdUFrSXhXYxtfVkrSZoE4KY.j1pZbEmXFn73/S8GWZPo7dNgCYobZWsbHMhsFdv1";
         openssh.authorizedKeys.keys = [
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKhezaZPIx4/UkbTm27qaTqOwlfmVNovc33p6L1p+dHG anmonteiro@gmail.com"
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA483NKFZXAOUZY1dTy3GUYlWWQM1Z6qrh+ajCK8bCS/ anmonteiro@gmail.com"
         ];
         shell = pkgs.zsh;
       };

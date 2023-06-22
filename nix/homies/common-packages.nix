@@ -17,7 +17,7 @@ let
       bat
       cacert
       curl
-      ocaml-ng.ocamlPackages_5_0.carl
+      ocaml-ng.ocamlPackages_5_1.carl
       exa
       fzf
       git
