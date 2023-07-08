@@ -7,6 +7,7 @@ local _ = require("nvim-treesitter.configs").setup {
     "javascript",
     "json",
     "markdown",
+    "nix",
     "ocaml",
     "ocaml_interface",
     "python",
