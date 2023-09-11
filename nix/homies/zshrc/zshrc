@@ -110,7 +110,7 @@ ppr() {
 }
 
 alias vim=nvim
-alias ls=exa
+alias ls=eza
 alias cat=bat
 
 export LADDER_LOG_LEVEL=error

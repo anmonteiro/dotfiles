@@ -75,3 +75,10 @@ require('lspconfig')['ocamllsp'].setup {
   on_attach = on_attach
 }
 
+lspconfig.rust_analyzer.setup {
+  -- Server-specific settings. See `:help lspconfig-setup`
+  on_attach = on_attach
+  -- settings = {
+    -- ['rust-analyzer'] = {},
+  -- },
+}

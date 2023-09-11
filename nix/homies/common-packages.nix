@@ -18,7 +18,7 @@ let
       cacert
       curl
       ocaml-ng.ocamlPackages_5_1.carl
-      exa
+      eza
       fzf
       git
       gnupg
