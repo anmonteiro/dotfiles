@@ -57,6 +57,16 @@ call plug#begin($NVIM_CONFIG_PLUGINS_PATH)
   """ HCL / Terraform
   Plug 'hashivim/vim-terraform', {'for': ['terraform', 'hcl']}
 
+  """ Coq
+  Plug 'whonore/Coqtail'
+  ", { 'for': 'coq' }
+
+  """ DB
+  Plug 'tpope/vim-dadbod'
+  Plug 'kristijanhusak/vim-dadbod-ui'
+  Plug 'kristijanhusak/vim-dadbod-completion'
+
+
   " call dein#add('MartinLafreniere/vim-PairTools', {
     " \ 'on_ft': ['ocaml', 'reason', 'javascript', 'vim', 'sql'],
     " \})

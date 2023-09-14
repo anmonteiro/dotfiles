@@ -123,6 +123,19 @@ let g:neoformat_sql_pg_format = {
   \ 'stdin': 1,
   \ }
 
+autocmd FileType sql setlocal omnifunc=vim_dadbod_completion#omni
+
+" Source is automatically added, you just need to include it in the chain complete list
+let g:completion_chain_complete_list = {
+    \   'sql': [
+    \    {'complete_items': ['vim-dadbod-completion']},
+    \   ],
+    \ }
+" Make sure `substring` is part of this list. Other items are optional for this completion source
+let g:completion_matching_strategy_list = ['exact', 'substring']
+" Useful if there's a lot of camel case items
+let g:completion_matching_ignore_case = 1
+
 
 " Snoopy Mode
 " http://vim.wikia.com/wiki/Invert_the_number_row_keys_for_faster_typing
