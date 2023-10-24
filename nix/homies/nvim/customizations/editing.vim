@@ -51,6 +51,9 @@ set mouse=
 " NERD Commenter config
 let g:NERDSpaceDelims = 1
 
+" Add your own custom formats or override the defaults
+let g:NERDCustomDelimiters = { 'reason': { 'left': '//', 'leftAlt': '/*','rightAlt': '*/' } }
+
 " Vimagit config
 let g:magit_discard_untracked_do_delete = 1
 
