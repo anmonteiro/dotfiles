@@ -31,7 +31,7 @@ call plug#begin($NVIM_CONFIG_PLUGINS_PATH)
 
   Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
   Plug 'nvim-lua/plenary.nvim'
-  Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.4' }
+  Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.5' }
 
   """ Git
   Plug 'mhinz/vim-signify'

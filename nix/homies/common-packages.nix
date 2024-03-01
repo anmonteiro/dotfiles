@@ -2,7 +2,7 @@
 let
   # The list of packages to be installed
   # This setup is mostly based on https://github.com/nmattia/homies
-  inherit (pkgs) kitty darwin librsync callPackage;
+  inherit (pkgs) kitty darwin callPackage;
 
   # Kitty with a custom kitty.conf baked in
   kittyWrapped = callPackage ./kitty { };
