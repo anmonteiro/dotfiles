@@ -1,4 +1,4 @@
-{ linux-user ? config.users.users.anmonteiro.home }:
+{ linux-user ? null }:
 
 let
   system = builtins.currentSystem;

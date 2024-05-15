@@ -1,4 +1,4 @@
-{ pkgs, lib, stdenv, linux-user, config ? null }:
+{ pkgs, lib, stdenv, linux-user ? null }:
 let
   # The list of packages to be installed
   # This setup is mostly based on https://github.com/nmattia/homies
@@ -80,7 +80,7 @@ let
         cacert
         stdenv;
       neovim = pkgs.neovim;
-      inherit config linux-user;
+      inherit linux-user;
     });
 
 

@@ -7,7 +7,6 @@
 , copyPathToStore
 , fzf
 , fetchurl
-, config
 , linux-user ? null
 }:
 

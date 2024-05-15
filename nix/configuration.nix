@@ -58,7 +58,7 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs;
-    (callPackage ./homies/common-packages.nix { inherit config; }) ++
+    (callPackage ./homies/common-packages.nix { linux-user = config.users.users.anmonteiro.home; }) ++
     (callPackage ./system-packages { });
 
   programs.zsh = {
