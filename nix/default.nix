@@ -1,3 +1,5 @@
+{ linux-user ? config.users.users.anmonteiro.home }:
+
 let
   system = builtins.currentSystem;
   flake = (import
@@ -14,7 +16,7 @@ let
 
   inherit (pkgs) callPackage;
 
-  commonPkgs = callPackage ./homies/common-packages.nix { };
+  commonPkgs = callPackage ./homies/common-packages.nix { inherit linux-user; };
   macOSPkgs = callPackage ./homies/macos-packages.nix pkgs;
 
 in

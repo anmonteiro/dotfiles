@@ -8,12 +8,13 @@
 , fzf
 , fetchurl
 , config
+, linux-user ? null
 }:
 
 let
   homeDir =
     if stdenv.isLinux then
-      config.users.users.anmonteiro.home
+      linux-user
     else
       "/Users/anmonteiro";
   customizations = copyPathToStore ./customizations;
