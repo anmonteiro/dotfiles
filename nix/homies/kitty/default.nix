@@ -2,19 +2,12 @@
 
 let
   conf = ./kitty.conf;
-  kittyPatched = kitty.overrideAttrs (_: {
-    postPatch = ''
-      mkdir fonts
-      cp ${./SymbolsNerdFontMono-Regular.ttf} fonts/SymbolsNerdFontMono-Regular.ttf
-    '';
-  });
-
 in
 
 symlinkJoin {
   name = "kitty";
   buildInputs = [ makeWrapper ];
-  paths = [ kittyPatched ];
+  paths = [ kitty ];
   postBuild = ''
     ${if stdenv.isDarwin then ''
         wrapProgram "$out/Applications/kitty.app/Contents/MacOS/kitty" --add-flags "--config ${conf}"
