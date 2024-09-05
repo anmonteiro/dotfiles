@@ -45,7 +45,7 @@ for _, lsp in pairs(servers) do
   }
 end
 
-lspconfig['tsserver'].setup({
+lspconfig['ts_ls'].setup({
   init_options = {
     filetypes = {
       "typescript",
