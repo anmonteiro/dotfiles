@@ -12,3 +12,6 @@
 	wserrorhighlight = all
 [pull]
 	rebase = false
+[core]
+	fscache = true
+	untrackedCache = true

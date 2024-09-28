@@ -89,17 +89,28 @@ fi
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-
 prompt_dir() {
-  prompt_segment blue black ${${${:-/${(j:/:)${(M)${(s:/:)${(D)PWD:h}}#(|.)[^.]}}/${PWD:t}}//(\/${(j:\/:)${(M)${(s:\/:)${(D)HOME:h}}#(|.)[^.]}}\/${HOME:t}|\/~)/\~}//\/\//\/}
+  local dir="${PWD/#$HOME/~}"   # Replace home directory with '~'
+  local path=""
+
+  # Iterate over each directory in the path
+  for segment in "${(s:/:)dir}"; do
+    if [[ $segment == "~" ]]; then
+      path="~/"               # Start with '~' if the path contains the home directory
+    elif [[ $segment == ${dir:t} ]]; then
+      path="$path$segment"    # Full name for the current directory
+    else
+      path="$path${segment[1]}/"  # Only the first character of each preceding directory
+    fi
+  done
+
+  prompt_segment blue black $path
 }
 
 mov2gif() {
   ffmpeg -i "$1" -vf scale=800:-1 -pix_fmt rgb24 -r 10 -f image2pipe -vcodec ppm - |\
     convert -delay 10 -layers Optimize -loop 0 - "$2"
 }
-
-export DYLD_FRAMEWORK_PATH=/Applications/WebKit.app/Contents/Frameworks/10.12/
 
 # opam configuration
 test -r /Users/anmonteiro/.opam/opam-init/init.zsh && . /Users/anmonteiro/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
@@ -113,9 +124,7 @@ alias vim=nvim
 alias ls=eza
 alias cat=bat
 
-export LADDER_LOG_LEVEL=error
-export GOPATH="/Users/anmonteiro/Documents/github/go"
-export PATH="$HOME/bin:$PATH:/usr/local/opt/coreutils/libexec/gnubin:$GOPATH/bin"
+export PATH="$HOME/bin:$PATH"
 
 capture() {
   sudo dtrace -p "$1" -qn '
