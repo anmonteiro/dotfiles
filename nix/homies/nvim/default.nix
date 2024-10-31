@@ -5,7 +5,6 @@
 , makeWrapper
 , stdenv
 , copyPathToStore
-, fzf
 , fetchurl
 , linux-user ? null
 }:
@@ -32,8 +31,8 @@ let
   vimPlug = stdenv.mkDerivation {
     name = "vim-plug";
     src = fetchurl {
-      url = https://raw.githubusercontent.com/junegunn/vim-plug/034e8445908e828351da6e428022d8487c57ce99/plug.vim;
-      sha256 = "1vcx8cn8y9v5zrl63par0w22pv0kk3c7avpwc7ca77qsr2p0nz5r";
+      url = https://raw.githubusercontent.com/junegunn/vim-plug/d80f495fabff8446972b8695ba251ca636a047b0/plug.vim;
+      sha256 = "1nywzjd9nfr7sqqbdi69wza305q3vp26i0390j1884wdz6awid10";
     };
     unpackPhase = ''
       mkdir -p $out/autoload
@@ -66,6 +65,5 @@ symlinkJoin {
       --add-flags "--cmd 'set rtp+=${vimPlug},${ocaml-plugin},${lua-modules}' -u ${./init.vim}" \
       --set NVIM_CONFIG_CUSTOMIZATIONS_PATH "${customizations}" \
       --set NVIM_CONFIG_PLUGINS_PATH "${homeDir}/.config/nvim/plugged" \
-      --set NVIM_CONFIG_FZF_PATH "${fzf}"
   '';
 }

@@ -38,6 +38,9 @@ let
 
       # GUIs
       kittyWrapped
+
+      # Remote development
+      devpod
     ];
 
   ## Some customizations
@@ -68,20 +71,7 @@ let
     });
 
   # Neovim with a custom configuration baked in the derivation
-  neovim = import ./nvim (with pkgs;
-    {
-      inherit
-        makeWrapper
-        fetchurl
-        symlinkJoin
-        copyPathToStore
-        fzf
-        git
-        cacert
-        stdenv;
-      neovim = pkgs.neovim;
-      inherit linux-user;
-    });
+  neovim = pkgs.callPackage ./nvim { inherit linux-user; };
 
 
   # Vim with a custom vimrc and set of packages

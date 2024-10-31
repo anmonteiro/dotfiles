@@ -25,11 +25,9 @@ call plug#begin($NVIM_CONFIG_PLUGINS_PATH)
   Plug 'sbdchd/neoformat'
 
   """ Navigation
-  Plug $NVIM_CONFIG_FZF_PATH . '/share/vim-plugins/*'
-  Plug 'junegunn/fzf.vim'
   Plug 'christoomey/vim-tmux-navigator'
 
-  Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+  Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate'}
   Plug 'nvim-lua/plenary.nvim'
   Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.8' }
 
@@ -38,12 +36,12 @@ call plug#begin($NVIM_CONFIG_PLUGINS_PATH)
   Plug 'tpope/vim-fugitive'
 
   """ OCaml / Reason
-  Plug 'rgrinberg/vim-ocaml', {'for': ['ocaml', 'reason', 'opam', 'dune'] }
-  Plug 'tjdevries/ocaml.nvim', {'do': ':lua require(\"ocaml\").update()'}
+  Plug 'rgrinberg/vim-ocaml', { 'for': ['ocaml', 'reason', 'opam', 'dune'] }
+  Plug 'tjdevries/ocaml.nvim', { 'do': ':lua require(\"ocaml\").update()'}
   Plug 'nvim-treesitter/playground'
 
   """ Clojure
-  Plug 'tpope/vim-fireplace', {'for': 'clojure' }
+  Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
 
   """ Nix
   Plug 'LnL7/vim-nix', { 'for': 'nix' }
@@ -55,7 +53,7 @@ call plug#begin($NVIM_CONFIG_PLUGINS_PATH)
   Plug 'jparise/vim-graphql'
 
   """ HCL / Terraform
-  Plug 'hashivim/vim-terraform', {'for': ['terraform', 'hcl']}
+  Plug 'hashivim/vim-terraform', { 'for': ['terraform', 'hcl']}
 
   """ Coq
   Plug 'whonore/Coqtail'

@@ -128,4 +128,5 @@ nnoremap("<leader>th", "<cmd>Telescope help_tags<cr>")
 nnoremap("<C-p>", "<cmd>Telescope find_files hidden=true<cr>")
 nnoremap("<C-b>", "<cmd>Telescope buffers<cr>")
 nnoremap("<leader>;", "<cmd>Telescope command_history<cr>")
+nnoremap("<leader><Space>", "<cmd>Telescope commands<cr>")
 
