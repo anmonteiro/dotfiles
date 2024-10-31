@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+export XDG_CONFIG_HOME="$HOME"/.config
+
+mkdir -p "$XDG_CONFIG_HOME"
+
+nix-env -i -f ../nix --argstr linux-user /home/dev --remove-all
+
