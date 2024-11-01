@@ -11,3 +11,4 @@ with pkgs; [
   zshrc # Installed via `configuration.nix` with native support on Linux
   git-lfs
 ]
+++ lib.optionals pkgs.stdenv.isLinux [ xsel ]

@@ -1,6 +1,5 @@
 local telescope = require("telescope")
 local actions = require("telescope.actions")
-local nnoremap = require("utils").nnoremap
 
 telescope.setup({
 	defaults = {
@@ -113,20 +112,21 @@ telescope.setup({
 })
 
 -- mappings
-nnoremap("<leader>e", "<cmd>Telescope find_files hidden=true<cr>")
-nnoremap("<leader>p", "<cmd>Telescope live_grep hidden=true<cr>")
-nnoremap("<leader>b", "<cmd>Telescope buffers<cr>")
-nnoremap("<leader>o", "<cmd>Telescope oldfiles<cr>")
-nnoremap("<leader>tt", "<cmd>Telescope<cr>")
-nnoremap("<leader>tn", "<cmd>Telescope node_modules list<cr>")
-nnoremap("<leader>tr", "<cmd>lua require('telescope').extensions.live_grep_raw.live_grep_raw()<cr>")
-nnoremap("<leader>te", "<cmd>Telescope find_files hidden=true <cr>")
-nnoremap("<leader>tp", "<cmd>Telescope live_grep hidden=true <cr>")
-nnoremap("<leader>th", "<cmd>Telescope help_tags<cr>")
+local map = vim.api.nvim_set_keymap
+local opts = { noremap = true, silent = true }
 
+map("n", "<leader>e", "<cmd>Telescope find_files hidden=true<cr>", opts)
+map("n", "<leader>p", "<cmd>Telescope live_grep hidden=true<cr>", opts)
+map("n", "<leader>b", "<cmd>Telescope buffers<cr>", opts)
+map("n", "<leader>o", "<cmd>Telescope oldfiles<cr>", opts)
+map("n", "<leader>tt", "<cmd>Telescope<cr>", opts)
+map("n", "<leader>tn", "<cmd>Telescope node_modules list<cr>", opts)
+map("n", "<leader>tr", "<cmd>lua require('telescope').extensions.live_grep_raw.live_grep_raw()<cr>", opts)
+map("n", "<leader>te", "<cmd>Telescope find_files hidden=true<cr>", opts)
+map("n", "<leader>tp", "<cmd>Telescope live_grep hidden=true<cr>", opts)
+map("n", "<leader>th", "<cmd>Telescope help_tags<cr>", opts)
 
-nnoremap("<C-p>", "<cmd>Telescope find_files hidden=true<cr>")
-nnoremap("<C-b>", "<cmd>Telescope buffers<cr>")
-nnoremap("<leader>;", "<cmd>Telescope command_history<cr>")
-nnoremap("<leader><Space>", "<cmd>Telescope commands<cr>")
-
+map("n", "<C-p>", "<cmd>Telescope find_files hidden=true<cr>", opts)
+map("n", "<C-b>", "<cmd>Telescope buffers<cr>", opts)
+map("n", "<leader>;", "<cmd>Telescope command_history<cr>", opts)
+map("n", "<leader><Space>", "<cmd>Telescope commands<cr>", opts)

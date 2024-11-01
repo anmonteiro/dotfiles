@@ -20,7 +20,7 @@ endfun
 autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
 
 " Share the system clipboard with yank / paste
-set clipboard^=unnamed,unnamedplus
+set clipboard+=unnamed,unnamedplus
 
 " Don't create swap files
 set noswapfile

@@ -15,7 +15,7 @@ let
   inherit (pkgs) callPackage;
 
   commonPkgs = callPackage ./homies/common-packages.nix { };
-  macOSPkgs = callPackage ./homies/macos-packages.nix pkgs;
+  nixEnvPkgs = callPackage ./homies/nixenv-packages.nix pkgs;
 
 in
-commonPkgs ++ macOSPkgs
+commonPkgs ++ nixEnvPkgs
