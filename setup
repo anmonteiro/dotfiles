@@ -2,13 +2,9 @@
 
 set -xeo pipefail
 
-cat ~/.bashrc
-
-
-cp .bashrc ~/.bash_profiley
+cp bashrc ~/.bash_profiley
 
 export XDG_CONFIG_HOME="$HOME"/.config
-
 mkdir -p "$XDG_CONFIG_HOME"
 
 # nix-env -i -f ./nix --remove-all
