@@ -70,18 +70,26 @@ lspconfig['ts_ls'].setup({
   on_attach = on_attach,
 })
 
-require('lspconfig')['ocamllsp'].setup {
+lspconfig.ocamllsp.setup {
   -- cmd = { '/Users/anmonteiro/monorepo/relay-play/ocamllsp.exe', '--fallback-read-dot-merlin' },
   on_attach = on_attach
 }
 
 lspconfig.rust_analyzer.setup {
-  -- Server-specific settings. See `:help lspconfig-setup`
-  on_attach = on_attach
-  -- settings = {
-    -- ['rust-analyzer'] = {},
-  -- },
+  cmd = {"rust-analyzer" },
+    settings = {
+        ["rust-analyzer"] = {
+            diagnostics = {
+                enable = true,
+                experimental = {
+                    enable = true,
+                },
+            },
+        },
+    },
+  on_attach = on_attach,
 }
+
 
 lspconfig.ccls.setup {
   init_options = {

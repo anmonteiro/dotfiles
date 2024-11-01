@@ -101,12 +101,6 @@ let g:rainbow_active = 1
 " Enable trimmming of trailing whitespace
 "let g:neoformat_basic_format_trim = 1
 
-augroup fmt
-  autocmd!
-  autocmd BufWritePre * Neoformat
-  "autocmd BufWritePre * undojoin | Neoformat
-augroup END
-
 " Neoformat JS
 
 let g:neoformat_javascript_prettier = {
