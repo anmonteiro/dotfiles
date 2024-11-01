@@ -6,15 +6,9 @@
 , stdenv
 , copyPathToStore
 , fetchurl
-, linux-user ? null
 }:
 
 let
-  homeDir =
-    if stdenv.isLinux then
-      linux-user
-    else
-      "/Users/anmonteiro";
   customizations = copyPathToStore ./customizations;
 
   ocaml-plugin = stdenv.mkDerivation {
@@ -63,7 +57,6 @@ symlinkJoin {
   postBuild = ''
     wrapProgram "$out/bin/nvim" \
       --add-flags "--cmd 'set rtp+=${vimPlug},${ocaml-plugin},${lua-modules}' -u ${./init.vim}" \
-      --set NVIM_CONFIG_CUSTOMIZATIONS_PATH "${customizations}" \
-      --set NVIM_CONFIG_PLUGINS_PATH "${homeDir}/.config/nvim/plugged" \
+      --set NVIM_CONFIG_CUSTOMIZATIONS_PATH "${customizations}"
   '';
 }

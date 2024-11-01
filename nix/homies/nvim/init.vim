@@ -2,7 +2,8 @@ if &compatible
   set nocompatible               " Be iMproved
 endif
 
-call plug#begin($NVIM_CONFIG_PLUGINS_PATH)
+let plugin_path = expand("$HOME") . "/.config/nvim/plugged"
+call plug#begin(plugin_path)
   """ Theming
   Plug 'vim-airline/vim-airline'
   " Plug 'vim-airline/vim-airline-themes'

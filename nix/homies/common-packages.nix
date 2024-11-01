@@ -1,4 +1,4 @@
-{ pkgs, lib, stdenv, linux-user ? null }:
+{ pkgs, lib, stdenv }:
 let
   # The list of packages to be installed
   # This setup is mostly based on https://github.com/nmattia/homies
@@ -71,7 +71,7 @@ let
     });
 
   # Neovim with a custom configuration baked in the derivation
-  neovim = pkgs.callPackage ./nvim { inherit linux-user; };
+  neovim = pkgs.callPackage ./nvim { };
 
 
   # Vim with a custom vimrc and set of packages
