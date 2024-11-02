@@ -4,13 +4,10 @@
 , symlinkJoin
 , makeWrapper
 , stdenv
-, copyPathToStore
 , fetchurl
 }:
 
 let
-  customizations = copyPathToStore ./customizations;
-
   ocaml-plugin = stdenv.mkDerivation {
     name = "ocaml-plugin";
     src = ./ocaml-plugin;
@@ -56,7 +53,7 @@ symlinkJoin {
   paths = [ neovim ];
   postBuild = ''
     wrapProgram "$out/bin/nvim" \
-      --add-flags "--cmd 'set rtp+=${vimPlug},${ocaml-plugin},${lua-modules}' -u ${./init.vim}" \
-      --set NVIM_CONFIG_CUSTOMIZATIONS_PATH "${customizations}"
+      --add-flags \
+      "--cmd 'set rtp+=${vimPlug},${ocaml-plugin},${lua-modules}' -u ${./init.lua}"
   '';
 }
