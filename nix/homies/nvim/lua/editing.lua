@@ -55,7 +55,15 @@ vim.g.NERDCustomDelimiters = { reason = { left = "//", leftAlt = "/*", rightAlt 
 -- Set conceal level to 0 on markdown and json{,c} files
 vim.api.nvim_create_autocmd("FileType", {
   pattern = { "json", "jsonc", "markdown" },
-  callback = function() vim.opt_local.conceallevel = 0 end,
+  callback = function()
+    vim.api.nvim_create_autocmd("BufWinEnter", {
+      once = true,
+      buffer = vim.api.nvim_get_current_buf(),
+      callback = function()
+        vim.api.nvim_win_set_option(0, "conceallevel", 0)
+      end,
+    })
+  end,
 })
 
 -- Leader key config
