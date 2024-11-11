@@ -57,7 +57,6 @@ vim.api.nvim_create_autocmd("FileType", {
   pattern = { "json", "jsonc", "markdown" },
   callback = function()
     vim.api.nvim_create_autocmd("BufWinEnter", {
-      once = true,
       buffer = vim.api.nvim_get_current_buf(),
       callback = function()
         vim.api.nvim_win_set_option(0, "conceallevel", 0)
@@ -172,7 +171,9 @@ vim.api.nvim_create_autocmd("BufWritePre", {
   group = fmt_group,
   pattern = "*",
   callback = function()
-    if vim.lsp.buf.format then
+    local client = vim.lsp.get_active_clients({ bufnr = 0 })[1]
+
+    if client and client.supports_method("textDocument/formatting") then
       vim.lsp.buf.format()
     else
       -- Fall back to Neoformat
