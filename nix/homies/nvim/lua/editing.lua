@@ -163,7 +163,12 @@ local _ = require("nvim-treesitter.configs").setup {
 require("clojure")
 
 require("reason-ocaml")
-require("ocaml").setup()
+require("ocaml").setup({
+  install_rapper = false, -- for now
+  install_mlx = true,
+  setup_lspconfig = false,
+  setup_conform = false,
+})
 
 local fmt_group = vim.api.nvim_create_augroup("fmt", { clear = true })
 

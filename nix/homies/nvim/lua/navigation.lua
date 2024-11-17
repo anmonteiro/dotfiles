@@ -1,6 +1,7 @@
 -- Set wildmode and wildignore
 vim.opt.wildmode = { "longest:list", "full" }
-vim.opt.wildignore:append({ "*/_build/*", "*/.svn/*", "*/node_modules/*"  })
+vim.opt.wildignorecase = true
+vim.opt.wildignore:append({ "*/_build/*" })
 -- vim.opt.wildignore:append("*/_build/*,*/.svn/*,*/node_modules/*")
 
 -- Map `;` to `:`
