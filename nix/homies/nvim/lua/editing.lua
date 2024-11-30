@@ -1,5 +1,4 @@
 
-
 vim.opt.hidden = true
 
 -- From `:help Y`:
@@ -129,6 +128,9 @@ vim.g.completion_chain_complete_list = {
 vim.g.completion_matching_strategy_list = { "exact", "substring" }
 -- Useful if there's a lot of camel case items
 vim.g.completion_matching_ignore_case = 1
+
+-- Load editing-related plugins
+require("nvim-autopairs").setup {}
 
 local _ = require("nvim-treesitter.configs").setup {
   ensure_installed = {

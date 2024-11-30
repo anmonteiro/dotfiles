@@ -33,7 +33,7 @@ with pkgs; [
   bat
   cacert
   curl
-  ocaml-ng.ocamlPackages_5_2.carl
+  ocaml-ng.ocamlPackages_5_3.carl
   eza
   fzf
   git

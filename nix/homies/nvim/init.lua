@@ -10,7 +10,7 @@ vim.call('plug#begin', plugin_path)
 
   --- Editing
   Plug('tpope/vim-surround')
-  Plug('jiangmiao/auto-pairs')
+  Plug('windwp/nvim-autopairs')
   Plug('guns/vim-sexp')
   Plug('tpope/vim-sexp-mappings-for-regular-people')
   Plug('scrooloose/nerdcommenter')
