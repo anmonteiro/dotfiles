@@ -53,7 +53,6 @@ symlinkJoin {
   paths = [ neovim ];
   postBuild = ''
     wrapProgram "$out/bin/nvim" \
-      --add-flags \
-      "--cmd 'set rtp+=${vimPlug},${ocaml-plugin},${lua-modules}' -u ${./init.lua}"
+      --add-flags "--cmd 'set rtp+=${ocaml-plugin}'"
   '';
 }
