@@ -129,48 +129,9 @@ vim.g.completion_matching_strategy_list = { "exact", "substring" }
 -- Useful if there's a lot of camel case items
 vim.g.completion_matching_ignore_case = 1
 
--- Load editing-related plugins
-require("nvim-autopairs").setup {}
+require("config.clojure")
 
-local _ = require("nvim-treesitter.configs").setup {
-  ensure_installed = {
-    "c",
-    "graphql",
-    "go",
-    "html",
-    "javascript",
-    "json",
-    "jsonc",
-    "lua",
-    "markdown",
-    "nix",
-    "ocaml",
-    "ocaml_interface",
-    "python",
-    "query",
-    "rust",
-    "toml",
-    "tsx",
-    "typescript",
-    "vim",
-    -- my own...
-    "rapper",
-  },
-  highlight = {
-    enable = true
-  }
-}
-
-
-require("clojure")
-
-require("reason-ocaml")
-require("ocaml").setup({
-  install_rapper = false, -- for now
-  install_mlx = true,
-  setup_lspconfig = false,
-  setup_conform = false,
-})
+require("config.reason-ocaml")
 
 local fmt_group = vim.api.nvim_create_augroup("fmt", { clear = true })
 
