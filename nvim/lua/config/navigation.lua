@@ -14,14 +14,6 @@ vim.api.nvim_set_keymap("n", "<leader>/", ":nohlsearch<CR>", { silent = true, no
 vim.api.nvim_set_keymap("n", "<leader>n", ":bn<CR>", { silent = true, noremap = true })
 vim.api.nvim_set_keymap("n", "<leader>p", ":bp<CR>", { silent = true, noremap = true })
 
--- Tmux navigation mappings (assuming `tmux-navigator` plugin)
-vim.g.tmux_navigator_no_mappings = 1
-vim.api.nvim_set_keymap("n", "<M-h>", ":TmuxNavigateLeft<CR>", { silent = true, noremap = true })
-vim.api.nvim_set_keymap("n", "<M-j>", ":TmuxNavigateDown<CR>", { silent = true, noremap = true })
-vim.api.nvim_set_keymap("n", "<M-k>", ":TmuxNavigateUp<CR>", { silent = true, noremap = true })
-vim.api.nvim_set_keymap("n", "<M-l>", ":TmuxNavigateRight<CR>", { silent = true, noremap = true })
-vim.api.nvim_set_keymap("n", "<M-\\>", ":TmuxNavigatePrevious<CR>", { silent = true, noremap = true })
-
 -- Split behavior settings
 vim.opt.splitbelow = true
 vim.opt.splitright = true

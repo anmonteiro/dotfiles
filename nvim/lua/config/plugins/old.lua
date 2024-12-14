@@ -18,9 +18,6 @@ return {
     --- Automatic Formatting
     'sbdchd/neoformat',
 
-    --- Navigation
-    'christoomey/vim-tmux-navigator',
-
     --- Git
     'mhinz/vim-signify',
     'tpope/vim-fugitive',

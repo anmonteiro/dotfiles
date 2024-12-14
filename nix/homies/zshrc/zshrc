@@ -145,3 +145,9 @@ function changeMac() {
 
 alias npf='nix-prefetch-url --type sha256'
 alias npfu='nix-prefetch-url --type sha256 --unpack'
+
+# disable ctrl+l to clear the screen, too annoying to hit that in vim
+bindkey -r "^L"
+bindkey -r "^H"
+bindkey "^H" clear-screen
+
