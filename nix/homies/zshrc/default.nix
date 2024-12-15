@@ -41,7 +41,7 @@ let
           export LIBSQLITE=${
             if stdenv.isDarwin
             then "/usr/lib/sqlite3/libtclsqlite3.dylib"
-            else "${sqlite.dev}/lib/libsqlite3.so"
+            else "${sqlite.out}/lib/libsqlite3.so"
           }
         ''
       ]

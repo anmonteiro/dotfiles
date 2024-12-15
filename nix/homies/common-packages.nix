@@ -48,6 +48,7 @@ with pkgs; [
   ripgrep
   fd
   zsh
+  sqlite
 
   # Remote development
   devpod
