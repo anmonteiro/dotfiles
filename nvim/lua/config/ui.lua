@@ -3,17 +3,6 @@ vim.opt.termguicolors = true
 vim.g.did_install_default_menus = 1
 vim.g.did_install_syntax_menu = 1
 
--- Disable unneeded built-in plugins to improve startup time
-local disabled_builtins = {
-  "gzip", "tar", "tarPlugin", "zip", "zipPlugin", "rrhelper",
-  "2html_plugin", "vimball", "vimballPlugin", "getscript",
-  "getscriptPlugin", "logiPat"
-}
-
-for _, plugin in ipairs(disabled_builtins) do
-  vim.g["loaded_" .. plugin] = 1
-end
-
 -- color scheme
 vim.opt.background = "dark"
 vim.g.taste_allow_italics = 1

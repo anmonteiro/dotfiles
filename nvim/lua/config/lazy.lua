@@ -32,4 +32,35 @@ require("lazy").setup({
   install = { colorscheme = { "habamax" } },
   -- automatically check for plugin updates
   checker = { enabled = true },
+
+  performance = {
+    cache = {
+      enabled = true,
+    },
+    reset_packpath = true, -- reset the package path to improve startup time
+    rtp = {
+      reset = true, -- don't reset `runtimepath` because of the OCaml plugin
+      -- paths = {},
+      disabled_plugins = {
+        "gzip",
+        "tar",
+        "tarPlugin",
+        "zip",
+        "zipPlugin",
+        "rrhelper",
+        "2html_plugin",
+        "vimball",
+        "vimballPlugin",
+        "getscript",
+        "getscriptPlugin",
+        "logiPat",
+        "netrwPlugin",
+        "tohtml",
+        "tutor",
+        -- "matchit",
+        -- "matchparen",
+      },
+    },
+  },
 })
+
