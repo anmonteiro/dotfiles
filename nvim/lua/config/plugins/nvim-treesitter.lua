@@ -5,7 +5,9 @@ return {
       { "reasonml-editor/tree-sitter-reason" },
     },
 
-    build = function() require("nvim-treesitter.install").update { with_sync = true } end,
+    build = function()
+      require("nvim-treesitter.install").update({ with_sync = true })
+    end,
     event = { "BufEnter" },
     lazy = false,
     config = function()

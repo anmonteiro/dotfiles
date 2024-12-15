@@ -1,5 +1,4 @@
-
-local M =  {}
+local M = {}
 
 M.setup = function()
   local list = require("nvim-treesitter.parsers").get_parser_configs()
@@ -11,7 +10,7 @@ M.setup = function()
     },
   }
 
-  require("nvim-treesitter.configs").setup {
+  require("nvim-treesitter.configs").setup({
     ensure_installed = {
       "c",
       "graphql",
@@ -35,9 +34,9 @@ M.setup = function()
       "vim",
     },
     highlight = {
-      enable = true
-    }
-  }
+      enable = true,
+    },
+  })
 end
 
 return M

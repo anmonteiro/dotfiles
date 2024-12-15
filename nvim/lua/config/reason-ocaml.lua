@@ -37,4 +37,3 @@ vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
     vim.bo.filetype = "ocaml.interface"
   end,
 })
-

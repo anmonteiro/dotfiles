@@ -3,7 +3,7 @@ vim.opt.hidden = true
 -- From `:help Y`:
 --   If you like "Y" to work from the cursor to the end of line (which is more
 --   logical, but not Vi-compatible) use ":map Y y$".
-vim.api.nvim_set_keymap("n", "Y", "y$", { noremap = true  })
+vim.api.nvim_set_keymap("n", "Y", "y$", { noremap = true })
 
 -- Delete trailing whitespace on save
 local function strip_trailing_whitespace()
@@ -44,7 +44,6 @@ vim.opt.completeopt = { "menuone", "preview", "noinsert", "noselect" }
 
 vim.opt.mouse = ""
 
-
 -- Check if the buffer is open in another tab / window before switching to it
 -- set switchbuf=usetab,useopen
 
@@ -69,7 +68,9 @@ vim.g.maplocalleader = ","
 
 vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
   pattern = "Vagrantfile",
-  callback = function() vim.opt_local.filetype = "ruby" end,
+  callback = function()
+    vim.opt_local.filetype = "ruby"
+  end,
 })
 
 vim.opt.statusline = vim.opt.statusline + "%#warningmsg#" + "%{SyntasticStatuslineFlag()}" + "%*"
@@ -80,7 +81,6 @@ vim.g.syntastic_check_on_wq = 0
 vim.g.syntastic_error_symbol = "✗"
 vim.g.syntastic_warning_symbol = "⚠"
 vim.cmd("highlight link SyntasticWarningSign Typedef")
-
 
 vim.api.nvim_set_keymap("n", "<leader>e", ":Errors<CR>", { silent = true, noremap = true })
 
@@ -110,8 +110,8 @@ vim.api.nvim_create_autocmd("FileType", {
 -- Source is automatically added, you just need to include it in the chain complete list
 vim.g.completion_chain_complete_list = {
   sql = {
-    { complete_items = { "vim-dadbod-completion" } }
-  }
+    { complete_items = { "vim-dadbod-completion" } },
+  },
 }
 -- Make sure `substring` is part of this list. Other items are optional for this completion source
 vim.g.completion_matching_strategy_list = { "exact", "substring" }
@@ -138,7 +138,6 @@ vim.api.nvim_create_autocmd("BufWritePre", {
     end
   end,
 })
-
 
 -- Snoopy Mode
 -- http://vim.wikia.com/wiki/Invert_the_number_row_keys_for_faster_typing

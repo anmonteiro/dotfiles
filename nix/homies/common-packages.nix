@@ -42,6 +42,7 @@ with pkgs; [
   nix-zsh-completions
   procps
   silver-searcher
+  stylua
 
   # for nvim
   ripgrep

@@ -1,19 +1,19 @@
 local ocaml_ft = {
-  'dune',
-  'ocaml',
+  "dune",
+  "ocaml",
   "ocaml.cram",
-  'ocaml.interface',
-  'ocaml.menhir',
+  "ocaml.interface",
+  "ocaml.menhir",
   "ocaml.mlx",
   "ocaml.ocamllex",
-  'opam',
-  'reason',
+  "opam",
+  "reason",
 }
 
 return {
   {
-    'rgrinberg/vim-ocaml',
-    ft = ocaml_ft
+    "rgrinberg/vim-ocaml",
+    ft = ocaml_ft,
   },
   {
     dir = vim.fn.stdpath("config") .. "/" .. "ocaml-plugin",
@@ -21,12 +21,14 @@ return {
     config = function()
       vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
         pattern = "jbuild",
-        callback = function() vim.opt_local.filetype = "dune" end,
+        callback = function()
+          vim.opt_local.filetype = "dune"
+        end,
       })
-    end
+    end,
   },
   {
-    'tjdevries/ocaml.nvim',
+    "tjdevries/ocaml.nvim",
     config = function()
       require("ocaml").setup({
         install_rapper = true,
@@ -34,7 +36,6 @@ return {
         setup_lspconfig = false,
         setup_conform = false,
       })
-    end
-  }
+    end,
+  },
 }
-
