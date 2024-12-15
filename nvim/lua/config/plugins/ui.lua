@@ -73,6 +73,8 @@ return {
       -- vim.cmd("highlight Comment cterm=italic gui=italic")
       -- end,
       -- })
+
+      require("config.keymap")
     end,
   },
   {
