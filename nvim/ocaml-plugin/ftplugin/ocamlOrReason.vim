@@ -2,6 +2,7 @@
 " Language:     Reason
 " Description:  Vim ftplugin file for Reason
 "
+
 if exists("b:finished_activating_merlin_for_buffer_successfully") && b:finished_activating_merlin_for_buffer_successfully
   finish
 endif
@@ -25,6 +26,7 @@ if !b:finished_activating_merlin_for_buffer_successfully
   if executable('ocamlmerlin')
     " throw "hiii"
     let merlinBin = substitute(system('which ocamlmerlin'),'\n$','','''')
+
     " let merlinBase = fnamemodify(merlinBin, ':p:h:h')
     " let b:ocamlmerlinRtp = merlinBase . "/share/merlin/vim"
     call ReasonMaybeUseThisMerlinVimPluginForAllProjects(merlinBin)
