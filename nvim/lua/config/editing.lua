@@ -47,8 +47,6 @@ vim.opt.mouse = ""
 
 -- Check if the buffer is open in another tab / window before switching to it
 -- set switchbuf=usetab,useopen
-vim.g.NERDSpaceDelims = 1
-vim.g.NERDCustomDelimiters = { reason = { left = "//", leftAlt = "/*", rightAlt = "*/" } }
 
 -- Set conceal level to 0 on markdown and json{,c} files
 vim.api.nvim_create_autocmd("FileType", {
@@ -69,10 +67,6 @@ vim.api.nvim_create_autocmd("FileType", {
 vim.g.mapleader = " "
 vim.g.maplocalleader = ","
 
-vim.api.nvim_create_autocmd("BufEnter", {
-  pattern = "*.nix",
-  callback = function() vim.opt_local.filetype = "nix" end,
-})
 vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
   pattern = "Vagrantfile",
   callback = function() vim.opt_local.filetype = "ruby" end,

@@ -1,13 +1,13 @@
 return {
   {
-    'nvim-telescope/telescope.nvim',
-    tag = '0.1.8',
+    "nvim-telescope/telescope.nvim",
+    tag = "0.1.8",
     dependencies = {
-      'nvim-lua/plenary.nvim',
-      { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
+      "nvim-lua/plenary.nvim",
+      { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
       "nvim-telescope/telescope-ui-select.nvim",
       "kkharji/sqlite.lua",
-      { "danielfalk/smart-open.nvim", branch = "0.2.x" }
+      { "danielfalk/smart-open.nvim", branch = "0.2.x" },
     },
     config = function()
       local telescope = require("telescope")
@@ -28,25 +28,25 @@ return {
             },
           },
           -- ripgrep_arguments = {
-            -- 'rg',
-            -- '--hidden',
-            -- '--no-heading',
-            -- '--with-filename',
-            -- '--line-number',
-            -- '--column',
-            -- '--smart-case'
+          -- 'rg',
+          -- '--hidden',
+          -- '--no-heading',
+          -- '--with-filename',
+          -- '--line-number',
+          -- '--column',
+          -- '--smart-case'
           -- },
 
           -- vimgrep_arguments = {
-            -- "rg",
-            -- "--color=never",
-            -- "-H",
-            -- "--no-heading",
-            -- "-n",
-            -- "--column",
-            -- "-S",
-            -- "--hidden",
-            -- "--trim",
+          -- "rg",
+          -- "--color=never",
+          -- "-H",
+          -- "--no-heading",
+          -- "-n",
+          -- "--column",
+          -- "-S",
+          -- "--hidden",
+          -- "--trim",
           -- },
           -- vimgrep_arguments = {
           -- 	"rg",
@@ -99,14 +99,14 @@ return {
             sort_lastused = true,
             sort_mru = true,
           },
-        -- 	-- live_grep = {
-        -- 	-- 	additional_args = function(opts)
-        -- 	-- 		return { "--hidden" }
-        -- 	-- 	end,
-        -- 	-- },
-        -- 	find_files = {
-        -- 		find_command = { "fd", "-I", "--type", "f", "--strip-cwd-prefix" },
-        -- 	},
+          -- 	-- live_grep = {
+          -- 	-- 	additional_args = function(opts)
+          -- 	-- 		return { "--hidden" }
+          -- 	-- 	end,
+          -- 	-- },
+          -- 	find_files = {
+          -- 		find_command = { "fd", "-I", "--type", "f", "--strip-cwd-prefix" },
+          -- 	},
         },
         extensions = {
           fzf = {
@@ -116,7 +116,7 @@ return {
             case_mode = "smart_case",
           },
           ["ui-select"] = {
-            require("telescope.themes").get_dropdown {},
+            require("telescope.themes").get_dropdown({}),
           },
           smart_open = {
             match_algorithm = "fzf",
@@ -144,7 +144,7 @@ return {
       vim.api.nvim_set_keymap("n", "<leader>tp", "<cmd>Telescope live_grep hidden=true<cr>", opts)
       vim.api.nvim_set_keymap("n", "<leader>th", "<cmd>Telescope help_tags<cr>", opts)
 
-      vim.keymap.set("n", "<C-p>", function ()
+      vim.keymap.set("n", "<C-p>", function()
         require("telescope").extensions.smart_open.smart_open()
       end, { noremap = true, silent = true })
       vim.api.nvim_set_keymap("n", "<C-b>", "<cmd>Telescope buffers<cr>", opts)
@@ -153,7 +153,6 @@ return {
 
       -- vim.api.nvim_set_keymap("n", "<leader>tn", "<cmd>Telescope node_modules list<cr>", opts)
       -- vim.api.nvim_set_keymap("n", "<leader>tr", "<cmd>lua require('telescope').extensions.live_grep_raw.live_grep_raw()<cr>", opts)
-
-    end
-  }
+    end,
+  },
 }

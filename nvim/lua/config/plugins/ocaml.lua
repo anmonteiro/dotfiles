@@ -12,6 +12,10 @@ local ocaml_ft = {
 
 return {
   {
+    'rgrinberg/vim-ocaml',
+    ft = ocaml_ft
+  },
+  {
     dir = vim.fn.stdpath("config") .. "/" .. "ocaml-plugin",
     ft = ocaml_ft,
     config = function()
