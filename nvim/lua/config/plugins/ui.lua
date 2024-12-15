@@ -53,6 +53,21 @@ return {
       vim.opt.background = "dark"
       vim.g.taste_allow_italics = 1
       vim.cmd("colorscheme taste")
+      -- Invisible character settings
+      vim.cmd("highlight NonText ctermfg=7 guifg=gray guibg=NONE ctermbg=NONE")
+      -- vim.api.nvim_set_hl(0, "NonText", { ctermfg = 7, guifg = "gray" })
+
+      -- Use transparent background if not using GUI (applies to TUI users)
+      -- vim.cmd("highlight Normal ctermbg=NONE guibg=NONE")
+      -- vim.api.nvim_set_hl(0, "Normal", { ctermbg = "NONE", guibg = "NONE" })
+
+      -- Enable italic comments
+      -- TODO(anmonteiro): this is not working, maybe because of `$TERM`
+      -- vim.api.nvim_create_autocmd("VimEnter", {
+      -- callback = function()
+      -- vim.cmd("highlight Comment cterm=italic gui=italic")
+      -- end,
+      -- })
     end,
   },
   {

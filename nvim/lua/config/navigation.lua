@@ -20,15 +20,3 @@ vim.opt.splitright = true
 
 -- Link NormalFloat highlight to Normal
 vim.cmd("highlight def link NormalFloat Normal")
-
--- git push --set-upstream origin `current_branch`
-local function gpsup(...)
-  local symbolicRef = vim.fn.system("git symbolic-ref --quiet HEAD"):gsub("\n$", "")
-  local currentBranch = symbolicRef:gsub("^refs/heads/", "")
-  local args = table.concat({ ... }, " ")
-  vim.cmd("Git push --set-upstream origin " .. currentBranch .. " " .. args)
-end
-
-vim.api.nvim_create_user_command("Gpsup", function(opts)
-  gpsup(unpack(opts.fargs))
-end, { nargs = "*" })
