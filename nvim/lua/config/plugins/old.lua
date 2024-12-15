@@ -17,7 +17,13 @@ return {
       end,
     },
     "vim-syntastic/syntastic",
-    "luochen1990/rainbow",
+    {
+      "luochen1990/rainbow",
+      config = function()
+        -- Rainbow Parens
+        vim.g.rainbow_active = 1
+      end,
+    },
     -- 'guns/vim-clojure-static'
     "vim-scripts/ShowTrailingWhitespace",
 
@@ -34,12 +40,11 @@ return {
     "jparise/vim-graphql",
 
     --- HCL / Terraform
-    "hashivim/vim-terraform", -- { ['for'] = {'terraform', 'hcl'}})
+    { "hashivim/vim-terraform", ft = { "terraform", "hcl" } },
   },
 }
 
 -- 'nvim-treesitter/playground')
-
 --- Clojure
 -- 'tpope/vim-fireplace', { ['for'] = 'clojure' })
 --- Coq

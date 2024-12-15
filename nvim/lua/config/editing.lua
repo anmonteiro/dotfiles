@@ -84,19 +84,6 @@ vim.cmd("highlight link SyntasticWarningSign Typedef")
 
 vim.api.nvim_set_keymap("n", "<leader>e", ":Errors<CR>", { silent = true, noremap = true })
 
--- Rainbow Parens
-vim.g.rainbow_active = 1
-
-vim.api.nvim_create_autocmd("FileType", {
-  pattern = "sql",
-  command = [[setlocal omnifunc=vim_dadbod_completion#omni]],
-})
--- Source is automatically added, you just need to include it in the chain complete list
-vim.g.completion_chain_complete_list = {
-  sql = {
-    { complete_items = { "vim-dadbod-completion" } },
-  },
-}
 -- Make sure `substring` is part of this list. Other items are optional for this completion source
 vim.g.completion_matching_strategy_list = { "exact", "substring" }
 -- Useful if there's a lot of camel case items

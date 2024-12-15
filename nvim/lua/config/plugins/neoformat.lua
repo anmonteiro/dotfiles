@@ -1,7 +1,7 @@
 return {
   {
     "sbdchd/neoformat",
-    config = function()
+    init = function()
       vim.g.neoformat_javascript_prettier = {
         exe = "./node_modules/.bin/prettier",
         args = { "--single-quote", "--stdin", "--stdin-filepath", "%:p" },
