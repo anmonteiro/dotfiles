@@ -4,7 +4,10 @@ return {
     tag = '0.1.8',
     dependencies = {
       'nvim-lua/plenary.nvim',
-      { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' }
+      { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
+      "nvim-telescope/telescope-ui-select.nvim",
+      "kkharji/sqlite.lua",
+      { "danielfalk/smart-open.nvim", branch = "0.2.x" }
     },
     config = function()
       local telescope = require("telescope")
@@ -112,6 +115,13 @@ return {
             override_file_sorter = true,
             case_mode = "smart_case",
           },
+          ["ui-select"] = {
+            require("telescope.themes").get_dropdown {},
+          },
+          smart_open = {
+            match_algorithm = "fzf",
+            disable_devicons = false,
+          },
         },
         -- file_previewer = require("telescope.previewers").vim_buffer_cat.new,
         -- grep_previewer = require("telescope.previewers").vim_buffer_vimgrep.new,
@@ -119,6 +129,10 @@ return {
         -- Developer configurations: Not meant for general override
         -- buffer_previewer_maker = require("telescope.previewers").buffer_previewer_maker,
       })
+
+      telescope.load_extension("fzf")
+      telescope.load_extension("smart_open")
+      telescope.load_extension("ui-select")
 
       -- mappings
       local opts = { noremap = true, silent = true }
@@ -130,7 +144,9 @@ return {
       vim.api.nvim_set_keymap("n", "<leader>tp", "<cmd>Telescope live_grep hidden=true<cr>", opts)
       vim.api.nvim_set_keymap("n", "<leader>th", "<cmd>Telescope help_tags<cr>", opts)
 
-      vim.api.nvim_set_keymap("n", "<C-p>", "<cmd>Telescope find_files hidden=true<cr>", opts)
+      vim.keymap.set("n", "<C-p>", function ()
+        require("telescope").extensions.smart_open.smart_open()
+      end, { noremap = true, silent = true })
       vim.api.nvim_set_keymap("n", "<C-b>", "<cmd>Telescope buffers<cr>", opts)
       vim.api.nvim_set_keymap("n", "<leader>;", "<cmd>Telescope command_history<cr>", opts)
       vim.api.nvim_set_keymap("n", "<leader><Space>", "<cmd>Telescope commands<cr>", opts)
