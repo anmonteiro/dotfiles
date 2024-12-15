@@ -32,10 +32,6 @@ return {
       end,
     },
 
-    --- Git
-    "mhinz/vim-signify",
-    "tpope/vim-fugitive",
-
     { "LnL7/vim-nix", ft = { "nix" } },
 
     --- MDX

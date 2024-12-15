@@ -17,6 +17,10 @@ return {
   {
     "vim-scripts/ShowTrailingWhitespace",
     init = function()
+      -- Show trailing whitespace with red highlighting
+      vim.cmd("highlight TrailingWhitespaceError ctermbg=red cterm=bold guibg=red")
+      vim.cmd("highlight! link ShowTrailingWhitespace TrailingWhitespaceError")
+
       vim.api.nvim_create_autocmd("BufWritePre", {
         pattern = "*",
         callback = strip_trailing_whitespace,
