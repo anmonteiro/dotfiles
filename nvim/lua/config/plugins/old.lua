@@ -1,10 +1,5 @@
 return {
   {
-    -- Theming
-    "vim-airline/vim-airline",
-    "jordwalke/vim-taste",
-    "Yggdroot/indentLine",
-
     --- Editing
     "tpope/vim-surround",
     "guns/vim-sexp",
