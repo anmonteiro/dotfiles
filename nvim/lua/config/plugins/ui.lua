@@ -54,6 +54,10 @@ return {
       vim.opt.background = "dark"
       vim.g.taste_allow_italics = 1
       vim.cmd("colorscheme taste")
+
+      -- Link NormalFloat highlight to Normal
+      vim.cmd("highlight def link NormalFloat Normal")
+
       -- Invisible character settings
       vim.cmd("highlight NonText ctermfg=7 guifg=gray guibg=NONE ctermbg=NONE")
       -- vim.api.nvim_set_hl(0, "NonText", { ctermfg = 7, guifg = "gray" })
