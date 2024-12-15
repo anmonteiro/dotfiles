@@ -21,9 +21,6 @@ return {
     -- 'guns/vim-clojure-static'
     "vim-scripts/ShowTrailingWhitespace",
 
-    --- Automatic Formatting
-    "sbdchd/neoformat",
-
     --- Git
     "mhinz/vim-signify",
     "tpope/vim-fugitive",

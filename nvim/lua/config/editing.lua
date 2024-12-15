@@ -87,22 +87,6 @@ vim.api.nvim_set_keymap("n", "<leader>e", ":Errors<CR>", { silent = true, norema
 -- Rainbow Parens
 vim.g.rainbow_active = 1
 
-vim.g.neoformat_javascript_prettier = {
-  exe = "./node_modules/.bin/prettier",
-  args = { "--single-quote", "--stdin", "--stdin-filepath", "%:p" },
-  stdin = 1,
-}
-vim.g.neoformat_typescript_prettier = vim.g.neoformat_javascript_prettier
-vim.g.neoformat_typescriptreact_prettier = vim.g.neoformat_javascript_prettier
-vim.g.neoformat_css_prettier = vim.g.neoformat_javascript_prettier
-vim.g.neoformat_scss_prettier = vim.g.neoformat_javascript_prettier
-
-vim.g.neoformat_sql_pg_format = {
-  exe = "pg_format",
-  args = { "-B", "-s", "2", "-w", "80", "-" },
-  stdin = 1,
-}
-
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "sql",
   command = [[setlocal omnifunc=vim_dadbod_completion#omni]],
@@ -123,21 +107,6 @@ require("config.clojure")
 require("config.reason-ocaml")
 
 local fmt_group = vim.api.nvim_create_augroup("fmt", { clear = true })
-
-vim.api.nvim_create_autocmd("BufWritePre", {
-  group = fmt_group,
-  pattern = "*",
-  callback = function()
-    local client = vim.lsp.get_active_clients({ bufnr = 0 })[1]
-
-    if client and client.supports_method("textDocument/formatting") then
-      vim.lsp.buf.format()
-    else
-      -- Fall back to Neoformat
-      vim.cmd("Neoformat")
-    end
-  end,
-})
 
 -- Snoopy Mode
 -- http://vim.wikia.com/wiki/Invert_the_number_row_keys_for_faster_typing

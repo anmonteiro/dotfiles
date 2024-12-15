@@ -16,16 +16,6 @@ vim.g.syntastic_reason_checkers = { "merlin" }
 vim.g["airline#extensions#esy#enabled"] = 1
 vim.g["airline#extensions#reason#enabled"] = 1
 
--- Neoformat
-vim.g.neoformat_ocaml_ocamlformat = {
-  exe = "ocamlformat",
-  args = { "--name", '"%:p"', "-" },
-  no_append = 1,
-  stdin = 1,
-}
-
-vim.g.neoformat_enabled_ocaml = { "ocamlformat" }
-
 -- Use Python 3 for Merlin
 -- https://github.com/ocaml/merlin/issues/1050
 vim.g.merlin_python_version = 3
