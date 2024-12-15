@@ -104,8 +104,6 @@ vim.g.completion_matching_ignore_case = 1
 
 require("config.clojure")
 
-require("config.reason-ocaml")
-
 local fmt_group = vim.api.nvim_create_augroup("fmt", { clear = true })
 
 -- Snoopy Mode

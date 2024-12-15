@@ -25,6 +25,27 @@ return {
           vim.opt_local.filetype = "dune"
         end,
       })
+
+      -- autocmd FileType reason silent! call merlin#Register()
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = ocaml_ft,
+        callback = function()
+          vim.api.nvim_set_keymap("n", "<localleader>d", ":MerlinDocument<CR>", { silent = true, noremap = true })
+        end,
+      })
+
+      vim.g.reasonml_project_airline = 1
+      vim.g.reasonml_syntastic_airline = 1
+      vim.g.reasonml_clean_project_airline = 1
+      vim.g.syntastic_reason = 1
+      vim.g.syntastic_ocaml_checkers = { "merlin" }
+      vim.g.syntastic_reason_checkers = { "merlin" }
+      vim.g["airline#extensions#esy#enabled"] = 1
+      vim.g["airline#extensions#reason#enabled"] = 1
+
+      -- Use Python 3 for Merlin
+      -- https://github.com/ocaml/merlin/issues/1050
+      vim.g.merlin_python_version = 3
     end,
   },
   {
