@@ -1,4 +1,3 @@
-
 vim.opt.hidden = true
 
 -- From `:help Y`:
@@ -77,10 +76,6 @@ vim.api.nvim_create_autocmd("BufEnter", {
 vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
   pattern = "Vagrantfile",
   callback = function() vim.opt_local.filetype = "ruby" end,
-})
-vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
-  pattern = "jbuild",
-  callback = function() vim.opt_local.filetype = "dune" end,
 })
 
 vim.opt.statusline = vim.opt.statusline + "%#warningmsg#" + "%{SyntasticStatuslineFlag()}" + "%*"

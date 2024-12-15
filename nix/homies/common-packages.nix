@@ -23,9 +23,6 @@ let
 
   # Tmux with a custom tmux.conf baked in
   tmux = callPackage ./tmux { };
-
-  # Neovim with a custom configuration baked in the derivation
-  neovim = callPackage ./nvim { };
 in
 
 with pkgs; [
@@ -41,6 +38,7 @@ with pkgs; [
   htop
   jq
   nixpkgs-fmt
+  neovim
   nix-zsh-completions
   procps
   silver-searcher
@@ -55,6 +53,5 @@ with pkgs; [
 ] ++ [
   ffmpeg
   kittyWrapped
-  neovim
   tmux
 ]
