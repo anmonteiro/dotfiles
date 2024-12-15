@@ -16,7 +16,19 @@ return {
         vim.g.NERDCustomDelimiters = { reason = { left = "//", leftAlt = "/*", rightAlt = "*/" } }
       end,
     },
-    "vim-syntastic/syntastic",
+    {
+      "vim-syntastic/syntastic",
+      init = function()
+        vim.opt.statusline = vim.opt.statusline + "%#warningmsg#" + "%{SyntasticStatuslineFlag()}" + "%*"
+        vim.g.syntastic_always_populate_loc_list = 1
+        vim.g.syntastic_aggregate_errors = 1
+        vim.g.syntastic_check_on_open = 1
+        vim.g.syntastic_check_on_wq = 0
+        vim.g.syntastic_error_symbol = "✗"
+        vim.g.syntastic_warning_symbol = "⚠"
+        vim.cmd("highlight link SyntasticWarningSign Typedef")
+      end,
+    },
     {
       "luochen1990/rainbow",
       config = function()
@@ -24,8 +36,6 @@ return {
         vim.g.rainbow_active = 1
       end,
     },
-    -- 'guns/vim-clojure-static'
-    "vim-scripts/ShowTrailingWhitespace",
 
     --- Git
     "mhinz/vim-signify",
@@ -46,6 +56,7 @@ return {
 
 -- 'nvim-treesitter/playground')
 --- Clojure
+-- 'guns/vim-clojure-static'
 -- 'tpope/vim-fireplace', { ['for'] = 'clojure' })
 --- Coq
 -- 'whonore/Coqtail') --, { 'for': 'coq' }

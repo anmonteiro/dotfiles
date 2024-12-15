@@ -5,25 +5,6 @@ vim.opt.hidden = true
 --   logical, but not Vi-compatible) use ":map Y y$".
 vim.api.nvim_set_keymap("n", "Y", "y$", { noremap = true })
 
--- Delete trailing whitespace on save
-local function strip_trailing_whitespace()
-  local line = vim.fn.line(".")
-  local col = vim.fn.col(".")
-  local last_search = vim.fn.getreg("/")
-
-  vim.cmd("%s/\\s\\+$//e")
-
-  -- Delete the last entry from the search history, which is the substitution
-  -- command
-  vim.fn.histdel("search", -1)
-  vim.fn.setreg("/", last_search)
-  vim.fn.cursor(line, col)
-end
-vim.api.nvim_create_autocmd("BufWritePre", {
-  pattern = "*",
-  callback = strip_trailing_whitespace,
-})
-
 -- Share system clipboard
 vim.opt.clipboard:append({ "unnamed", "unnamedplus" })
 
@@ -72,15 +53,6 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
     vim.opt_local.filetype = "ruby"
   end,
 })
-
-vim.opt.statusline = vim.opt.statusline + "%#warningmsg#" + "%{SyntasticStatuslineFlag()}" + "%*"
-vim.g.syntastic_always_populate_loc_list = 1
-vim.g.syntastic_aggregate_errors = 1
-vim.g.syntastic_check_on_open = 1
-vim.g.syntastic_check_on_wq = 0
-vim.g.syntastic_error_symbol = "✗"
-vim.g.syntastic_warning_symbol = "⚠"
-vim.cmd("highlight link SyntasticWarningSign Typedef")
 
 vim.api.nvim_set_keymap("n", "<leader>e", ":Errors<CR>", { silent = true, noremap = true })
 

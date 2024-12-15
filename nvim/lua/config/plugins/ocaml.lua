@@ -18,7 +18,7 @@ return {
   {
     dir = vim.fn.stdpath("config") .. "/" .. "ocaml-plugin",
     ft = ocaml_ft,
-    config = function()
+    init = function()
       vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
         pattern = "jbuild",
         callback = function()
