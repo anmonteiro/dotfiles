@@ -47,9 +47,10 @@ return {
   },
   {
     "jordwalke/vim-taste",
-    priority = 250,
+    priority = 1000,
     init = function()
       -- color scheme
+      vim.opt.termguicolors = true
       vim.opt.background = "dark"
       vim.g.taste_allow_italics = 1
       vim.cmd("colorscheme taste")

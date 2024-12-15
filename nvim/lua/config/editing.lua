@@ -61,8 +61,6 @@ vim.g.completion_matching_strategy_list = { "exact", "substring" }
 -- Useful if there's a lot of camel case items
 vim.g.completion_matching_ignore_case = 1
 
-require("config.clojure")
-
 local fmt_group = vim.api.nvim_create_augroup("fmt", { clear = true })
 
 -- Snoopy Mode

@@ -1,5 +1,3 @@
-vim.opt.termguicolors = true
-
 vim.g.did_install_default_menus = 1
 vim.g.did_install_syntax_menu = 1
 
