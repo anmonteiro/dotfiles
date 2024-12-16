@@ -1,18 +1,29 @@
-{ writeText, writeScriptBin, stdenv, lib, pkgs, sqlite }:
+{ fzf
+, lib
+, oh-my-zsh
+, sqlite
+, stdenv
+, writeText
+, writeScriptBin
+, zsh-autosuggestions
+, zsh-completions
+, zsh-syntax-highlighting
+}:
+
 let
   zshrc = writeScriptBin "zshrc"
     (lib.concatStringsSep "\n"
       [
         ''
           # Path to your oh-my-zsh installation.
-          export ZSH=${pkgs.oh-my-zsh}/share/oh-my-zsh
-          fpath=(${pkgs.zsh-completions}/share/zsh/site-functions $fpath)
+          export ZSH=${oh-my-zsh}/share/oh-my-zsh
+          fpath=(${zsh-completions}/share/zsh/site-functions $fpath)
         ''
         (builtins.readFile ./zshrc)
         ''
-          source ${pkgs.zsh-syntax-highlighting}/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-          source ${pkgs.zsh-autosuggestions}/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-          source ${pkgs.fzf}/share/fzf/key-bindings.zsh
+          source ${zsh-syntax-highlighting}/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+          source ${zsh-autosuggestions}/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+          source ${fzf}/share/fzf/key-bindings.zsh
 
           # Only show 10 lines of results in FZF reverse-i-search
           # FZF_DEFAULT_OPTS='--hidden'
@@ -37,7 +48,6 @@ let
           done
 
           # For telescope smart-open
-
           export LIBSQLITE=${
             if stdenv.isDarwin
             then "/usr/lib/sqlite3/libtclsqlite3.dylib"

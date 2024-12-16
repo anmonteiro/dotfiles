@@ -1,37 +1,21 @@
-{ pkgs, lib, stdenv }:
+{ pkgs, callPackage, lib, stdenv }:
+
 let
-  # The list of packages to be installed
-  # This setup is mostly based on https://github.com/nmattia/homies
-  inherit (pkgs) kitty darwin callPackage;
-
   # Kitty with a custom kitty.conf baked in
-  kittyWrapped = callPackage ./kitty { };
-
-  ## Some customizations
-
-  # A custom `nix-npm-install` (see `nix-npm-install/defaul.nix` for details)
-  # command to install npm packages in the nix sandbox:
-  nix-npm-install = callPackage ./nix-npm-install { };
-
-  ffmpeg = callPackage ./ffmpeg { };
-
-  # Git with config baked in
-  #git = import ./git (
-  #  { inherit (pkgs) makeWrapper symlinkJoin;
-  #    git = pkgs.git;
-  #  });
+  kitty = callPackage ./kitty { };
 
   # Tmux with a custom tmux.conf baked in
   tmux = callPackage ./tmux { };
+
 in
 
 with pkgs; [
-  # Nixpkgs index packages
   bat
   cacert
   curl
   ocaml-ng.ocamlPackages_5_3.carl
   eza
+  ffmpeg
   fzf
   git
   gnupg
@@ -48,12 +32,10 @@ with pkgs; [
   ripgrep
   fd
   zsh
-  sqlite
 
   # Remote development
   devpod
 ] ++ [
-  ffmpeg
-  kittyWrapped
+  kitty
   tmux
 ]

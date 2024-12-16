@@ -1,10 +1,7 @@
-pkgs:
+{ callPackage, git-lfs, nix }:
 
 let
-  inherit (pkgs) callPackage git-lfs nix;
-  zshrc = callPackage ./zshrc { inherit pkgs; };
-  lumo = callPackage ./lumo-cljs { };
-
+  zshrc = callPackage ./zshrc { };
 in
 
 [
