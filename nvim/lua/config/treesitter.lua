@@ -1,15 +1,6 @@
 local M = {}
 
 M.setup = function()
-  local list = require("nvim-treesitter.parsers").get_parser_configs()
-  list.reason = {
-    install_info = {
-      url = "https://github.com/reasonml-editor/tree-sitter-reason",
-      files = { "src/parser.c", "src/scanner.c" },
-      branch = "master",
-    },
-  }
-
   require("nvim-treesitter.configs").setup({
     ensure_installed = {
       "c",
@@ -36,6 +27,23 @@ M.setup = function()
     highlight = {
       enable = true,
     },
+  })
+
+  vim.api.nvim_create_autocmd("User", {
+    group = group,
+    pattern = "TSUpdate",
+    callback = function()
+      local parsers = require("nvim-treesitter.parsers")
+
+      parsers.reason = {
+        -- tier = 0,
+        install_info = {
+          url = "https://github.com/reasonml-editor/tree-sitter-reason",
+          files = { "src/parser.c", "src/scanner.c" },
+          branch = "master",
+        },
+      }
+    end,
   })
 end
 

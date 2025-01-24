@@ -4,12 +4,9 @@ return {
     dependencies = {
       { "reasonml-editor/tree-sitter-reason" },
     },
-
-    build = function()
-      require("nvim-treesitter.install").update({ with_sync = true })
-    end,
+    build = ":TSUpdate",
     event = { "BufEnter" },
-    lazy = false,
+    -- lazy = false,
     config = function()
       require("config.treesitter").setup()
     end,

@@ -14,10 +14,6 @@ return {
   {
     "rgrinberg/vim-ocaml",
     ft = ocaml_ft,
-  },
-  {
-    dir = vim.fn.stdpath("config") .. "/" .. "ocaml-plugin",
-    ft = ocaml_ft,
     init = function()
       vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
         pattern = "jbuild",
@@ -25,7 +21,12 @@ return {
           vim.opt_local.filetype = "dune"
         end,
       })
-
+    end,
+  },
+  {
+    dir = vim.fn.stdpath("config") .. "/" .. "ocaml-plugin",
+    ft = ocaml_ft,
+    init = function()
       -- autocmd FileType reason silent! call merlin#Register()
       vim.api.nvim_create_autocmd("FileType", {
         pattern = ocaml_ft,
