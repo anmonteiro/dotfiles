@@ -6,7 +6,7 @@ return {
     "tpope/vim-sexp-mappings-for-regular-people",
     {
       "scrooloose/nerdcommenter",
-      config = function()
+      init = function()
         vim.g.NERDSpaceDelims = 1
         vim.g.NERDCustomDelimiters = { reason = { left = "//", leftAlt = "/*", rightAlt = "*/" } }
       end,
@@ -26,7 +26,7 @@ return {
     },
     {
       "luochen1990/rainbow",
-      config = function()
+      init = function()
         -- Rainbow Parens
         vim.g.rainbow_active = 1
       end,

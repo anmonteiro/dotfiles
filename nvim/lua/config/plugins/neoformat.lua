@@ -1,6 +1,22 @@
 return {
   {
     "sbdchd/neoformat",
+    config = function()
+      vim.api.nvim_create_autocmd("BufWritePre", {
+        group = fmt_group,
+        pattern = "*",
+        callback = function()
+          local client = vim.lsp.get_active_clients({ bufnr = 0 })[1]
+
+          if client and client.supports_method("textDocument/formatting") then
+            vim.lsp.buf.format()
+          else
+            -- Fall back to Neoformat
+            vim.cmd("Neoformat")
+          end
+        end,
+      })
+    end,
     init = function()
       vim.g.neoformat_javascript_prettier = {
         exe = "./node_modules/.bin/prettier",
@@ -25,21 +41,6 @@ return {
         stdin = 1,
       }
       vim.g.neoformat_enabled_ocaml = { "ocamlformat" }
-
-      vim.api.nvim_create_autocmd("BufWritePre", {
-        group = fmt_group,
-        pattern = "*",
-        callback = function()
-          local client = vim.lsp.get_active_clients({ bufnr = 0 })[1]
-
-          if client and client.supports_method("textDocument/formatting") then
-            vim.lsp.buf.format()
-          else
-            -- Fall back to Neoformat
-            vim.cmd("Neoformat")
-          end
-        end,
-      })
     end,
   },
 }

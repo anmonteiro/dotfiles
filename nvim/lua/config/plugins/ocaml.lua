@@ -14,7 +14,7 @@ return {
   {
     "rgrinberg/vim-ocaml",
     ft = ocaml_ft,
-    init = function()
+    config = function()
       vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
         pattern = "jbuild",
         callback = function()
@@ -26,7 +26,7 @@ return {
   {
     dir = vim.fn.stdpath("config") .. "/" .. "ocaml-plugin",
     ft = ocaml_ft,
-    init = function()
+    config = function()
       -- autocmd FileType reason silent! call merlin#Register()
       vim.api.nvim_create_autocmd("FileType", {
         pattern = ocaml_ft,

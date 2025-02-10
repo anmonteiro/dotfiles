@@ -1,11 +1,13 @@
 return {
   {
     "tpope/vim-dadbod",
-    init = function()
+    config = function()
       vim.api.nvim_create_autocmd("FileType", {
         pattern = "sql",
         command = [[setlocal omnifunc=vim_dadbod_completion#omni]],
       })
+    end,
+    init = function()
       -- Source is automatically added, you just need to include it in the chain complete list
       vim.g.completion_chain_complete_list = {
         sql = {
