@@ -1,4 +1,9 @@
-{ kitty, symlinkJoin, makeWrapper, stdenv }:
+{ kitty
+, symlinkJoin
+, stdenv
+, makeBinaryWrapper
+, autoSignDarwinBinariesHook
+}:
 
 let
   conf = ./kitty.conf;
@@ -6,7 +11,7 @@ in
 
 symlinkJoin {
   name = "kitty";
-  buildInputs = [ makeWrapper ];
+  nativeBuildInputs = [ makeBinaryWrapper autoSignDarwinBinariesHook ];
   paths = [ kitty ];
   postBuild = ''
     ${if stdenv.isDarwin then ''

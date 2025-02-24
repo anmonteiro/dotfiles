@@ -2,7 +2,9 @@
 
 let
   # Kitty with a custom kitty.conf baked in
-  kitty = callPackage ./kitty { };
+  kitty = callPackage ./kitty {
+    inherit (pkgs.darwin) autoSignDarwinBinariesHook;
+  };
 
   # Tmux with a custom tmux.conf baked in
   tmux = callPackage ./tmux { };
