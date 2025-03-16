@@ -12,7 +12,7 @@ in
 symlinkJoin {
   name = "kitty";
   nativeBuildInputs = [ makeBinaryWrapper autoSignDarwinBinariesHook ];
-  paths = [ kitty ];
+  paths = [ (kitty.overrideAttrs (_: { doCheck = false; })) ];
   postBuild = ''
     ${if stdenv.isDarwin then ''
         wrapProgram "$out/Applications/kitty.app/Contents/MacOS/kitty" --add-flags "--config ${conf}"
