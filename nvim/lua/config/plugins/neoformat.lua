@@ -6,7 +6,7 @@ return {
         group = fmt_group,
         pattern = "*",
         callback = function()
-          local client = vim.lsp.get_active_clients({ bufnr = 0 })[1]
+          local client = vim.lsp.get_clients({ bufnr = 0 })[1]
 
           if client and client.supports_method("textDocument/formatting") then
             vim.lsp.buf.format()
