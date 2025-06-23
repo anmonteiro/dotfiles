@@ -65,7 +65,7 @@ vim.api.nvim_set_keymap("n", "Y", "y$", { noremap = true })
 
 -- Set conceal level to 0 on markdown and json{,c} files
 vim.api.nvim_create_autocmd("FileType", {
-  pattern = { "json", "jsonc", "markdown" },
+  pattern = { "json", "jsonc", "markdown", "rust" },
   callback = function()
     vim.api.nvim_create_autocmd("BufWinEnter", {
       buffer = vim.api.nvim_get_current_buf(),
