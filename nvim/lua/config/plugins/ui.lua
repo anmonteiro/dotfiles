@@ -78,10 +78,17 @@ return {
     end,
   },
   {
-    "Yggdroot/indentLine",
-    init = function()
-      -- Indent guides character
-      vim.g.indentLine_char = "│"
+    "nvimdev/indentmini.nvim",
+    config = function()
+      require("indentmini").setup()
+      vim.cmd.highlight("IndentLine guifg=gray")
+    end,
+  },
+
+  {
+    "fei6409/log-highlight.nvim",
+    config = function()
+      require("log-highlight").setup({})
     end,
   },
 }
