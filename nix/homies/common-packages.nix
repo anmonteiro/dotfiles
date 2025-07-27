@@ -15,7 +15,7 @@ with pkgs; [
   bat
   cacert
   curl
-  ocaml-ng.ocamlPackages_5_3.carl
+  ocaml-ng.ocamlPackages_5_4.carl
   eza
   ffmpeg
   fzf
