@@ -37,6 +37,8 @@ with pkgs; [
 
   # Remote development
   devpod
+  pyright
+  typescript-language-server
 ] ++ [
   kitty
   tmux

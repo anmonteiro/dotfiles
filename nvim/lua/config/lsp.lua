@@ -109,6 +109,10 @@ M.setup = function()
       },
     },
   })
+
+  lspconfig.pyright.setup({
+    on_attach = on_attach,
+  }) --
 end
 
 return M
