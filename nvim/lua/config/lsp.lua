@@ -1,8 +1,6 @@
 local M = {}
 
 M.setup = function()
-  local lspconfig = require("lspconfig")
-  --
   -- Mappings.
   -- See `:help vim.diagnostic.*` for documentation on any of the below functions
   local opts = { noremap = true, silent = true }
@@ -44,16 +42,17 @@ M.setup = function()
   -- map buffer local keybindings when the language server attaches
   local servers = { "terraform_lsp" }
   for _, lsp in pairs(servers) do
-    lspconfig[lsp].setup({
+    vim.lsp.config(lsp, {
       on_attach = on_attach,
       flags = {
         -- This will be the default in neovim 0.7+
         debounce_text_changes = 150,
       },
     })
+    vim.lsp.enable(lsp)
   end
 
-  lspconfig["ts_ls"].setup({
+  vim.lsp.config("ts_ls", {
     init_options = {
       filetypes = {
         "typescript",
@@ -77,13 +76,15 @@ M.setup = function()
 
     on_attach = on_attach,
   })
+  vim.lsp.enable("ts_ls")
 
-  lspconfig.ocamllsp.setup({
+  vim.lsp.config("ocamllsp", {
     -- cmd = { '/Users/anmonteiro/monorepo/relay-play/ocamllsp.exe', '--fallback-read-dot-merlin' },
     on_attach = on_attach,
   })
+  vim.lsp.enable("ocamllsp")
 
-  lspconfig.rust_analyzer.setup({
+  vim.lsp.config("rust_analyzer", {
     cmd = { "rust-analyzer" },
     settings = {
       ["rust-analyzer"] = {
@@ -97,8 +98,9 @@ M.setup = function()
     },
     on_attach = on_attach,
   })
+  vim.lsp.enable("rust_analyzer")
 
-  lspconfig.ccls.setup({
+  vim.lsp.config("ccls", {
     init_options = {
       compilationDatabaseDirectory = "build",
       index = {
@@ -109,10 +111,12 @@ M.setup = function()
       },
     },
   })
+  vim.lsp.enable("ccls")
 
-  lspconfig.pyright.setup({
+  vim.lsp.config("pyright", {
     on_attach = on_attach,
   }) --
+  vim.lsp.enable("pyright")
 end
 
 return M
