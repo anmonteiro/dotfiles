@@ -113,7 +113,7 @@ mov2gif() {
 }
 
 # opam configuration
-test -r /Users/anmonteiro/.opam/opam-init/init.zsh && . /Users/anmonteiro/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
+# test -r /Users/anmonteiro/.opam/opam-init/init.zsh && . /Users/anmonteiro/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
 
 # checkout a pull request locally
 ppr() {

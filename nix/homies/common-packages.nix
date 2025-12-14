@@ -23,7 +23,7 @@ with pkgs; [
   gnupg
   htop
   jq
-  nixpkgs-fmt
+  nixfmt
   neovim
   nix-zsh-completions
   procps
