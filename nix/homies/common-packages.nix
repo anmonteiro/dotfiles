@@ -1,4 +1,9 @@
-{ pkgs, callPackage, lib, stdenv }:
+{
+  pkgs,
+  callPackage,
+  lib,
+  stdenv,
+}:
 
 let
   # Kitty with a custom kitty.conf baked in
@@ -11,7 +16,8 @@ let
 
 in
 
-with pkgs; [
+with pkgs;
+[
   bat
   cacert
   curl
@@ -34,12 +40,14 @@ with pkgs; [
   ripgrep
   fd
   zsh
+  terminal-notifier
 
   # Remote development
   devpod
   pyright
   typescript-language-server
-] ++ [
+]
+++ [
   kitty
   tmux
 ]
