@@ -2,6 +2,7 @@
 
 import json
 import os
+import shlex
 import shutil
 import subprocess
 import sys
@@ -18,6 +19,40 @@ def should_use_terminal_notifier() -> bool:
     if os.environ.get("TERM") == "xterm-ghostty":
         return False
     return True
+
+
+def tmux_click_command() -> Optional[str]:
+    """Build a command to jump back to the originating tmux window/pane."""
+    tmux = shutil.which("tmux")
+    tmux_pane = os.environ.get("TMUX_PANE")
+    if not tmux or not tmux_pane:
+        return None
+
+    try:
+        # Target the pane where Codex is running so we capture the right window.
+        result = subprocess.run(
+            [tmux, "display-message", "-p", "-t", tmux_pane, "#{socket_path}\t#{window_id}\t#{pane_id}"],
+            capture_output=True,
+            text=True,
+            timeout=2,
+            check=True,
+        )
+    except Exception:
+        return None
+
+    parts = result.stdout.strip().split("\t")
+    if len(parts) != 3 or not all(parts):
+        return None
+
+    socket_path, window_id, pane_id = parts
+    q_tmux = shlex.quote(tmux)
+    q_socket = shlex.quote(socket_path)
+    q_window = shlex.quote(window_id)
+    q_pane = shlex.quote(pane_id)
+    return (
+        f"{q_tmux} -S {q_socket} select-window -t {q_window} >/dev/null 2>&1; "
+        f"{q_tmux} -S {q_socket} select-pane -t {q_pane} >/dev/null 2>&1"
+    )
 
 
 def notify(title: str, message: str) -> None:
@@ -43,6 +78,9 @@ def notify(title: str, message: str) -> None:
         "-activate",
         "net.kovidgoyal.kitty",
     ]
+    click_cmd = tmux_click_command()
+    if click_cmd:
+        args.extend(["-execute", click_cmd])
     try:
         subprocess.run(args, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=3)
     except Exception:
