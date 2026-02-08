@@ -46,6 +46,8 @@ with pkgs;
   devpod
   pyright
   typescript-language-server
+  nodejs_latest
+  github-mcp-server
 ]
 ++ [
   kitty
