@@ -113,10 +113,10 @@ M.setup = function()
   })
   vim.lsp.enable("ccls")
 
-  vim.lsp.config("pyright", {
+  vim.lsp.config("ty", {
     on_attach = on_attach,
   }) --
-  vim.lsp.enable("pyright")
+  vim.lsp.enable("ty")
 end
 
 return M

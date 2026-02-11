@@ -44,7 +44,7 @@ with pkgs;
 
   # Remote development
   devpod
-  pyright
+  ty
   typescript-language-server
   nodejs_latest
   github-mcp-server
