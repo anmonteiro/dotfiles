@@ -9,7 +9,15 @@ return {
     -- if you are using nixos
     -- build = "nix run .#release",
     init = function()
-      vim.env.CARGO_TARGET_DIR = "/nix/store/dkdgh0hx0iqkj1s284w8i2hmcc2ygwxi-fff-nvim-0.1.0/"
+      local fff_mcp = vim.fn.exepath("fff-mcp")
+      if fff_mcp ~= "" then
+        local resolved = vim.uv.fs_realpath(fff_mcp) or fff_mcp
+        local path = vim.fn.fnamemodify(resolved, ":h:h")
+        if path ~= "" then
+          vim.env.CARGO_TARGET_DIR = path
+          -- print("fff.nvim CARGO_TARGET_DIR: " .. path)
+        end
+      end
     end,
     opts = { -- (optional)
       debug = {

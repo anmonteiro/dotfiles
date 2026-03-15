@@ -1,10 +1,10 @@
-notify = ["/Users/anmonteiro/.nix-profile/bin/nvim-python3", "/Users/anmonteiro/.codex/notify.py"]
+notify = ["/Users/anmonteiro/.nix-profile/bin/python3", "/Users/anmonteiro/.codex/notify.py"]
 model_reasoning_summary = "auto"
 file_opener = "none"
 show_raw_agent_reasoning = true
 sandbox_mode = "workspace-write"
 approval_policy = "on-request"
-model = "gpt-5.3-codex"
+model = "gpt-5.4"
 model_reasoning_effort = "high"
 personality = "pragmatic"
 
@@ -17,8 +17,13 @@ web_search = true
 [mcp_servers.github]
 command = "github-mcp-server"
 args = ["stdio"]
-env = { GITHUB_TOOLSETS = "context,actions,code_security,dependabot,discussions,gists,git,issues,labels,notifications,orgs,projects,pull_requests,repos,secret_protection,security_advisories,stargazers,users" }
 env_vars = ["GITHUB_PERSONAL_ACCESS_TOKEN"]
+
+[mcp_servers.github.env]
+GITHUB_TOOLSETS = "context,actions,code_security,dependabot,discussions,gists,git,issues,labels,notifications,orgs,projects,pull_requests,repos,secret_protection,security_advisories,stargazers,users"
+
+[mcp_servers.fff]
+command = "fff-mcp"
 
 [sandbox_workspace_write]
 network_access = true
@@ -40,3 +45,5 @@ ignore_default_excludes = true
 [notice]
 hide_rate_limit_model_nudge = true
 
+[notice.model_migrations]
+"gpt-5.3-codex" = "gpt-5.4"
