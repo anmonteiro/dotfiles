@@ -36,3 +36,7 @@ writable_roots = [
 [shell_environment_policy]
 inherit = "all"
 ignore_default_excludes = true
+
+[notice]
+hide_rate_limit_model_nudge = true
+

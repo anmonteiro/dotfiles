@@ -13,6 +13,18 @@ let
 
   # Tmux with a custom tmux.conf baked in
   tmux = callPackage ./tmux { };
+  neovimWithPython = pkgs.neovim.override {
+    withPython3 = true;
+    extraPython3Packages =
+      ps: with ps; [
+        pynvim
+      ];
+  };
+  pythonWithPynvim = pkgs.python3.withPackages (
+    ps: with ps; [
+      pynvim
+    ]
+  );
 
 in
 
@@ -30,11 +42,13 @@ with pkgs;
   htop
   jq
   nixfmt
-  neovim
+  neovimWithPython
   nix-zsh-completions
   procps
+  pythonWithPynvim
   silver-searcher
   stylua
+  fff
 
   # for nvim
   ripgrep
