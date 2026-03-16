@@ -8,11 +8,8 @@ model = "gpt-5.4"
 model_reasoning_effort = "high"
 personality = "pragmatic"
 
-
-
 trust_level = "trusted"
-
-web_search = true
+web_search = "live"
 
 [mcp_servers.github]
 command = "github-mcp-server"
