@@ -53,6 +53,7 @@ with pkgs;
   # for nvim
   ripgrep
   fd
+  tree-sitter
   zsh
   terminal-notifier
 

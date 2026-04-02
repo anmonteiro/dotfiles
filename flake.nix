@@ -4,11 +4,7 @@
   inputs = {
     nixpkgs.url = "github:anmonteiro/nix-overlays";
     nixos-hardware.url = "github:NixOS/nixos-hardware";
-    fff = {
-      url = "github:dmtrKovalenko/fff.nvim";
-      # inputs.nixpkgs.follows = "nixpkgs";
-      # inputs.rust-overlay.follows = "rust-overlay";
-    };
+    fff.url = "github:dmtrKovalenko/fff.nvim";
   };
   outputs =
     {

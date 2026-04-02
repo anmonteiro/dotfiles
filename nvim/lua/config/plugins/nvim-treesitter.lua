@@ -5,8 +5,7 @@ return {
       { "reasonml-editor/tree-sitter-reason" },
     },
     build = ":TSUpdate",
-    event = { "BufEnter" },
-    -- lazy = false,
+    lazy = false,
     config = function()
       require("config.treesitter").setup()
     end,
