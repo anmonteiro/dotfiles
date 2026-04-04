@@ -11,6 +11,18 @@ end
 
 local function configure_lsp_keymaps(bufnr)
   local opts = { noremap = true, silent = true, buffer = bufnr }
+  local function format_buffer()
+    local ok, conform = pcall(require, "conform")
+    if ok then
+      conform.format({
+        bufnr = bufnr,
+        async = true,
+        lsp_format = vim.bo[bufnr].filetype == "nix" and "never" or "prefer",
+      })
+    else
+      vim.lsp.buf.format({ bufnr = bufnr, async = true })
+    end
+  end
 
   vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
   vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
@@ -26,9 +38,7 @@ local function configure_lsp_keymaps(bufnr)
   vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, opts)
   vim.keymap.set("n", "<space>ca", vim.lsp.buf.code_action, opts)
   vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
-  vim.keymap.set("n", "<space>f", function()
-    vim.lsp.buf.format({ async = true })
-  end, opts)
+  vim.keymap.set("n", "<space>f", format_buffer, opts)
 end
 
 local function make_capabilities()
