@@ -1,3 +1,8 @@
+local function apply_ui_theme_overrides()
+  vim.api.nvim_set_hl(0, "NonText", { fg = "gray", bg = "NONE", ctermfg = 7, ctermbg = "NONE" })
+  vim.api.nvim_set_hl(0, "IndentLine", { fg = "gray" })
+end
+
 return {
   {
     "vim-airline/vim-airline",
@@ -46,33 +51,23 @@ return {
     end,
   },
   {
-    "jordwalke/vim-taste",
+    dir = vim.fn.stdpath("config"),
+    name = "local-taste",
+    lazy = false,
     priority = 1000,
     init = function()
       -- color scheme
       vim.opt.termguicolors = true
       vim.opt.background = "dark"
       vim.g.taste_allow_italics = 1
+
+      local group = vim.api.nvim_create_augroup("local_ui_theme_overrides", { clear = true })
+      vim.api.nvim_create_autocmd("ColorScheme", {
+        group = group,
+        callback = apply_ui_theme_overrides,
+      })
+
       vim.cmd("colorscheme taste")
-
-      -- Link NormalFloat highlight to Normal
-      vim.cmd("highlight def link NormalFloat Normal")
-
-      -- Invisible character settings
-      vim.cmd("highlight NonText ctermfg=7 guifg=gray guibg=NONE ctermbg=NONE")
-      -- vim.api.nvim_set_hl(0, "NonText", { ctermfg = 7, guifg = "gray" })
-
-      -- Use transparent background if not using GUI (applies to TUI users)
-      -- vim.cmd("highlight Normal ctermbg=NONE guibg=NONE")
-      -- vim.api.nvim_set_hl(0, "Normal", { ctermbg = "NONE", guibg = "NONE" })
-
-      -- Enable italic comments
-      -- TODO(anmonteiro): this is not working, maybe because of `$TERM`
-      -- vim.api.nvim_create_autocmd("VimEnter", {
-      -- callback = function()
-      -- vim.cmd("highlight Comment cterm=italic gui=italic")
-      -- end,
-      -- })
 
       require("config.keymap")
     end,
@@ -81,7 +76,7 @@ return {
     "nvimdev/indentmini.nvim",
     config = function()
       require("indentmini").setup()
-      vim.cmd.highlight("IndentLine guifg=gray")
+      apply_ui_theme_overrides()
     end,
   },
 
