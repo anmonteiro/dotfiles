@@ -11,27 +11,6 @@ return {
         vim.g.NERDCustomDelimiters = { reason = { left = "//", leftAlt = "/*", rightAlt = "*/" } }
       end,
     },
-    {
-      "vim-syntastic/syntastic",
-      init = function()
-        vim.opt.statusline = vim.opt.statusline + "%#warningmsg#" + "%{SyntasticStatuslineFlag()}" + "%*"
-        vim.g.syntastic_always_populate_loc_list = 1
-        vim.g.syntastic_aggregate_errors = 1
-        vim.g.syntastic_check_on_open = 1
-        vim.g.syntastic_check_on_wq = 0
-        vim.g.syntastic_error_symbol = "✗"
-        vim.g.syntastic_warning_symbol = "⚠"
-        vim.cmd("highlight link SyntasticWarningSign Typedef")
-      end,
-    },
-    {
-      "luochen1990/rainbow",
-      init = function()
-        -- Rainbow Parens
-        vim.g.rainbow_active = 1
-      end,
-    },
-
     { "LnL7/vim-nix", ft = { "nix" } },
     "jxnblk/vim-mdx-js", -- { ['for'] = 'mdx' })
     "jparise/vim-graphql",

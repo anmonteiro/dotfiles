@@ -1,4 +1,4 @@
-" Vim syntastic plugin helper
+" Reason Vim plugin helper
 " Language:     Reason
 " Maintainer:   Jordan Walke <jordojw@gmail.com>
 " Portions Copyright (c) 2015-present, Facebook, Inc. All rights reserved.
@@ -50,29 +50,6 @@ endif
 if !exists('g:reasonml_extra_args_expr_reason')
   let g:reasonml_extra_args_expr_reason='""'
 endif
-if !exists('g:reasonml_project_airline')
-  let g:reasonml_project_airline=1
-endif
-if !exists('g:reasonml_clean_project_airline')
-  let g:reasonml_clean_project_airline=0
-endif
-if !exists('g:reasonml_syntastic_airline')
-  let g:reasonml_syntastic_airline=1
-endif
-
-
-" User Customizable Lint And Error Symbols:
-if !exists('g:vimBoxLinterErrorSymbol')
-  let g:vimBoxLinterErrorSymbol="⮿"
-endif
-if !exists('g:vimBoxLinterWarningSymbol')
-  let g:vimBoxLinterWarningSymbol="⮿"
-endif
-if !exists('g:vimBoxLinterOkSymbol')
-  let g:vimBoxLinterOkSymbol="☻"
-endif
-
-
 let g:reasonml_did_ensure_shell_plugins=0
 if !exists('g:reasonml_force_ocamlmerlin_path')
   let g:reasonml_force_ocamlmerlin_path=''
@@ -102,14 +79,6 @@ let g:reasonml_args_expr_reason = '"--print re " .  (match(expand("%"), "\\.rei$
 
 let s:save_cpo = &cpo
 set cpo&vim
-
-" Tell Syntastic about Reason filetype/enables tab completion 'SyntasticInfo'
-" command. Doesn't actually register the checker.
-if exists('g:syntastic_extra_filetypes')
-  call add(g:syntastic_extra_filetypes, 'reason')
-else
-  let g:syntastic_extra_filetypes = ['reason']
-endif
 
 " Utilities: functions copy/pasted from reasonPluginLoader.vim Prefixed with
 " __ so they don't show up in autocompletion in command line etc.
@@ -177,11 +146,6 @@ function! DoReasonPrettyPrint()
     let l = line(".")
     let c = col(".")
     if call('refmt#Refmt', a:000)
-        if exists ('g:SyntasticChecker')
-          execute 'SyntasticReset'
-          " Can't do this till you save!
-          " execute 'SyntasticCheck reasonc'
-        endif
     endif
     let @/=_s
     call cursor(l, c)
@@ -207,9 +171,6 @@ function! ReasonMaybeUseThisMerlinVimPluginForAllProjects(thisProjectsMerlinPath
 
     let ocamlmerlin=substitute(thisProjectsMerlinPath,'ocamlmerlin\(\.exe\)\?$','','') . "../share/merlin/vim/"
     let ocamlmerlinRtp = __ReasonUtilsDirPath(ocamlmerlin)
-    " syntastic. Enabled by default, no-op when syntastic isn't present
-    let g:syntastic_ocaml_checkers=['merlin']
-    let g:syntastic_reason_checkers=['merlin']
     let g:plugs_reasonPluginLoader={}
     let g:plugs_reasonPluginLoader['merlin'] = {'dir': (ocamlmerlinRtp)}
     call call(function("ReasonPluginLoaderLoad"), keys(g:plugs_reasonPluginLoader))
@@ -217,4 +178,3 @@ function! ReasonMaybeUseThisMerlinVimPluginForAllProjects(thisProjectsMerlinPath
     execute "set rtp+=".ocamlmerlinRtp
   endif
 endfunction
-

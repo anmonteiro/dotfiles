@@ -11,8 +11,6 @@ return {
   {
     "mhinz/vim-signify",
     config = function()
-      vim.cmd("highlight SignColumn ctermbg=NONE guibg=NONE")
-
       vim.api.nvim_create_user_command("Gpsup", function(opts)
         gpsup(unpack(opts.fargs))
       end, { nargs = "*" })
