@@ -17,10 +17,37 @@ local function visual_map(callback)
   end
 end
 
+local function setup_editing_autocmds()
+  vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+    pattern = "Vagrantfile",
+    callback = function()
+      vim.bo.filetype = "ruby"
+    end,
+  })
+
+  -- Window-local display overrides.
+  -- Keep this disabled unless conceal in Markdown/JSON becomes annoying again.
+  -- The nested BufWinEnter was intentional because conceallevel is window-local.
+  --[[
+  vim.api.nvim_create_autocmd("FileType", {
+    pattern = { "json", "jsonc", "markdown" },
+    callback = function()
+      vim.api.nvim_create_autocmd("BufWinEnter", {
+        buffer = vim.api.nvim_get_current_buf(),
+        callback = function()
+          vim.wo.conceallevel = 0
+        end,
+      })
+    end,
+  })
+  ]]
+end
+
 return {
   {
     "kylechui/nvim-surround",
     branch = "main",
+    init = setup_editing_autocmds,
     config = function()
       require("nvim-surround").setup({})
     end,

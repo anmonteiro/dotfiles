@@ -41,6 +41,7 @@ with pkgs;
   gnupg
   htop
   jq
+  nixd
   nixfmt
   neovimWithPython
   nix-zsh-completions

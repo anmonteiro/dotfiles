@@ -3,7 +3,11 @@ return {
     "guns/vim-sexp",
     "tpope/vim-sexp-mappings-for-regular-people",
     { "LnL7/vim-nix", ft = { "nix" } },
-    "jxnblk/vim-mdx-js", -- { ['for'] = 'mdx' })
+    {
+      "davidmh/mdx.nvim",
+      lazy = false,
+      dependencies = { "nvim-treesitter/nvim-treesitter" },
+    },
     "jparise/vim-graphql",
     { "hashivim/vim-terraform", ft = { "terraform", "hcl" } },
   },

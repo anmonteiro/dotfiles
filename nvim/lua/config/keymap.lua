@@ -57,26 +57,6 @@ map("n", "Y", "y$", { noremap = true })
 -- Check if the buffer is open in another tab / window before switching to it
 -- set switchbuf=usetab,useopen
 
--- Set conceal level to 0 on markdown and json{,c} files
-vim.api.nvim_create_autocmd("FileType", {
-  pattern = { "json", "jsonc", "markdown", "rust" },
-  callback = function()
-    vim.api.nvim_create_autocmd("BufWinEnter", {
-      buffer = vim.api.nvim_get_current_buf(),
-      callback = function()
-        vim.api.nvim_win_set_option(0, "conceallevel", 0)
-      end,
-    })
-  end,
-})
-
-vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
-  pattern = "Vagrantfile",
-  callback = function()
-    vim.bo.filetype = "ruby"
-  end,
-})
-
 vim.api.nvim_create_user_command("Errors", function()
   vim.diagnostic.setloclist({ open = true })
 end, { desc = "Open diagnostics in the location list" })

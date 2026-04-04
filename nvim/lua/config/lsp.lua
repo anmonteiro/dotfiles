@@ -94,6 +94,21 @@ M.setup = function()
     capabilities = capabilities,
   })
 
+  enable_server("nixd_local", {
+    cmd = { "nixd" },
+    filetypes = { "nix" },
+    root_markers = { "flake.nix", ".git" },
+    on_attach = on_attach,
+    capabilities = capabilities,
+    settings = {
+      nixd = {
+        formatting = {
+          command = { "nixfmt" },
+        },
+      },
+    },
+  })
+
   enable_server("rust_analyzer", {
     cmd = { "rust-analyzer" },
     settings = {
