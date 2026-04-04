@@ -63,6 +63,12 @@ return {
       vim.keymap.set("i", "<C-x><C-o>", function()
         require("blink.cmp").show()
       end, { desc = "Blink completion" })
+      vim.keymap.set("i", "<C-x><C-f>", function()
+        require("blink.cmp").show({ providers = { "path" } })
+      end, { desc = "Blink path completion" })
+      vim.keymap.set("i", "<C-x><C-n>", function()
+        require("blink.cmp").show({ providers = { "buffer" } })
+      end, { desc = "Blink buffer completion" })
     end,
     opts = {
       keymap = {
@@ -115,9 +121,20 @@ return {
           plsql = { inherit_defaults = true, "dadbod" },
         },
         providers = {
+          lsp = {
+            fallbacks = { "buffer" },
+            timeout_ms = function()
+              if vim.bo.filetype == "nix" then return 10000 end
+              return 2000
+            end,
+          },
+          buffer = {
+            score_offset = -3,
+          },
           dadbod = {
             name = "Dadbod",
             module = "vim_dadbod_completion.blink",
+            fallbacks = { "buffer" },
           },
         },
       },

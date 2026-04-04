@@ -55,13 +55,56 @@ local function enable_server(name, config)
   vim.lsp.enable(name)
 end
 
+local function make_nixd_settings(nixpkgs_expr)
+  return {
+    nixd = {
+      formatting = {
+        command = { "nixfmt" },
+      },
+      nixpkgs = {
+        expr = nixpkgs_expr or "import <nixpkgs> { }",
+      },
+    },
+  }
+end
+
+local function nixd_nixpkgs_expr(root)
+  if not root or not vim.uv.fs_stat(vim.fs.joinpath(root, "flake.nix")) then
+    return "import <nixpkgs> { }"
+  end
+
+  local quoted_root = string.format("%q", root)
+  return table.concat({
+    "let",
+    "  flake = builtins.getFlake " .. quoted_root .. ";",
+    "  nixpkgs = if flake.inputs ? nixpkgs then flake.inputs.nixpkgs else null;",
+    "in",
+    "if flake ? legacyPackages then",
+    "flake.legacyPackages.${builtins.currentSystem}",
+    "else if nixpkgs != null && nixpkgs ? legacyPackages then",
+    "nixpkgs.legacyPackages.${builtins.currentSystem}",
+    "else",
+    "import (if nixpkgs != null then nixpkgs else <nixpkgs>) { }",
+  }, " ")
+end
+
+local function configure_nixd_workspace(client, bufnr)
+  local bufname = vim.api.nvim_buf_get_name(bufnr)
+  local root = vim.fs.root(bufname, { "flake.nix", ".git" })
+  client.settings = make_nixd_settings(nixd_nixpkgs_expr(root))
+  client:notify("workspace/didChangeConfiguration", { settings = client.settings })
+end
+
 M.setup = function()
   local capabilities = make_capabilities()
 
   configure_global_diagnostics()
 
-  local on_attach = function(_, bufnr)
+  local on_attach = function(client, bufnr)
     configure_lsp_keymaps(bufnr)
+    if client.name == "nixd_local" then
+      configure_nixd_workspace(client, bufnr)
+    end
   end
 
   for _, server in ipairs({ "terraform_lsp" }) do
@@ -110,13 +153,7 @@ M.setup = function()
     root_markers = { "flake.nix", ".git" },
     on_attach = on_attach,
     capabilities = capabilities,
-    settings = {
-      nixd = {
-        formatting = {
-          command = { "nixfmt" },
-        },
-      },
-    },
+    settings = make_nixd_settings(),
   })
 
   enable_server("rust_analyzer", {
