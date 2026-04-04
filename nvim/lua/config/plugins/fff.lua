@@ -1,6 +1,7 @@
 return {
   {
-    "dmtrKovalenko/fff.nvim",
+    "anmonteiro/fff.nvim",
+    branch = "anmonteiro/picker-ui-seam",
     -- build = function()
     -- this will download prebuild binary or try to use existing rustup toolchain to build from source
     -- (if you are using lazy you can use gb for rebuilding a plugin if needed)
@@ -21,8 +22,15 @@ return {
     end,
     opts = { -- (optional)
       debug = {
-        enabled = true, -- we expect your collaboration at least during the beta
+        enabled = false, -- we expect your collaboration at least during the beta
         show_scores = true, -- to help us optimize the scoring system, feel free to share your scores!
+      },
+      hl = {
+        normal = "NormalFloat",
+        border = "FloatBorder",
+        title = "FloatTitle",
+        selected = "FFFSelected",
+        selected_active = "FFFSelectedActive",
       },
     },
     -- No need to lazy-load with lazy.nvim.
@@ -60,6 +68,13 @@ return {
           require("fff").live_grep({ query = vim.fn.expand("<cword>") })
         end,
         desc = "Search current word",
+      },
+      {
+        "fb",
+        function()
+          require("config.buffer_picker").open()
+        end,
+        desc = "FFF buffers",
       },
     },
   },
