@@ -2,17 +2,27 @@ return {
   {
     "sbdchd/neoformat",
     config = function()
+      local fmt_group = vim.api.nvim_create_augroup("neoformat_fallback", { clear = true })
+
+      local function has_lsp_formatter(bufnr)
+        for _, client in ipairs(vim.lsp.get_clients({ bufnr = bufnr })) do
+          if client.supports_method("textDocument/formatting") then return true end
+        end
+        return false
+      end
+
       vim.api.nvim_create_autocmd("BufWritePre", {
         group = fmt_group,
         pattern = "*",
-        callback = function()
-          local client = vim.lsp.get_clients({ bufnr = 0 })[1]
+        callback = function(args)
+          if not vim.bo[args.buf].modifiable or vim.bo[args.buf].buftype ~= "" then return end
 
-          if client and client.supports_method("textDocument/formatting") then
-            vim.lsp.buf.format()
+          if has_lsp_formatter(args.buf) then
+            vim.lsp.buf.format({ bufnr = args.buf, async = false })
           else
-            -- Fall back to Neoformat
-            vim.cmd("Neoformat")
+            vim.api.nvim_buf_call(args.buf, function()
+              vim.cmd("silent Neoformat")
+            end)
           end
         end,
       })

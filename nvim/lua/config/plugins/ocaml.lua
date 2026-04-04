@@ -18,7 +18,7 @@ return {
       vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
         pattern = "jbuild",
         callback = function()
-          vim.opt_local.filetype = "dune"
+          vim.bo.filetype = "dune"
         end,
       })
     end,
@@ -27,15 +27,19 @@ return {
     dir = vim.fn.stdpath("config") .. "/" .. "ocaml-plugin",
     ft = ocaml_ft,
     config = function()
-      -- autocmd FileType reason silent! call merlin#Register()
+      local group = vim.api.nvim_create_augroup("ocaml_plugin_keymaps", { clear = true })
       vim.api.nvim_create_autocmd("FileType", {
+        group = group,
         pattern = ocaml_ft,
-        callback = function()
-          vim.api.nvim_set_keymap("n", "<localleader>d", ":MerlinDocument<CR>", { silent = true, noremap = true })
+        callback = function(args)
+          if vim.bo[args.buf].buftype ~= "" then return end
+          vim.keymap.set("n", "<localleader>d", "<cmd>MerlinDocument<CR>", {
+            buffer = args.buf,
+            silent = true,
+            noremap = true,
+          })
         end,
       })
-
-      vim.g["airline#extensions#esy#enabled"] = 1
 
       -- Use Python 3 for Merlin
       -- https://github.com/ocaml/merlin/issues/1050
@@ -46,7 +50,7 @@ return {
     "tjdevries/ocaml.nvim",
     config = function()
       require("ocaml").setup({
-        install_rapper = true,
+        install_rapper = false,
         install_mlx = true,
         setup_lspconfig = false,
         setup_conform = false,

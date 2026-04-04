@@ -1,7 +1,7 @@
 return {
   {
     "anmonteiro/fff.nvim",
-    branch = "anmonteiro/picker-ui-seam",
+    branch = "anmonteiro/merged-fixes",
     -- build = function()
     -- this will download prebuild binary or try to use existing rustup toolchain to build from source
     -- (if you are using lazy you can use gb for rebuilding a plugin if needed)

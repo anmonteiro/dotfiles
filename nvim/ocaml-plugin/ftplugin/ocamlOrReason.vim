@@ -3,6 +3,13 @@
 " Description:  Vim ftplugin file for Reason
 "
 
+" Skip scratch buffers such as file-picker previews. They may borrow the
+" filetype for syntax highlighting, but they are not real project files and
+" should not try to register with Merlin.
+if &buftype !=# ''
+  finish
+endif
+
 if exists("b:finished_activating_merlin_for_buffer_successfully") && b:finished_activating_merlin_for_buffer_successfully
   finish
 endif

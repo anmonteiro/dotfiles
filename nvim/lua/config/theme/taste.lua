@@ -542,69 +542,92 @@ function M.apply()
   apply_extra_highlights(palette)
   apply_treesitter_highlights(palette)
   apply_semantic_highlights(palette)
-
-  if vim.fn.exists("*airline#load_theme") == 1 and vim.g.airline_theme == "taste" then
-    vim.schedule(function()
-      pcall(vim.fn["airline#load_theme"])
-    end)
-  end
 end
 
-function M.airline_palette()
-  local fn = vim.fn
-  local get_highlight = fn["airline#themes#get_highlight"]
-  local get_highlight2 = fn["airline#themes#get_highlight2"]
-  local generate_color_map = fn["airline#themes#generate_color_map"]
-  local palette = {
-    accents = {
-      red = get_highlight("Constant"),
+function M.lualine_theme()
+  local palette = select(1, derived_colors(vim.o.background == "light" and "light" or "dark"))
+
+  local function section(fg, bg, gui)
+    local hl = {
+      fg = resolve_color(fg, palette),
+      bg = resolve_color(bg, palette),
+    }
+
+    if gui then hl.gui = gui end
+
+    return hl
+  end
+
+  local function mode_section(bg)
+    return {
+      fg = to_hex(blend(palette.syntax_bg, palette[bg], 10)),
+      bg = resolve_color(bg, palette),
+      gui = "bold",
+    }
+  end
+
+  local modal = section("syntax_fg", "modal_bg")
+  local chrome = section("syntax_fg", "chrome_bg")
+  local inactive = section("chrome_fg_dim", "chrome_bg")
+
+  return {
+    normal = {
+      a = mode_section("green"),
+      b = modal,
+      c = chrome,
+      x = chrome,
+      y = modal,
+      z = mode_section("green"),
+    },
+    insert = {
+      a = mode_section("blue"),
+      b = modal,
+      c = chrome,
+      x = chrome,
+      y = modal,
+      z = mode_section("blue"),
+    },
+    visual = {
+      a = mode_section("orange"),
+      b = modal,
+      c = chrome,
+      x = chrome,
+      y = modal,
+      z = mode_section("orange"),
+    },
+    replace = {
+      a = mode_section("red"),
+      b = modal,
+      c = chrome,
+      x = chrome,
+      y = modal,
+      z = mode_section("red"),
+    },
+    command = {
+      a = mode_section("purple"),
+      b = modal,
+      c = chrome,
+      x = chrome,
+      y = modal,
+      z = mode_section("purple"),
+    },
+    terminal = {
+      a = mode_section("cyan"),
+      b = modal,
+      c = chrome,
+      x = chrome,
+      y = modal,
+      z = mode_section("cyan"),
+    },
+    inactive = {
+      a = inactive,
+      b = inactive,
+      c = inactive,
+      x = inactive,
+      y = inactive,
+      z = inactive,
     },
   }
-
-  local n1_base = get_highlight2({ "Normal", "bg" }, { "DiffAdd", "bg" }, "none")
-  local n1 = { to_hex(blend(n1_base[1], n1_base[2], 10)), n1_base[2], n1_base[3], n1_base[4], n1_base[5] }
-  local n2 = get_highlight("Pmenu")
-  local n3 = get_highlight("StatusLine")
-  palette.normal = generate_color_map(n1, n2, n3)
-  palette.normal_modified = palette.normal
-
-  local i1_base = get_highlight2({ "Normal", "bg" }, { "DiffLine", "fg" }, "none")
-  local i1 = { to_hex(blend(i1_base[1], i1_base[2], 10)), i1_base[2], i1_base[3], i1_base[4], i1_base[5] }
-  local i2 = get_highlight2({ "MoreMsg", "fg" }, { "Normal", "bg" })
-  palette.insert = generate_color_map(i1, i2, n3)
-  palette.insert_modified = palette.insert
-
-  local r1_base = get_highlight2({ "Normal", "bg" }, { "Error", "fg" }, "none")
-  local r1 = { to_hex(blend(r1_base[1], r1_base[2], 10)), r1_base[2], r1_base[3], r1_base[4], r1_base[5] }
-  palette.replace = generate_color_map(r1, n2, n3)
-  palette.replace_modified = palette.replace
-
-  local v1_base = get_highlight2({ "Normal", "bg" }, { "Statement", "fg" }, "none")
-  local v1 = { to_hex(blend(v1_base[1], v1_base[2], 10)), v1_base[2], v1_base[3], v1_base[4], v1_base[5] }
-  palette.visual = generate_color_map(v1, n2, n3)
-  palette.visual_modified = palette.visual
-
-  local inactive = get_highlight2({ "StatusLineNC", "bg" }, { "StatusLine", "bg" })
-  palette.inactive = generate_color_map(inactive, inactive, inactive)
-  palette.inactive_modified = palette.inactive
-
-  local warning = get_highlight2({ "IncSearch", "fg" }, { "IncSearch", "bg" }, "bold")
-  local warning_section = { to_hex(blend(warning[1], warning[2], 10)), warning[2], warning[3], warning[4] }
-  local error = get_highlight2({ "Normal", "bg" }, { "DiffDelete", "bg" }, "none")
-  local error_section = { to_hex(blend(error[1], error[2], 10)), error[2], error[3], error[4] }
-  local term = get_highlight2({ "StatusLineNC", "bg" }, { "StatusLine", "bg" }, "none")
-  local term_section = { to_hex(blend(term[1], term[2], 10)), term[2], term[3], term[4] }
-
-  for _, mode in ipairs({ "normal", "normal_modified", "insert", "insert_modified", "visual", "visual_modified", "replace", "replace_modified" }) do
-    palette[mode].airline_warning = warning_section
-    palette[mode].airline_error = error_section
-  end
-
-  for _, mode in ipairs({ "normal", "insert", "visual", "replace" }) do
-    palette[mode].airline_term = term_section
-  end
-
-  return palette
 end
 
 return M

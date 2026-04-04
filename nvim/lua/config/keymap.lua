@@ -35,30 +35,24 @@ vim.opt.autoindent = true
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 
-vim.opt.completeopt = { "menuone", "preview", "noinsert", "noselect" }
-
 vim.opt.mouse = ""
 
--- Leader key config
--- vim.api.nvim_set_keymap("n", "<SPACE>", "<Nop>", { noremap = true })
--- vim.api.nvim_del_keymap("s", "<SPACE>")
-vim.g.mapleader = " "
-vim.g.maplocalleader = ","
+local map = vim.keymap.set
 
 -- Map `;` to `:`
-vim.api.nvim_set_keymap("n", ";", ":", { noremap = true })
+map("n", ";", ":", { noremap = true })
 
 -- Clear search highlight with `<leader>/`
-vim.api.nvim_set_keymap("n", "<leader>/", ":nohlsearch<CR>", { silent = true, noremap = true })
+map("n", "<leader>/", "<cmd>nohlsearch<CR>", { silent = true, noremap = true })
 
 -- Buffer navigation
-vim.api.nvim_set_keymap("n", "<leader>n", ":bn<CR>", { silent = true, noremap = true })
-vim.api.nvim_set_keymap("n", "<leader>p", ":bp<CR>", { silent = true, noremap = true })
+map("n", "<leader>n", "<cmd>bn<CR>", { silent = true, noremap = true })
+map("n", "<leader>p", "<cmd>bp<CR>", { silent = true, noremap = true })
 
 -- From `:help Y`:
 --   If you like "Y" to work from the cursor to the end of line (which is more
 --   logical, but not Vi-compatible) use ":map Y y$".
-vim.api.nvim_set_keymap("n", "Y", "y$", { noremap = true })
+map("n", "Y", "y$", { noremap = true })
 
 -- Check if the buffer is open in another tab / window before switching to it
 -- set switchbuf=usetab,useopen
@@ -79,18 +73,15 @@ vim.api.nvim_create_autocmd("FileType", {
 vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
   pattern = "Vagrantfile",
   callback = function()
-    vim.opt_local.filetype = "ruby"
+    vim.bo.filetype = "ruby"
   end,
 })
 
-vim.api.nvim_set_keymap("n", "<leader>e", ":Errors<CR>", { silent = true, noremap = true })
+vim.api.nvim_create_user_command("Errors", function()
+  vim.diagnostic.setloclist({ open = true })
+end, { desc = "Open diagnostics in the location list" })
 
--- Make sure `substring` is part of this list. Other items are optional for this completion source
-vim.g.completion_matching_strategy_list = { "exact", "substring" }
--- Useful if there's a lot of camel case items
-vim.g.completion_matching_ignore_case = 1
-
-local fmt_group = vim.api.nvim_create_augroup("fmt", { clear = true })
+map("n", "<leader>e", "<cmd>Errors<CR>", { silent = true, noremap = true })
 
 -- Snoopy Mode
 -- http://vim.wikia.com/wiki/Invert_the_number_row_keys_for_faster_typing

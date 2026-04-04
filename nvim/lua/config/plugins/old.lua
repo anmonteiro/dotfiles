@@ -1,16 +1,7 @@
 return {
   {
-    --- Editing
-    "tpope/vim-surround",
     "guns/vim-sexp",
     "tpope/vim-sexp-mappings-for-regular-people",
-    {
-      "scrooloose/nerdcommenter",
-      init = function()
-        vim.g.NERDSpaceDelims = 1
-        vim.g.NERDCustomDelimiters = { reason = { left = "//", leftAlt = "/*", rightAlt = "*/" } }
-      end,
-    },
     { "LnL7/vim-nix", ft = { "nix" } },
     "jxnblk/vim-mdx-js", -- { ['for'] = 'mdx' })
     "jparise/vim-graphql",
