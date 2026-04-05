@@ -69,13 +69,6 @@ return {
         end,
         desc = "Search current word",
       },
-      {
-        "fb",
-        function()
-          require("config.buffer_picker").open()
-        end,
-        desc = "FFF buffers",
-      },
     },
   },
 }

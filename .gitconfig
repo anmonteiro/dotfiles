@@ -14,4 +14,16 @@
 	rebase = false
 [core]
 	fscache = true
+	fsmonitor = true
 	untrackedCache = true
+[feature]
+	manyFiles = true
+[gc]
+	writeCommitGraph = true
+[fetch]
+	writeCommitGraph = true
+	fsmonitor = true
+[gc]
+	writeCommitGraph = true
+[fetch]
+	writeCommitGraph = true
