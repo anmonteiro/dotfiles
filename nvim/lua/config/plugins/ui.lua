@@ -1,6 +1,8 @@
 local function apply_ui_theme_overrides()
   vim.api.nvim_set_hl(0, "NonText", { fg = "gray", bg = "NONE", ctermfg = 7, ctermbg = "NONE" })
-  vim.api.nvim_set_hl(0, "IndentLine", { fg = "gray" })
+  vim.api.nvim_set_hl(0, "SnacksIndent", { fg = "gray" })
+  vim.api.nvim_set_hl(0, "SnacksIndentScope", { link = "Special" })
+  vim.api.nvim_set_hl(0, "SnacksIndentChunk", { fg = "gray" })
 end
 
 local function lualine_fileformat()
@@ -198,14 +200,6 @@ return {
       vim.cmd("colorscheme taste")
     end,
   },
-  {
-    "nvimdev/indentmini.nvim",
-    config = function()
-      require("indentmini").setup()
-      apply_ui_theme_overrides()
-    end,
-  },
-
   {
     "fei6409/log-highlight.nvim",
     config = function()

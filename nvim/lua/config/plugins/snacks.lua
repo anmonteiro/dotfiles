@@ -13,6 +13,17 @@ return {
     },
     opts = {
       bigfile = { enabled = true },
+      indent = {
+        enabled = true,
+        animate = {
+          enabled = true,
+          duration = {
+            step = 10,
+            total = 120,
+          },
+        },
+        scope = { enabled = true },
+      },
       input = { enabled = true },
       notifier = { enabled = true },
       picker = { enabled = true },
