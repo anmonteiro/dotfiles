@@ -1,0 +1,17 @@
+[package]
+name = "fff-tui"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+anyhow = "1.0"
+clap = { version = "4.5", features = ["derive", "env"] }
+crossterm = "0.29"
+dirs = "6.0"
+fff = { package = "fff-search", git = "https://github.com/dmtrKovalenko/fff.nvim", rev = "29e6480ea011351fe468fdec3ee01a4ff1d760cf" }
+fff-query-parser = { git = "https://github.com/dmtrKovalenko/fff.nvim", package = "fff-query-parser", rev = "29e6480ea011351fe468fdec3ee01a4ff1d760cf" }
+git2 = "0.20.2"
+ratatui = "0.29"
+sha1 = "0.10"
+tempfile = "3.23"
+
