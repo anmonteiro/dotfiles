@@ -8,7 +8,7 @@
 # don't pay agnoster's prompt-time git/vcs_info cost on every redraw.
 ZSH_THEME=""
 
-DEFAULT_USER=`whoami`
+DEFAULT_USER="${USER:-$(id -un)}"
 
 HISTFILE="$HOME/.zsh_history"
 HISTSIZE=10000000

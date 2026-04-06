@@ -62,7 +62,10 @@ return {
       scratch = { enabled = true },
       -- Flip this to false to fall back to Neovim's normal gutter.
       statuscolumn = { enabled = use_snacks_statuscolumn },
-      terminal = { enabled = true },
+      terminal = {
+        enabled = true,
+        shell = { "/bin/zsh", "-i" },
+      },
       gitbrowse = { enabled = true },
     },
   },

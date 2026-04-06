@@ -47,11 +47,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1775442751,
-        "narHash": "sha256-Jz1nxCrV/hWT7psdVDKjbqDfuRU9TLEeYL8lIimi6AM=",
+        "lastModified": 1775452428,
+        "narHash": "sha256-ANHzj/RcjVCP20FnOEDnHE3R2axf3AVpWZ39gMWMnYU=",
         "owner": "anmonteiro",
         "repo": "fff-cli",
-        "rev": "ba8019db914069dda9cc49e590b8b7b9a9d5139c",
+        "rev": "607aaa3a0ec75c6200a3234cf6c5227f2a7de850",
         "type": "github"
       },
       "original": {

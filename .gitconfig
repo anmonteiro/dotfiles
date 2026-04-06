@@ -14,7 +14,6 @@
 	rebase = false
 [core]
 	fscache = true
-	fsmonitor = true
 	untrackedCache = true
 [feature]
 	manyFiles = true
