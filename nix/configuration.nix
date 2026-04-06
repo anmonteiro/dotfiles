@@ -65,7 +65,7 @@
     enable = true;
     interactiveShellInit = ''
       cat << EOF > $HOME/.zshrc
-          . ${pkgs.callPackage ./homies/zshrc { inherit pkgs; }}/bin/zshrc
+          . ${pkgs.callPackage ./homies/zshrc { inherit pkgs; }}/share/zsh/zshrc
       EOF
     '';
     promptInit = "";

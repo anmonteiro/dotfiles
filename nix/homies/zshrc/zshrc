@@ -4,14 +4,26 @@
 # Path to your oh-my-zsh installation.
 # export ZSH=/Users/anmonteiro/.nix-profile/share/oh-my-zsh
 
-# Set name of the theme to load. Optionally, if you set this to "random"
-# it'll load a random theme each time that oh-my-zsh is loaded.
-# See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="agnoster"
+# Keep oh-my-zsh for plugins/completions, but own the prompt locally so we
+# don't pay agnoster's prompt-time git/vcs_info cost on every redraw.
+ZSH_THEME=""
 
 DEFAULT_USER=`whoami`
 
-HISTSIZE=1000000
+HISTFILE="$HOME/.zsh_history"
+HISTSIZE=10000000
+SAVEHIST=10000000
+setopt EXTENDED_HISTORY
+setopt SHARE_HISTORY
+setopt HIST_FCNTL_LOCK
+setopt HIST_EXPIRE_DUPS_FIRST
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_FIND_NO_DUPS
+setopt HIST_SAVE_NO_DUPS
+setopt HIST_REDUCE_BLANKS
+
+# Allow binding Ctrl-S for forward history search instead of terminal flow control.
+[[ -o interactive ]] && stty -ixon 2>/dev/null || true
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -41,7 +53,11 @@ HISTSIZE=1000000
 # Uncomment the following line if you want to disable marking untracked files
 # under VCS as dirty. This makes repository status check for large repositories
 # much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
+DISABLE_UNTRACKED_FILES_DIRTY="true"
+
+# The stock agnoster prompt also computes upstream ahead/behind state, which
+# adds extra git log work on every prompt redraw for little value here.
+AGNOSTER_GIT_BRANCH_STATUS=false
 
 # Uncomment the following line if you want to change the command execution time
 # stamp shown in the history command output.
@@ -57,8 +73,462 @@ HISTSIZE=1000000
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git colorize)
 
+# Outside nix shells, prefer cached completion init for faster startup.
+# Inside nix shells/dev shells, keep full compinit so environment-specific
+# completions from the current shell are discovered correctly.
+compinit() {
+  unfunction compinit compaudit zrecompile 2>/dev/null
+  autoload -U compaudit compinit zrecompile
+
+  if [[ -n "${IN_NIX_SHELL:-}" ]]; then
+    compinit "$@"
+    return
+  fi
+
+  local -a args=()
+  local arg
+  for arg in "$@"; do
+    if [[ "$arg" != "-i" && "$arg" != "-u" ]]; then
+      args+=("$arg")
+    fi
+  done
+
+  compinit -C "${args[@]}"
+}
+
 
 source $ZSH/oh-my-zsh.sh
+
+CURRENT_BG='NONE'
+CURRENT_FG='black'
+CURRENT_DEFAULT_FG='default'
+
+: ${AGNOSTER_DIR_FG:=${CURRENT_FG}}
+: ${AGNOSTER_DIR_BG:=blue}
+: ${AGNOSTER_CONTEXT_FG:=${CURRENT_DEFAULT_FG}}
+: ${AGNOSTER_CONTEXT_BG:=black}
+: ${AGNOSTER_GIT_CLEAN_FG:=${CURRENT_FG}}
+: ${AGNOSTER_GIT_CLEAN_BG:=green}
+: ${AGNOSTER_GIT_DIRTY_FG:=black}
+: ${AGNOSTER_GIT_DIRTY_BG:=yellow}
+: ${AGNOSTER_VENV_FG:=black}
+: ${AGNOSTER_VENV_BG:=blue}
+: ${AGNOSTER_AWS_PROD_FG:=yellow}
+: ${AGNOSTER_AWS_PROD_BG:=red}
+: ${AGNOSTER_AWS_FG:=black}
+: ${AGNOSTER_AWS_BG:=green}
+: ${AGNOSTER_STATUS_RETVAL_FG:=red}
+: ${AGNOSTER_STATUS_ROOT_FG:=yellow}
+: ${AGNOSTER_STATUS_JOB_FG:=cyan}
+: ${AGNOSTER_STATUS_FG:=${CURRENT_DEFAULT_FG}}
+: ${AGNOSTER_STATUS_BG:=black}
+: ${AGNOSTER_STATUS_RETVAL_NUMERIC:=false}
+: ${AGNOSTER_GIT_INLINE:=false}
+: ${AGNOSTER_GIT_PENDING_SYMBOL:=…}
+: ${PROMPT_GIT_CACHE:=true}
+
+typeset -g _PROMPT_GIT_CACHE_PWD=""
+typeset -g _PROMPT_GIT_CACHE_KEY=""
+typeset -g _PROMPT_GIT_CACHE_STATE=""
+typeset -g _PROMPT_GIT_CACHE_TEXT=""
+typeset -g _PROMPT_GIT_CACHE_RELATIVE=""
+typeset -g _PROMPT_GIT_CACHE_PENDING=false
+typeset -g _PROMPT_GIT_CACHE_PENDING_KEY=""
+typeset -g _PROMPT_GIT_CACHE_NEEDS_REFRESH=true
+typeset -g _PROMPT_GIT_CACHE_JOB_PID=""
+typeset -g _PROMPT_GIT_CACHE_GENERATION=0
+typeset -g _PROMPT_GIT_CACHE_PENDING_GENERATION=0
+typeset -g _PROMPT_GIT_LAST_REPO_CHECK_PWD=""
+typeset -g _PROMPT_GIT_LAST_REPO_CHECK_RESULT=false
+typeset -g _PROMPT_GIT_ASYNC_GENERATION=0
+typeset -g _PROMPT_GIT_ASYNC_KEY=""
+typeset -g _PROMPT_GIT_ASYNC_PWD=""
+typeset -g _PROMPT_GIT_ASYNC_STATE=""
+typeset -g _PROMPT_GIT_ASYNC_TEXT=""
+typeset -g _PROMPT_GIT_ASYNC_RELATIVE=""
+typeset -g _PROMPT_PARENT_PID=$$
+typeset -g _PROMPT_GIT_CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/zsh"
+typeset -g _PROMPT_GIT_CACHE_FILE="${_PROMPT_GIT_CACHE_DIR}/prompt-git-${_PROMPT_PARENT_PID}.zsh"
+
+() {
+  local LC_ALL="" LC_CTYPE="en_US.UTF-8"
+  SEGMENT_SEPARATOR=$'\ue0b0'
+}
+
+mkdir -p "$_PROMPT_GIT_CACHE_DIR"
+
+prompt_escape_literal() {
+  local text="${1//$'\n'/ }"
+  print -nr -- "${text//\%/%%}"
+}
+
+prompt_git_branch_char() {
+  local branch_char
+  () {
+    local LC_ALL="" LC_CTYPE="en_US.UTF-8"
+    branch_char=$'\ue0a0' # 
+  }
+  print -nr -- "$branch_char"
+}
+
+prompt_segment() {
+  local bg fg
+  [[ -n $1 ]] && bg="%K{$1}" || bg="%k"
+  [[ -n $2 ]] && fg="%F{$2}" || fg="%f"
+  if [[ $CURRENT_BG != 'NONE' && $1 != $CURRENT_BG ]]; then
+    print -nr -- " %{$bg%F{$CURRENT_BG}%}$SEGMENT_SEPARATOR%{$fg%} "
+  else
+    print -nr -- "%{$bg%}%{$fg%} "
+  fi
+  CURRENT_BG=$1
+  [[ -n $3 ]] && print -nr -- "$3"
+}
+
+prompt_end() {
+  if [[ -n $CURRENT_BG ]]; then
+    print -nr -- " %{%k%F{$CURRENT_BG}%}$SEGMENT_SEPARATOR"
+  else
+    print -nr -- "%{%k%}"
+  fi
+  print -nr -- "%{%f%}"
+  CURRENT_BG=''
+}
+
+git_toplevel() {
+  local repo_root
+  repo_root=$(__git_prompt_git rev-parse --show-toplevel 2>/dev/null)
+  if [[ -z $repo_root ]]; then
+    repo_root=$(__git_prompt_git rev-parse --git-dir 2>/dev/null)
+    if [[ $repo_root = '.' ]]; then
+      repo_root=$PWD
+    fi
+  fi
+  print -nr -- "$repo_root"
+}
+
+prompt_context() {
+  if [[ "$USERNAME" != "$DEFAULT_USER" || -n "$SSH_CLIENT" ]]; then
+    prompt_segment "$AGNOSTER_CONTEXT_BG" "$AGNOSTER_CONTEXT_FG" "%(!.%{%F{$AGNOSTER_STATUS_ROOT_FG}%}.)%n@%m"
+  fi
+}
+
+prompt_virtualenv() {
+  if [[ -n "$CONDA_DEFAULT_ENV" ]]; then
+    prompt_segment magenta $CURRENT_FG "🐍 $(prompt_escape_literal "$CONDA_DEFAULT_ENV")"
+  fi
+  if [[ -n "$VIRTUAL_ENV" && -n "$VIRTUAL_ENV_DISABLE_PROMPT" ]]; then
+    prompt_segment "$AGNOSTER_VENV_BG" "$AGNOSTER_VENV_FG" "(${VIRTUAL_ENV:t:gs/%/%%})"
+  fi
+}
+
+prompt_aws() {
+  [[ -z "$AWS_PROFILE" || "$SHOW_AWS_PROMPT" = false ]] && return
+  case "$AWS_PROFILE" in
+    *-prod|*production*) prompt_segment "$AGNOSTER_AWS_PROD_BG" "$AGNOSTER_AWS_PROD_FG" "AWS: ${AWS_PROFILE:gs/%/%%}" ;;
+    *) prompt_segment "$AGNOSTER_AWS_BG" "$AGNOSTER_AWS_FG" "AWS: ${AWS_PROFILE:gs/%/%%}" ;;
+  esac
+}
+
+prompt_terraform() {
+  (( $+functions[tf_prompt_info] )) || return
+  local terraform_info=$(tf_prompt_info)
+  [[ -z "$terraform_info" ]] && return
+  prompt_segment magenta yellow "TF: $(prompt_escape_literal "$terraform_info")"
+}
+
+prompt_status() {
+  local -a symbols
+
+  if [[ $AGNOSTER_STATUS_RETVAL_NUMERIC == 'true' ]]; then
+    [[ $RETVAL -ne 0 ]] && symbols+="%{%F{$AGNOSTER_STATUS_RETVAL_FG}%}$RETVAL"
+  else
+    [[ $RETVAL -ne 0 ]] && symbols+="%{%F{$AGNOSTER_STATUS_RETVAL_FG}%}✘"
+  fi
+  [[ $UID -eq 0 ]] && symbols+="%{%F{$AGNOSTER_STATUS_ROOT_FG}%}⚡"
+  (( ${#jobstates} > 0 )) && symbols+="%{%F{$AGNOSTER_STATUS_JOB_FG}%}⚙"
+
+  [[ -n "$symbols" ]] && prompt_segment "$AGNOSTER_STATUS_BG" "$AGNOSTER_STATUS_FG" "$symbols"
+}
+
+prompt_git_relative() {
+  local repo_root path_in_repo
+
+  if [[ "$PROMPT_GIT_CACHE" == true && -n "$_PROMPT_GIT_CACHE_RELATIVE" ]]; then
+    path_in_repo=$_PROMPT_GIT_CACHE_RELATIVE
+  else
+    repo_root=$(git_toplevel)
+    [[ -n "$repo_root" && "$PWD" == "$repo_root"/* ]] || return
+    path_in_repo=${PWD#$repo_root/}
+  fi
+
+  if [[ -n $path_in_repo ]]; then
+    prompt_segment "$AGNOSTER_DIR_BG" "$AGNOSTER_DIR_FG" "$(prompt_escape_literal "$path_in_repo")"
+  fi
+}
+
+prompt_git_changes() {
+  local changes=""
+
+  if ! __git_prompt_git diff --no-ext-diff --quiet --exit-code 2>/dev/null; then
+    changes+=" ±"
+  fi
+
+  if ! __git_prompt_git diff --cached --no-ext-diff --quiet --exit-code 2>/dev/null; then
+    changes+=" ✚"
+  fi
+
+  print -nr -- "$changes"
+}
+
+prompt_git_compute_cache() {
+  local branch_char dirty ref mode repo_path status_suffix="" repo_root=""
+  branch_char=$(prompt_git_branch_char)
+  _PROMPT_GIT_CACHE_PWD=$PWD
+  _PROMPT_GIT_CACHE_KEY=$PWD
+  _PROMPT_GIT_CACHE_STATE=""
+  _PROMPT_GIT_CACHE_TEXT=""
+  _PROMPT_GIT_CACHE_RELATIVE=""
+
+  if [[ "$(__git_prompt_git config --get oh-my-zsh.hide-status 2>/dev/null)" = 1 ]]; then
+    return 1
+  fi
+
+  if [[ "$(__git_prompt_git rev-parse --is-inside-work-tree 2>/dev/null)" != "true" ]]; then
+    return 1
+  fi
+
+  repo_path=$(__git_prompt_git rev-parse --git-dir 2>/dev/null)
+  dirty=$(parse_git_dirty)
+  status_suffix=$(prompt_git_changes)
+  ref=$(__git_prompt_git symbolic-ref --short HEAD 2>/dev/null) || \
+  ref="◈ $(__git_prompt_git describe --exact-match --tags HEAD 2>/dev/null)" || \
+  ref="➦ $(__git_prompt_git rev-parse --short HEAD 2>/dev/null)"
+
+  if [[ -n $dirty ]]; then
+    _PROMPT_GIT_CACHE_STATE="dirty"
+  else
+    _PROMPT_GIT_CACHE_STATE="clean"
+  fi
+
+  if [[ -e "${repo_path}/BISECT_LOG" ]]; then
+    mode=" <B>"
+  elif [[ -e "${repo_path}/MERGE_HEAD" ]]; then
+    mode=" >M<"
+  elif [[ -e "${repo_path}/rebase" || -e "${repo_path}/rebase-apply" || -e "${repo_path}/rebase-merge" || -e "${repo_path}/../.dotest" ]]; then
+    mode=" >R>"
+  fi
+
+  _PROMPT_GIT_CACHE_TEXT="${branch_char} $(prompt_escape_literal "$ref")${status_suffix}${mode}"
+
+  if [[ $AGNOSTER_GIT_INLINE == 'true' ]]; then
+    repo_root=$(git_toplevel)
+    if [[ -n "$repo_root" && "$PWD" == "$repo_root"/* ]]; then
+      _PROMPT_GIT_CACHE_RELATIVE=$(prompt_escape_literal "${PWD#$repo_root/}")
+    fi
+  fi
+
+  return 0
+}
+
+prompt_git_clear_cache() {
+  _PROMPT_GIT_CACHE_PWD=$PWD
+  _PROMPT_GIT_CACHE_KEY=$PWD
+  _PROMPT_GIT_CACHE_STATE=""
+  _PROMPT_GIT_CACHE_TEXT=""
+  _PROMPT_GIT_CACHE_RELATIVE=""
+}
+
+prompt_git_current_pwd_is_repo() {
+  if [[ "$_PROMPT_GIT_CACHE_KEY" == "$PWD" && -n "$_PROMPT_GIT_CACHE_STATE" ]]; then
+    return 0
+  fi
+
+  if [[ "$_PROMPT_GIT_LAST_REPO_CHECK_PWD" == "$PWD" ]]; then
+    [[ "$_PROMPT_GIT_LAST_REPO_CHECK_RESULT" == true ]]
+    return
+  fi
+
+  _PROMPT_GIT_LAST_REPO_CHECK_PWD=$PWD
+  _PROMPT_GIT_LAST_REPO_CHECK_RESULT=false
+
+  if [[ "$(__git_prompt_git config --get oh-my-zsh.hide-status 2>/dev/null)" = 1 ]]; then
+    return 1
+  fi
+
+  if [[ "$(__git_prompt_git rev-parse --is-inside-work-tree 2>/dev/null)" = "true" ]]; then
+    _PROMPT_GIT_LAST_REPO_CHECK_RESULT=true
+    return 0
+  fi
+
+  return 1
+}
+
+prompt_git_collect_async_result() {
+  [[ -s "$_PROMPT_GIT_CACHE_FILE" ]] || return
+  source "$_PROMPT_GIT_CACHE_FILE" 2>/dev/null || {
+    rm -f "$_PROMPT_GIT_CACHE_FILE"
+    return
+  }
+  rm -f "$_PROMPT_GIT_CACHE_FILE"
+
+  if [[ "$_PROMPT_GIT_ASYNC_GENERATION" != "$_PROMPT_GIT_CACHE_PENDING_GENERATION" ]]; then
+    return
+  fi
+
+  _PROMPT_GIT_CACHE_PENDING=false
+  _PROMPT_GIT_CACHE_PENDING_KEY=""
+  _PROMPT_GIT_CACHE_JOB_PID=""
+  _PROMPT_GIT_CACHE_NEEDS_REFRESH=false
+  _PROMPT_GIT_CACHE_PWD=$_PROMPT_GIT_ASYNC_PWD
+  _PROMPT_GIT_CACHE_KEY=$_PROMPT_GIT_ASYNC_KEY
+  _PROMPT_GIT_CACHE_STATE=$_PROMPT_GIT_ASYNC_STATE
+  _PROMPT_GIT_CACHE_TEXT=$_PROMPT_GIT_ASYNC_TEXT
+  _PROMPT_GIT_CACHE_RELATIVE=$_PROMPT_GIT_ASYNC_RELATIVE
+}
+
+prompt_git_start_async_refresh() {
+  local generation tmp_file
+
+  generation=$(( _PROMPT_GIT_CACHE_GENERATION + 1 ))
+  _PROMPT_GIT_CACHE_GENERATION=$generation
+  _PROMPT_GIT_CACHE_PENDING_GENERATION=$generation
+  _PROMPT_GIT_CACHE_PENDING=true
+  _PROMPT_GIT_CACHE_PENDING_KEY=$PWD
+
+  if [[ -n "$_PROMPT_GIT_CACHE_JOB_PID" ]]; then
+    kill "$_PROMPT_GIT_CACHE_JOB_PID" 2>/dev/null || true
+  fi
+
+  (
+    prompt_git_compute_cache || prompt_git_clear_cache
+
+    typeset -g _PROMPT_GIT_ASYNC_GENERATION=$generation
+    typeset -g _PROMPT_GIT_ASYNC_KEY=$_PROMPT_GIT_CACHE_KEY
+    typeset -g _PROMPT_GIT_ASYNC_PWD=$_PROMPT_GIT_CACHE_PWD
+    typeset -g _PROMPT_GIT_ASYNC_STATE=$_PROMPT_GIT_CACHE_STATE
+    typeset -g _PROMPT_GIT_ASYNC_TEXT=$_PROMPT_GIT_CACHE_TEXT
+    typeset -g _PROMPT_GIT_ASYNC_RELATIVE=$_PROMPT_GIT_CACHE_RELATIVE
+
+    tmp_file="${_PROMPT_GIT_CACHE_FILE}.tmp.$$"
+    typeset -p \
+      _PROMPT_GIT_ASYNC_GENERATION \
+      _PROMPT_GIT_ASYNC_KEY \
+      _PROMPT_GIT_ASYNC_PWD \
+      _PROMPT_GIT_ASYNC_STATE \
+      _PROMPT_GIT_ASYNC_TEXT \
+      _PROMPT_GIT_ASYNC_RELATIVE >| "$tmp_file" &&
+      mv -f "$tmp_file" "$_PROMPT_GIT_CACHE_FILE"
+
+    kill -s USR1 "$_PROMPT_PARENT_PID" 2>/dev/null || true
+  ) &!
+  _PROMPT_GIT_CACHE_JOB_PID=$!
+}
+
+prompt_git_precmd() {
+  [[ "$PROMPT_GIT_CACHE" == true ]] || return
+  prompt_git_collect_async_result
+
+  if [[ "$_PROMPT_GIT_CACHE_KEY" == "$PWD" && "$_PROMPT_GIT_CACHE_NEEDS_REFRESH" != true && "$_PROMPT_GIT_CACHE_PENDING" != true ]]; then
+    return
+  fi
+
+  if [[ "$_PROMPT_GIT_CACHE_PENDING" == true && "$_PROMPT_GIT_CACHE_PENDING_KEY" == "$PWD" ]]; then
+    return
+  fi
+
+  if ! prompt_git_current_pwd_is_repo; then
+    prompt_git_clear_cache
+    _PROMPT_GIT_CACHE_PENDING=false
+    _PROMPT_GIT_CACHE_PENDING_KEY=""
+    _PROMPT_GIT_CACHE_JOB_PID=""
+    _PROMPT_GIT_CACHE_NEEDS_REFRESH=false
+    return
+  fi
+
+  prompt_git_start_async_refresh
+}
+
+prompt_git_preexec() {
+  _PROMPT_GIT_CACHE_NEEDS_REFRESH=true
+}
+
+prompt_git_chpwd() {
+  _PROMPT_GIT_CACHE_NEEDS_REFRESH=true
+  _PROMPT_GIT_LAST_REPO_CHECK_PWD=""
+  _PROMPT_GIT_LAST_REPO_CHECK_RESULT=false
+}
+
+TRAPUSR1() {
+  prompt_git_collect_async_result
+  if zle >/dev/null 2>&1; then
+    zle reset-prompt
+  fi
+  return 0
+}
+
+autoload -Uz add-zsh-hook
+add-zsh-hook precmd prompt_git_precmd
+add-zsh-hook preexec prompt_git_preexec
+add-zsh-hook chpwd prompt_git_chpwd
+
+prompt_git() {
+  local branch_char
+  (( $+commands[git] )) || return
+  if [[ "$PROMPT_GIT_CACHE" == true ]]; then
+    if [[ "$_PROMPT_GIT_CACHE_KEY" == "$PWD" && -n "$_PROMPT_GIT_CACHE_STATE" ]]; then
+      if [[ "$_PROMPT_GIT_CACHE_STATE" == "dirty" ]]; then
+        prompt_segment "$AGNOSTER_GIT_DIRTY_BG" "$AGNOSTER_GIT_DIRTY_FG"
+      else
+        prompt_segment "$AGNOSTER_GIT_CLEAN_BG" "$AGNOSTER_GIT_CLEAN_FG"
+      fi
+
+      print -nr -- "$_PROMPT_GIT_CACHE_TEXT"
+      if [[ "$_PROMPT_GIT_CACHE_PENDING" == true && "$_PROMPT_GIT_CACHE_PENDING_KEY" == "$PWD" ]]; then
+        print -nr -- " $(prompt_escape_literal "$AGNOSTER_GIT_PENDING_SYMBOL")"
+      fi
+      [[ $AGNOSTER_GIT_INLINE == 'true' ]] && prompt_git_relative
+      return
+    fi
+
+    if [[ "$_PROMPT_GIT_CACHE_PENDING" == true && "$_PROMPT_GIT_CACHE_PENDING_KEY" == "$PWD" ]]; then
+      branch_char=$(prompt_git_branch_char)
+      prompt_segment "$AGNOSTER_GIT_CLEAN_BG" "$AGNOSTER_GIT_CLEAN_FG" "${branch_char} $(prompt_escape_literal "$AGNOSTER_GIT_PENDING_SYMBOL")"
+      return
+    fi
+
+    return
+  fi
+
+  prompt_git_compute_cache
+  [[ -n "$_PROMPT_GIT_CACHE_STATE" ]] || return
+
+  if [[ "$_PROMPT_GIT_CACHE_STATE" == "dirty" ]]; then
+    prompt_segment "$AGNOSTER_GIT_DIRTY_BG" "$AGNOSTER_GIT_DIRTY_FG"
+  else
+    prompt_segment "$AGNOSTER_GIT_CLEAN_BG" "$AGNOSTER_GIT_CLEAN_FG"
+  fi
+
+  print -nr -- "$_PROMPT_GIT_CACHE_TEXT"
+  [[ $AGNOSTER_GIT_INLINE == 'true' ]] && prompt_git_relative
+}
+
+build_prompt() {
+  local RETVAL=$?
+  prompt_status
+  prompt_virtualenv
+  prompt_aws
+  prompt_terraform
+  prompt_context
+  prompt_dir
+  prompt_git
+  prompt_end
+}
+
+build_prompt_safe() {
+  build_prompt || print -nr -- "%{%f%b%k%}%n@%m:%~ %#"
+}
+
+PROMPT='%{%f%b%k%}$(build_prompt_safe) '
 
 # User configuration
 
@@ -90,21 +560,33 @@ fi
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 prompt_dir() {
-  local dir="${PWD/#$HOME/~}"   # Replace home directory with '~'
-  local path=""
+  local path prefix
+  local -a segments shortened
 
-  # Iterate over each directory in the path
-  for segment in "${(s:/:)dir}"; do
-    if [[ $segment == "~" ]]; then
-      path="~/"               # Start with '~' if the path contains the home directory
-    elif [[ $segment == ${dir:t} ]]; then
-      path="$path$segment"    # Full name for the current directory
+  if [[ $PWD == $HOME ]]; then
+    path="~"
+  else
+    if [[ $PWD == $HOME/* ]]; then
+      prefix="~"
+      segments=("${(s:/:)${PWD#$HOME/}}")
     else
-      path="$path${segment[1]}/"  # Only the first character of each preceding directory
+      prefix=""
+      segments=("${(s:/:)${PWD#/}}")
     fi
-  done
 
-  prompt_segment blue black $path
+    local i
+    for (( i = 1; i <= ${#segments}; i++ )); do
+      if (( i == ${#segments} )); then
+        shortened+=("${segments[i]}")
+      elif [[ -n ${segments[i]} ]]; then
+        shortened+=("${segments[i][1]}")
+      fi
+    done
+
+    path="${prefix}/${(j:/:)shortened}"
+  fi
+
+  prompt_segment blue black "$(prompt_escape_literal "$path")"
 }
 
 mov2gif() {
