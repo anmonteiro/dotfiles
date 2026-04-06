@@ -36,7 +36,6 @@ with pkgs;
   ocaml-ng.ocamlPackages_5_5.carl
   eza
   ffmpeg
-  fzf
   git
   gnupg
   htop
@@ -50,6 +49,7 @@ with pkgs;
   silver-searcher
   stylua
   fff
+  fff-cli
 
   # for nvim
   ripgrep

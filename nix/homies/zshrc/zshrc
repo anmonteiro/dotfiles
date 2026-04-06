@@ -147,3 +147,114 @@ alias npf='nix-prefetch-url --type sha256'
 alias npfu='nix-prefetch-url --type sha256 --unpack'
 
 # disable ctrl+l to clear the screen, too annoying to hit that in vim
+
+export FFF_SHELL_WIDGET_RUNTIME_DIR="$HOME/.local/share/fff-shell-widget"
+
+fff-file-widget() {
+  local selected prefix=""
+
+  if [[ ! -f "$FFF_SHELL_WIDGET_RUNTIME_DIR/node_modules/@ff-labs/fff-node/dist/src/index.js" ]]; then
+    zle -M "fff runtime missing: npm install @ff-labs/fff-node in $FFF_SHELL_WIDGET_RUNTIME_DIR"
+    return 1
+  fi
+
+  selected=$(fff files) || {
+    zle redisplay
+    return 0
+  }
+
+  [[ -n "$selected" ]] || {
+    zle redisplay
+    return 0
+  }
+
+  if [[ -n "$LBUFFER" && "$LBUFFER[-1]" != ' ' ]]; then
+    prefix=" "
+  fi
+
+  LBUFFER+="$prefix${(q-)selected}"
+  zle redisplay
+}
+
+fff-history-widget() {
+  local direction="$1" selected query
+  local -A seen
+  local key command
+
+  if [[ ! -f "$FFF_SHELL_WIDGET_RUNTIME_DIR/node_modules/@ff-labs/fff-node/dist/src/index.js" ]]; then
+    zle -M "fff history runtime missing: npm install @ff-labs/fff-node in $FFF_SHELL_WIDGET_RUNTIME_DIR"
+    return 1
+  fi
+
+  setopt localoptions noposixbuiltins no_aliases noksharrays 2>/dev/null
+  zmodload -F zsh/parameter p:history 2>/dev/null || {
+    zle -M "fff history: failed to load zsh history parameter"
+    return 1
+  }
+
+  query="$LBUFFER"
+  selected="$(
+    {
+      if [[ "$direction" == "forward" ]]; then
+        for key in ${(onk)history}; do
+          command=${history[$key]}
+          [[ -n ${seen[$command]-} ]] && continue
+          seen[$command]=1
+          print -rn -- "$command"$'\0'
+        done
+      else
+        for key in ${(Onk)history}; do
+          command=${history[$key]}
+          [[ -n ${seen[$command]-} ]] && continue
+          seen[$command]=1
+          print -rn -- "$command"$'\0'
+        done
+      fi
+    } | FFF_HISTORY_HEIGHT=12 FFF_HISTORY_QUERY="$query" fff history
+  )" || {
+    zle redisplay
+    return 0
+  }
+
+  [[ -n "$selected" ]] || {
+    zle redisplay
+    return 0
+  }
+
+  BUFFER="$selected"
+  CURSOR=${#BUFFER}
+  zle reset-prompt
+}
+
+fff-history-backward-widget() {
+  fff-history-widget backward
+}
+
+fff-history-forward-widget() {
+  fff-history-widget forward
+}
+
+setup_fff_widgets() {
+  zle -N fff-file-widget
+  zle -N fff-history-backward-widget
+  zle -N fff-history-forward-widget
+
+  bindkey '^T' fff-file-widget
+  bindkey '^R' fff-history-backward-widget
+  bindkey '^S' fff-history-forward-widget
+  bindkey -M emacs '^T' fff-file-widget
+  bindkey -M emacs '^R' fff-history-backward-widget
+  bindkey -M emacs '^S' fff-history-forward-widget
+  bindkey -M vicmd '^R' fff-history-backward-widget
+  bindkey -M vicmd '^S' fff-history-forward-widget
+  bindkey -M viins '^T' fff-file-widget
+  bindkey -M viins '^R' fff-history-backward-widget
+  bindkey -M viins '^S' fff-history-forward-widget
+}
+
+setup_fff_widgets_once() {
+  add-zsh-hook -d precmd setup_fff_widgets_once
+  setup_fff_widgets
+}
+
+add-zsh-hook precmd setup_fff_widgets_once

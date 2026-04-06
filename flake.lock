@@ -23,16 +23,40 @@
         "rust-overlay": "rust-overlay"
       },
       "locked": {
-        "lastModified": 1775259704,
-        "narHash": "sha256-Up6z0EwxiOim43lpZElRHNvrudiMuYD08x/dIEkTnVY=",
+        "lastModified": 1775296384,
+        "narHash": "sha256-+Ly8W6TfbCMs3BqDtNByo5WXhWcpv4A5mjo97zvWdTM=",
         "owner": "dmtrKovalenko",
         "repo": "fff.nvim",
-        "rev": "b1c4f8e7d7a11cfd58ce5623bd4676a467a064b2",
+        "rev": "db4cd2825c32e5e53e12bb8af106ff724d33904e",
         "type": "github"
       },
       "original": {
         "owner": "dmtrKovalenko",
         "repo": "fff.nvim",
+        "rev": "db4cd2825c32e5e53e12bb8af106ff724d33904e",
+        "type": "github"
+      }
+    },
+    "fff-cli": {
+      "inputs": {
+        "fff": [
+          "fff"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1775438538,
+        "narHash": "sha256-ZzagPq+qO20EmpvvF2S67DZHJeHkGVmaw4AwwgVGrjg=",
+        "owner": "anmonteiro",
+        "repo": "fff-cli",
+        "rev": "17fd96fee8c1640a97390728d9d3cd8c50b7aac5",
+        "type": "github"
+      },
+      "original": {
+        "owner": "anmonteiro",
+        "repo": "fff-cli",
         "type": "github"
       }
     },
@@ -90,11 +114,11 @@
         "nixpkgs": "nixpkgs_3"
       },
       "locked": {
-        "lastModified": 1775245677,
-        "narHash": "sha256-UJPKu+2NTXiGg9sk/qvpUC1lNHL660Ktu8+UgU6NLbQ=",
+        "lastModified": 1775426303,
+        "narHash": "sha256-oWJvbzlkWZMVa09HS0AQm6Wz7ymBjrZB6YUeslSK8mA=",
         "owner": "anmonteiro",
         "repo": "nix-overlays",
-        "rev": "f06b63e2993c9060dbcfd3bb3a227d7a8eaa9ce6",
+        "rev": "2c377db743a96c881991bdf3cb9c1f07c11f0c00",
         "type": "github"
       },
       "original": {
@@ -105,23 +129,24 @@
     },
     "nixpkgs_3": {
       "locked": {
-        "lastModified": 1775231746,
-        "narHash": "sha256-EFaDQ0rnuSjKfC/DUKHS4toV4rEBuWhSgyX2Yy0kp00=",
+        "lastModified": 1775371993,
+        "narHash": "sha256-shlcgEOzW6rl7zmZeYBMP9EpF3O/cTL7/HpWlyqearw=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "0eac666efaa8a9afea2821f9efc7921b4ef39b4e",
+        "rev": "ff2af6f7ebc6c123603d5689aeea6461290f46b5",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "0eac666efaa8a9afea2821f9efc7921b4ef39b4e",
+        "rev": "ff2af6f7ebc6c123603d5689aeea6461290f46b5",
         "type": "github"
       }
     },
     "root": {
       "inputs": {
         "fff": "fff",
+        "fff-cli": "fff-cli",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_2"
       }
