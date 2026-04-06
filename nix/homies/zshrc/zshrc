@@ -59,6 +59,99 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 # adds extra git log work on every prompt redraw for little value here.
 AGNOSTER_GIT_BRANCH_STATUS=false
 
+# Keep autosuggestions out of the paste path and prefer async fetch when the
+# plugin/runtime supports it.
+typeset -ga ZSH_AUTOSUGGEST_IGNORE_WIDGETS
+typeset -ga ZSH_AUTOSUGGEST_CLEAR_WIDGETS
+ZSH_AUTOSUGGEST_IGNORE_WIDGETS+=(bracketed-paste bracketed-paste-magic)
+ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(bracketed-paste bracketed-paste-magic)
+
+_config_wrap_bracketed_paste_for_autosuggest() {
+  local widget_state original_widget
+
+  widget_state=${widgets[bracketed-paste]-}
+  [[ -n "$widget_state" ]] || return 0
+  [[ "$widget_state" == user:_config_autosuggest_bracketed_paste ]] && return 0
+
+  case "$widget_state" in
+    user:*)
+      original_widget=${widget_state#user:}
+      zle -N _config_orig_bracketed_paste "$original_widget"
+      ;;
+    builtin)
+      _config_orig_bracketed_paste_builtin() { zle .bracketed-paste -- "$@" }
+      zle -N _config_orig_bracketed_paste _config_orig_bracketed_paste_builtin
+      ;;
+    completion:*)
+      return 0
+      ;;
+    *)
+      return 0
+      ;;
+  esac
+
+  _config_autosuggest_bracketed_paste() {
+    local should_restore=0
+    local paste_status=0
+    local self_insert_widget original_self_insert_widget
+    local self_insert_restore=0
+    local original_prefix=${ZSH_AUTOSUGGEST_ORIGINAL_WIDGET_PREFIX-autosuggest-orig-}
+    local bind_count=${_ZSH_AUTOSUGGEST_BIND_COUNTS[self-insert]-}
+
+    if (( $+functions[_zsh_autosuggest_disable] )) && [[ -z ${_ZSH_AUTOSUGGEST_DISABLED-} ]]; then
+      should_restore=1
+      _zsh_autosuggest_disable
+    fi
+
+    self_insert_widget=${widgets[self-insert]-}
+    if [[ -n "$bind_count" ]]; then
+      original_self_insert_widget=${original_prefix}${bind_count}-self-insert
+    fi
+
+    if [[ "$self_insert_widget" == user:_zsh_autosuggest_bound_*_self-insert ]] &&
+       [[ -n "$original_self_insert_widget" ]] &&
+       (( ${+widgets[$original_self_insert_widget]} ))
+    then
+      case ${widgets[$original_self_insert_widget]} in
+        user:*)
+          zle -N self-insert "${widgets[$original_self_insert_widget]#user:}"
+          self_insert_restore=1
+          ;;
+        builtin)
+          _config_orig_self_insert_builtin() { zle .self-insert -- "$@" }
+          zle -N self-insert _config_orig_self_insert_builtin
+          self_insert_restore=1
+          ;;
+      esac
+    fi
+
+    {
+      zle _config_orig_bracketed_paste -- "$@"
+    } always {
+      paste_status=$?
+
+      if (( self_insert_restore )); then
+        case "$self_insert_widget" in
+          user:*)
+            zle -N self-insert "${self_insert_widget#user:}"
+            ;;
+          builtin)
+            zle -A .self-insert self-insert
+            ;;
+        esac
+      fi
+
+      if (( should_restore )) && (( $+functions[_zsh_autosuggest_enable] )); then
+        _zsh_autosuggest_enable
+      fi
+    }
+
+    return $paste_status
+  }
+
+  zle -N bracketed-paste _config_autosuggest_bracketed_paste
+}
+
 # Uncomment the following line if you want to change the command execution time
 # stamp shown in the history command output.
 # The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"

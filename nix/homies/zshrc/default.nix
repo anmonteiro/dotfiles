@@ -19,6 +19,8 @@ let
       ''
         source ${zsh-syntax-highlighting}/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
         source ${zsh-autosuggestions}/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+        ZSH_AUTOSUGGEST_USE_ASYNC=true
+        _config_wrap_bracketed_paste_for_autosuggest
       ''
     ]
   );
