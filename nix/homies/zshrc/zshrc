@@ -630,13 +630,17 @@ alias npfu='nix-prefetch-url --type sha256 --unpack'
 
 # disable ctrl+l to clear the screen, too annoying to hit that in vim
 
-export FFF_SHELL_WIDGET_RUNTIME_DIR="$HOME/.local/share/fff-shell-widget"
+fff-widget-check() {
+  if ! command -v fff >/dev/null 2>&1; then
+    zle -M "fff is not available on PATH"
+    return 1
+  fi
+}
 
 fff-file-widget() {
   local selected prefix=""
 
-  if [[ ! -f "$FFF_SHELL_WIDGET_RUNTIME_DIR/node_modules/@ff-labs/fff-node/dist/src/index.js" ]]; then
-    zle -M "fff runtime missing: npm install @ff-labs/fff-node in $FFF_SHELL_WIDGET_RUNTIME_DIR"
+  if ! fff-widget-check; then
     return 1
   fi
 
@@ -663,8 +667,7 @@ fff-history-widget() {
   local -A seen
   local key command
 
-  if [[ ! -f "$FFF_SHELL_WIDGET_RUNTIME_DIR/node_modules/@ff-labs/fff-node/dist/src/index.js" ]]; then
-    zle -M "fff history runtime missing: npm install @ff-labs/fff-node in $FFF_SHELL_WIDGET_RUNTIME_DIR"
+  if ! fff-widget-check; then
     return 1
   fi
 
