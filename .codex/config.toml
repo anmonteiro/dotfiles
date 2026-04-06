@@ -2,8 +2,8 @@ notify = ["/Users/anmonteiro/.nix-profile/bin/python3", "/Users/anmonteiro/.code
 model_reasoning_summary = "auto"
 file_opener = "none"
 show_raw_agent_reasoning = true
-sandbox_mode = "workspace-write"
-approval_policy = "on-request"
+sandbox_mode = "danger-full-access"
+approval_policy = "never"
 model = "gpt-5.4"
 model_reasoning_effort = "high"
 personality = "pragmatic"
@@ -44,3 +44,10 @@ hide_rate_limit_model_nudge = true
 
 [notice.model_migrations]
 "gpt-5.3-codex" = "gpt-5.4"
+
+[features]
+prevent_idle_sleep = true
+
+[tui]
+no_alt_screen = true
+status_line = ["model-with-reasoning", "context-remaining", "current-dir", "session-id"]
