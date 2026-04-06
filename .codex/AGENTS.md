@@ -1,4 +1,6 @@
 
+- For any file search or grep in git indexed directories, always use fff tools
+
 - Projects will usually have a flake.nix, so you can either:
     1. use their shell to run certain commands
     2. add stuff to their nix shell to get new commands. you can do this without approval
