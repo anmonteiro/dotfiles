@@ -3,7 +3,7 @@
 
 if [ -e /Users/anmonteiro/.nix-profile/etc/profile.d/nix.sh ]; then . /Users/anmonteiro/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
 
-source $(nix-env -q zshrc --out-path --no-name)/bin/zshrc
+source "$HOME/.nix-profile/share/zsh/zshrc"
 
 export CFLAGS="-I/Users/anmonteiro/.nix-profile/include -L/Users/anmonteiro/.nix-profile/lib"
 export LDFLAGS="-L/Users/anmonteiro/.nix-profile/lib"

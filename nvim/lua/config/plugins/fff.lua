@@ -1,14 +1,36 @@
+local function get_visual_selection()
+  local vmode = vim.fn.mode()
+  if not vmode:match("[vV\22]") then
+    vmode = vim.fn.visualmode()
+  end
+  if not vmode:match("[vV\22]") then
+    vmode = "v"
+  end
+
+  local lines = vim.fn.getregion(vim.fn.getpos("v"), vim.fn.getcurpos(), {
+    type = vmode,
+  })
+  return vim.trim(table.concat(lines, " "):gsub("%s+", " "))
+end
+
+local function grep_current_word_or_selection()
+  local mode = vim.fn.mode()
+  local query = ""
+
+  if mode:match("[vV\22]") then
+    query = get_visual_selection()
+    local esc = vim.api.nvim_replace_termcodes("<ESC>", true, false, true)
+    vim.api.nvim_feedkeys(esc, "nx", false)
+  else
+    query = vim.fn.expand("<cword>")
+  end
+
+  require("fff").live_grep({ query = query })
+end
+
 return {
   {
-    "anmonteiro/fff.nvim",
-    branch = "anmonteiro/merged-fixes",
-    -- build = function()
-    -- this will download prebuild binary or try to use existing rustup toolchain to build from source
-    -- (if you are using lazy you can use gb for rebuilding a plugin if needed)
-    -- require("fff.download").download_or_build_binary()
-    -- end,
-    -- if you are using nixos
-    -- build = "nix run .#release",
+    "dmtrKovalenko/fff.nvim",
     init = function()
       local fff_mcp = vim.fn.exepath("fff-mcp")
       if fff_mcp ~= "" then
@@ -63,11 +85,10 @@ return {
         desc = "Live fffuzy grep",
       },
       {
-        "fc",
-        function()
-          require("fff").live_grep({ query = vim.fn.expand("<cword>") })
-        end,
-        desc = "Search current word",
+        "fw",
+        grep_current_word_or_selection,
+        mode = { "n", "x" },
+        desc = "Search current word or selection",
       },
     },
   },

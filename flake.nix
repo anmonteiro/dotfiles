@@ -4,7 +4,12 @@
   inputs = {
     nixpkgs.url = "github:anmonteiro/nix-overlays";
     nixos-hardware.url = "github:NixOS/nixos-hardware";
-    fff.url = "github:dmtrKovalenko/fff.nvim";
+    fff.url = "github:dmtrKovalenko/fff.nvim/db4cd2825c32e5e53e12bb8af106ff724d33904e";
+    fff-cli = {
+      url = "github:anmonteiro/fff-cli";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.fff.follows = "fff";
+    };
   };
   outputs =
     {
@@ -12,6 +17,7 @@
       nixpkgs,
       nixos-hardware,
       fff,
+      fff-cli,
     }:
     let
       forAllSystems =
@@ -26,6 +32,7 @@
                     ln -sfn $out/lib/ $out/release
                   '';
                 });
+                fff-cli = fff-cli.packages.${system}.default;
               }
             );
           in
