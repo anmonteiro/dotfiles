@@ -1,4 +1,20 @@
 local M = {}
+local methods = vim.lsp.protocol.Methods
+
+local function snacks_picker(method, fallback)
+  return function()
+    local ok, snacks = pcall(require, "snacks")
+    local picker = ok and snacks.picker or _G.Snacks and _G.Snacks.picker
+    local fn = picker and picker[method]
+
+    if fn then
+      fn()
+      return
+    end
+
+    fallback()
+  end
+end
 
 local function configure_global_diagnostics()
   local opts = { noremap = true, silent = true }
@@ -7,6 +23,34 @@ local function configure_global_diagnostics()
   vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
   vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
   vim.keymap.set("n", "<space>q", vim.diagnostic.setloclist, opts)
+end
+
+local function toggle_lsp_feature(module, filter, label)
+  local enabled = module.is_enabled(filter)
+  module.enable(not enabled, filter)
+  vim.notify(string.format("%s %s", label, enabled and "disabled" or "enabled"), vim.log.levels.INFO, {
+    title = "LSP",
+  })
+end
+
+local function configure_lsp_toggle_commands(bufnr)
+  if vim.b[bufnr].config_lsp_toggles_ready then
+    return
+  end
+
+  vim.b[bufnr].config_lsp_toggles_ready = true
+
+  vim.api.nvim_buf_create_user_command(bufnr, "LspInlayHintsToggle", function()
+    toggle_lsp_feature(vim.lsp.inlay_hint, { bufnr = bufnr }, "Inlay hints")
+  end, { desc = "Toggle LSP inlay hints" })
+
+  vim.api.nvim_buf_create_user_command(bufnr, "LspCodeLensToggle", function()
+    toggle_lsp_feature(vim.lsp.codelens, { bufnr = bufnr }, "Code lens")
+  end, { desc = "Toggle LSP code lens" })
+
+  vim.api.nvim_buf_create_user_command(bufnr, "LspDocumentColorToggle", function()
+    toggle_lsp_feature(vim.lsp.document_color, { bufnr = bufnr }, "Document colors")
+  end, { desc = "Toggle LSP document colors" })
 end
 
 local function configure_lsp_keymaps(bufnr)
@@ -24,21 +68,63 @@ local function configure_lsp_keymaps(bufnr)
     end
   end
 
-  vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
-  vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+  vim.keymap.set("n", "gD", snacks_picker("lsp_declarations", vim.lsp.buf.declaration), opts)
+  vim.keymap.set("n", "gd", snacks_picker("lsp_definitions", vim.lsp.buf.definition), opts)
   vim.keymap.set("n", "<localleader>t", vim.lsp.buf.hover, opts)
-  vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
+  vim.keymap.set("n", "gi", snacks_picker("lsp_implementations", vim.lsp.buf.implementation), opts)
   vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, opts)
   vim.keymap.set("n", "<space>wa", vim.lsp.buf.add_workspace_folder, opts)
   vim.keymap.set("n", "<space>wr", vim.lsp.buf.remove_workspace_folder, opts)
   vim.keymap.set("n", "<space>wl", function()
     print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
   end, opts)
-  vim.keymap.set("n", "<space>D", vim.lsp.buf.type_definition, opts)
+  vim.keymap.set("n", "<space>D", snacks_picker("lsp_type_definitions", vim.lsp.buf.type_definition), opts)
   vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, opts)
   vim.keymap.set("n", "<space>ca", vim.lsp.buf.code_action, opts)
-  vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
+  vim.keymap.set("n", "gr", snacks_picker("lsp_references", vim.lsp.buf.references), opts)
   vim.keymap.set("n", "<space>f", format_buffer, opts)
+  vim.keymap.set(
+    "n",
+    "<space>ui",
+    "<cmd>LspInlayHintsToggle<CR>",
+    vim.tbl_extend("force", opts, {
+      desc = "Toggle LSP inlay hints",
+    })
+  )
+  vim.keymap.set(
+    "n",
+    "<space>uC",
+    "<cmd>LspCodeLensToggle<CR>",
+    vim.tbl_extend("force", opts, {
+      desc = "Toggle LSP code lens",
+    })
+  )
+  vim.keymap.set(
+    "n",
+    "<space>uc",
+    "<cmd>LspDocumentColorToggle<CR>",
+    vim.tbl_extend("force", opts, {
+      desc = "Toggle LSP document colors",
+    })
+  )
+end
+
+local function enable_supported_lsp_features(client, bufnr)
+  if client:supports_method(methods.textDocument_inlayHint, bufnr) then
+    vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+  end
+
+  if client:supports_method(methods.textDocument_codeLens, bufnr) then
+    vim.lsp.codelens.enable(true, { bufnr = bufnr })
+  end
+
+  if client:supports_method(methods.textDocument_documentColor, bufnr) then
+    vim.lsp.document_color.enable(true, { bufnr = bufnr })
+  end
+
+  if client:supports_method(methods.textDocument_linkedEditingRange, bufnr) then
+    require("vim.lsp.linked_editing_range").enable(true, { client_id = client.id })
+  end
 end
 
 local function make_capabilities()
@@ -101,7 +187,9 @@ M.setup = function()
   configure_global_diagnostics()
 
   local on_attach = function(client, bufnr)
+    configure_lsp_toggle_commands(bufnr)
     configure_lsp_keymaps(bufnr)
+    enable_supported_lsp_features(client, bufnr)
     if client.name == "nixd_local" then
       configure_nixd_workspace(client, bufnr)
     end
@@ -128,7 +216,7 @@ M.setup = function()
         "javascript.jsx",
       },
       preferences = {
-        includeInlayParameterNameHints = "none",
+        includeInlayParameterNameHints = "literals",
         includeInlayParameterNameHintsWhenArgumentMatchesName = false,
         includeInlayFunctionParameterTypeHints = false,
         includeInlayVariableTypeHints = true,
@@ -182,6 +270,7 @@ M.setup = function()
         excludeArgs = { "-frounding-math" },
       },
     },
+    on_attach = on_attach,
     capabilities = capabilities,
   })
 

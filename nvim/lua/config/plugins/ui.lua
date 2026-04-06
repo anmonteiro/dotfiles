@@ -11,22 +11,30 @@ local function lualine_fileformat()
 end
 
 local function lualine_paste_indicator()
-  if not vim.o.paste then return "" end
+  if not vim.o.paste then
+    return ""
+  end
   return "PASTE"
 end
 
 local function lualine_state_symbols()
   local symbols = {}
 
-  if vim.wo.spell then symbols[#symbols + 1] = "Ꞩ" end
-  if vim.bo.key ~= "" then symbols[#symbols + 1] = "🔒" end
+  if vim.wo.spell then
+    symbols[#symbols + 1] = "Ꞩ"
+  end
+  if vim.bo.key ~= "" then
+    symbols[#symbols + 1] = "🔒"
+  end
 
   local name = vim.api.nvim_buf_get_name(0)
   if name ~= "" and vim.bo.buftype == "" and vim.fn.filereadable(vim.fn.fnamemodify(name, ":p")) == 0 then
     symbols[#symbols + 1] = "Ɇ"
   end
 
-  if #symbols == 0 then return "" end
+  if #symbols == 0 then
+    return ""
+  end
   return table.concat(symbols, " ")
 end
 
@@ -73,9 +81,13 @@ local function lualine_options()
         {
           lualine_paste_indicator,
           color = function()
-            if not vim.o.paste then return nil end
+            if not vim.o.paste then
+              return nil
+            end
             local ok, hl = pcall(vim.api.nvim_get_hl, 0, { name = "IncSearch", link = false })
-            if not ok then return { gui = "bold" } end
+            if not ok then
+              return { gui = "bold" }
+            end
             return {
               fg = hl.fg and string.format("#%06x", hl.fg) or nil,
               bg = hl.bg and string.format("#%06x", hl.bg) or nil,
@@ -114,9 +126,13 @@ local function lualine_options()
         {
           lualine_paste_indicator,
           color = function()
-            if not vim.o.paste then return nil end
+            if not vim.o.paste then
+              return nil
+            end
             local ok, hl = pcall(vim.api.nvim_get_hl, 0, { name = "IncSearch", link = false })
-            if not ok then return { gui = "bold" } end
+            if not ok then
+              return { gui = "bold" }
+            end
             return {
               fg = hl.fg and string.format("#%06x", hl.fg) or nil,
               bg = hl.bg and string.format("#%06x", hl.bg) or nil,

@@ -14,4 +14,5 @@ if not vim.g.python3_host_prog or vim.g.python3_host_prog == "" then
   end
 end
 
+require("config.ui2").setup()
 require("config.lazy")
