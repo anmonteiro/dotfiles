@@ -28,6 +28,42 @@ local function grep_current_word_or_selection()
   require("fff").live_grep({ query = query })
 end
 
+local function fff_layout_width(columns)
+  if columns < 24 then
+    return 1
+  end
+
+  return 0.8
+end
+
+local function fff_layout_height(_, lines)
+  if lines < 10 then
+    return 1
+  end
+
+  return 0.8
+end
+
+local function fff_preview_position(columns, lines)
+  if lines < 14 then
+    return "right"
+  end
+
+  if columns < 130 then
+    return "top"
+  end
+
+  return "right"
+end
+
+local function fff_preview_size(columns, lines)
+  if lines < 14 then
+    return columns < 80 and 0.33 or 0.4
+  end
+
+  return 0.5
+end
+
 return {
   {
     "dmtrKovalenko/fff.nvim",
@@ -46,6 +82,13 @@ return {
       debug = {
         enabled = false, -- we expect your collaboration at least during the beta
         show_scores = true, -- to help us optimize the scoring system, feel free to share your scores!
+      },
+      layout = {
+        width = fff_layout_width,
+        height = fff_layout_height,
+        preview_position = fff_preview_position,
+        preview_size = fff_preview_size,
+        flex = false,
       },
       hl = {
         normal = "NormalFloat",
