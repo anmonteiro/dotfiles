@@ -41,7 +41,7 @@ require("lazy").setup({
     },
     reset_packpath = true, -- reset the package path to improve startup time
     rtp = {
-      reset = true, -- don't reset `runtimepath` because of the OCaml plugin
+      reset = true,
       -- paths = {},
       disabled_plugins = {
         "gzip",
