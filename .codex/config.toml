@@ -21,6 +21,8 @@ GITHUB_TOOLSETS = "context,actions,code_security,dependabot,discussions,gists,gi
 
 [mcp_servers.fff]
 command = "fff-mcp"
+args = ["--no-update-check"]
+
 
 [sandbox_workspace_write]
 network_access = true

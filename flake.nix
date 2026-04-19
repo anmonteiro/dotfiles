@@ -4,7 +4,7 @@
   inputs = {
     nixpkgs.url = "github:anmonteiro/nix-overlays";
     nixos-hardware.url = "github:NixOS/nixos-hardware";
-    fff.url = "github:dmtrKovalenko/fff.nvim/db4cd2825c32e5e53e12bb8af106ff724d33904e";
+    fff.url = "github:dmtrKovalenko/fff.nvim";
     fff-cli = {
       url = "github:anmonteiro/fff-cli";
       inputs.nixpkgs.follows = "nixpkgs";
