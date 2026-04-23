@@ -1,8 +1,6 @@
 {
   pkgs,
   callPackage,
-  lib,
-  stdenv,
 }:
 
 let
@@ -13,19 +11,18 @@ let
 
   # Tmux with a custom tmux.conf baked in
   tmux = callPackage ./tmux { };
-  # Neovim's treesitter functional tests on Darwin can collide on short `--listen`
-  # names when XDG_RUNTIME_DIR falls back to a long temp path.
-  patchedNeovimUnwrapped = pkgs.neovim.unwrapped.overrideAttrs (old: {
-    preCheck = lib.concatStringsSep "\n" [
-      (old.preCheck or "")
-      ''
-        export XDG_RUNTIME_DIR="$NIX_BUILD_TOP/xdg-runtime"
-        mkdir -p "$XDG_RUNTIME_DIR"
-        chmod 700 "$XDG_RUNTIME_DIR"
-      ''
-    ];
+  neovimMasterUnwrapped = pkgs.neovim.unwrapped.overrideAttrs (_: {
+    version = "master-${pkgs.neovim-src.shortRev or (builtins.substring 0 7 pkgs.neovim-src.rev)}";
+    src = pkgs.neovim-src;
+    # versionCheckHook expects a release-style version string, but master
+    # reports upstream's dev version (for example v0.13.0-dev).
+    doCheck = false;
+    doInstallCheck = false;
+    meta = pkgs.neovim.unwrapped.meta // {
+      changelog = "https://github.com/neovim/neovim/commits/${pkgs.neovim-src.rev}";
+    };
   });
-  neovimWithPython = pkgs.wrapNeovim patchedNeovimUnwrapped {
+  neovimWithPython = pkgs.wrapNeovim neovimMasterUnwrapped {
     withPython3 = true;
     extraPython3Packages =
       ps: with ps; [

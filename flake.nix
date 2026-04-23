@@ -4,6 +4,10 @@
   inputs = {
     nixpkgs.url = "github:anmonteiro/nix-overlays";
     nixos-hardware.url = "github:NixOS/nixos-hardware";
+    neovim-src = {
+      url = "github:neovim/neovim/master";
+      flake = false;
+    };
     fff.url = "github:dmtrKovalenko/fff.nvim";
     fff-cli = {
       url = "github:anmonteiro/fff-cli";
@@ -16,6 +20,7 @@
       self,
       nixpkgs,
       nixos-hardware,
+      neovim-src,
       fff,
       fff-cli,
     }:
@@ -27,6 +32,7 @@
           let
             pkgs = nixpkgs.legacyPackages.${system}.extend (
               self: super: {
+                neovim-src = neovim-src;
                 fff = fff.outputs.packages.${system}.default.overrideAttrs (_: {
                   postInstall = ''
                     ln -sfn $out/lib/ $out/release
