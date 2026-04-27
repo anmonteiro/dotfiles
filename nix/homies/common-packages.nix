@@ -38,24 +38,10 @@ let
   );
   zshForProfile =
     if stdenv.isDarwin then
-      let
-        # zsh 5.9 regenerated with Autoconf 2.73 in nixpkgs c4073437 hangs
-        # in interactive external command substitutions and compdump on Darwin.
-        oldPkgs = import (builtins.getFlake "github:NixOS/nixpkgs/f731538cdf1410a3c53d3a75a6a1142afc08e3af") {
-          inherit (pkgs.stdenv.hostPlatform) system;
-        };
-        oldAutoreconfHook = pkgs.autoreconfHook.override {
-          autoconf = oldPkgs.autoconf;
-        };
-      in
+      # zsh 5.9 regenerated with Autoconf 2.73 tries C23 on Darwin, which hangs
+      # in interactive external command substitutions and compdump.
       pkgs.zsh.overrideAttrs (old: {
-        nativeBuildInputs = builtins.map (
-          input:
-          if (input.pname or "") == "autoreconf-hook" then
-            oldAutoreconfHook
-          else
-            input
-        ) (old.nativeBuildInputs or [ ]);
+        configureFlags = (old.configureFlags or [ ]) ++ [ "ac_cv_prog_cc_c23=no" ];
       })
     else
       pkgs.zsh;
@@ -98,6 +84,7 @@ with pkgs;
   typescript-language-server
   nodejs_latest
   github-mcp-server
+  bun
 ]
 ++ [
   kitty
