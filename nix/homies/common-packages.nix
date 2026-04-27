@@ -34,6 +34,29 @@ let
       pynvim
     ]
   );
+  zshForProfile =
+    if stdenv.isDarwin then
+      let
+        # zsh 5.9 regenerated with Autoconf 2.73 in nixpkgs_3 c4073437 hangs
+        # in interactive external command substitutions and compdump on Darwin.
+        oldPkgs = import (builtins.getFlake "github:NixOS/nixpkgs/f731538cdf1410a3c53d3a75a6a1142afc08e3af") {
+          inherit (pkgs.stdenv.hostPlatform) system;
+        };
+        oldAutoreconfHook = pkgs.autoreconfHook.override {
+          autoconf = oldPkgs.autoconf;
+        };
+      in
+      pkgs.zsh.overrideAttrs (old: {
+        nativeBuildInputs = builtins.map (
+          input:
+          if (input.pname or "") == "autoreconf-hook" then
+            oldAutoreconfHook
+          else
+            input
+        ) (old.nativeBuildInputs or [ ]);
+      })
+    else
+      pkgs.zsh;
 
 in
 
@@ -64,7 +87,7 @@ with pkgs;
   ripgrep
   fd
   tree-sitter
-  zsh
+  zshForProfile
   terminal-notifier
 
   # Remote development

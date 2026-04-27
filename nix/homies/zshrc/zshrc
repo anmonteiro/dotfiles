@@ -66,21 +66,21 @@ typeset -ga ZSH_AUTOSUGGEST_CLEAR_WIDGETS
 ZSH_AUTOSUGGEST_IGNORE_WIDGETS+=(bracketed-paste bracketed-paste-magic)
 ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(bracketed-paste bracketed-paste-magic)
 
-_config_wrap_bracketed_paste_for_autosuggest() {
+config_wrap_bracketed_paste_for_autosuggest() {
   local widget_state original_widget
 
   widget_state=${widgets[bracketed-paste]-}
   [[ -n "$widget_state" ]] || return 0
-  [[ "$widget_state" == user:_config_autosuggest_bracketed_paste ]] && return 0
+  [[ "$widget_state" == user:config_autosuggest_bracketed_paste ]] && return 0
 
   case "$widget_state" in
     user:*)
       original_widget=${widget_state#user:}
-      zle -N _config_orig_bracketed_paste "$original_widget"
+      zle -N config_orig_bracketed_paste "$original_widget"
       ;;
     builtin)
-      _config_orig_bracketed_paste_builtin() { zle .bracketed-paste -- "$@" }
-      zle -N _config_orig_bracketed_paste _config_orig_bracketed_paste_builtin
+      config_orig_bracketed_paste_builtin() { zle .bracketed-paste -- "$@" }
+      zle -N config_orig_bracketed_paste config_orig_bracketed_paste_builtin
       ;;
     completion:*)
       return 0
@@ -90,7 +90,7 @@ _config_wrap_bracketed_paste_for_autosuggest() {
       ;;
   esac
 
-  _config_autosuggest_bracketed_paste() {
+  config_autosuggest_bracketed_paste() {
     local should_restore=0
     local paste_status=0
     local self_insert_widget original_self_insert_widget
@@ -118,15 +118,15 @@ _config_wrap_bracketed_paste_for_autosuggest() {
           self_insert_restore=1
           ;;
         builtin)
-          _config_orig_self_insert_builtin() { zle .self-insert -- "$@" }
-          zle -N self-insert _config_orig_self_insert_builtin
+          config_orig_self_insert_builtin() { zle .self-insert -- "$@" }
+          zle -N self-insert config_orig_self_insert_builtin
           self_insert_restore=1
           ;;
       esac
     fi
 
     {
-      zle _config_orig_bracketed_paste -- "$@"
+      zle config_orig_bracketed_paste -- "$@"
     } always {
       paste_status=$?
 
@@ -149,7 +149,7 @@ _config_wrap_bracketed_paste_for_autosuggest() {
     return $paste_status
   }
 
-  zle -N bracketed-paste _config_autosuggest_bracketed_paste
+  zle -N bracketed-paste config_autosuggest_bracketed_paste
 }
 
 # Uncomment the following line if you want to change the command execution time
