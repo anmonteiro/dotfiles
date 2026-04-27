@@ -1,6 +1,8 @@
 {
   pkgs,
   callPackage,
+  lib,
+  stdenv,
 }:
 
 let
@@ -37,7 +39,7 @@ let
   zshForProfile =
     if stdenv.isDarwin then
       let
-        # zsh 5.9 regenerated with Autoconf 2.73 in nixpkgs_3 c4073437 hangs
+        # zsh 5.9 regenerated with Autoconf 2.73 in nixpkgs c4073437 hangs
         # in interactive external command substitutions and compdump on Darwin.
         oldPkgs = import (builtins.getFlake "github:NixOS/nixpkgs/f731538cdf1410a3c53d3a75a6a1142afc08e3af") {
           inherit (pkgs.stdenv.hostPlatform) system;

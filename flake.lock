@@ -19,16 +19,19 @@
       "inputs": {
         "crane": "crane",
         "flake-utils": "flake-utils",
-        "nixpkgs": "nixpkgs",
+        "nixpkgs": [
+          "nixpkgs",
+          "nixpkgs"
+        ],
         "rust-overlay": "rust-overlay",
         "zig-overlay": "zig-overlay"
       },
       "locked": {
-        "lastModified": 1776925573,
-        "narHash": "sha256-1gOVTdgC9+CftECLaZHCyIEb3oRb8FRHau7n9qF3Rdg=",
+        "lastModified": 1777257471,
+        "narHash": "sha256-JRxccNVJkLPYUexCtkrxQNO+uRAFk2fTPN4NALrfLRQ=",
         "owner": "dmtrKovalenko",
         "repo": "fff.nvim",
-        "rev": "e00b41df5057dfaf3254cd90aee5e687690a11a5",
+        "rev": "0f5ead1ab5355ea83be1171c54d8d44a65c5f7b4",
         "type": "github"
       },
       "original": {
@@ -97,11 +100,11 @@
     "neovim-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1776922903,
-        "narHash": "sha256-LDHwV492G8r0CuA1NIpTEd1hKap+e1JGc54BsJrAEP8=",
+        "lastModified": 1777262221,
+        "narHash": "sha256-XbsA0D95dRTrHLmpPBH25KXjLsnOuOoe4HwY5n/6S5U=",
         "owner": "neovim",
         "repo": "neovim",
-        "rev": "a4ad469fb1f935aed6f84cfa9e663ab4f7ca1e02",
+        "rev": "689c824ef70488c8b427a4b2040f36fa87e50a99",
         "type": "github"
       },
       "original": {
@@ -113,11 +116,11 @@
     },
     "nixos-hardware": {
       "locked": {
-        "lastModified": 1776830795,
-        "narHash": "sha256-PAfvLwuHc1VOvsLcpk6+HDKgMEibvZjCNvbM1BJOA7o=",
+        "lastModified": 1776983936,
+        "narHash": "sha256-ZOQyNqSvJ8UdrrqU1p7vaFcdL53idK+LOM8oRWEWh6o=",
         "owner": "NixOS",
         "repo": "nixos-hardware",
-        "rev": "72674a6b5599e844c045ae7449ba91f803d44ebc",
+        "rev": "2096f3f411ce46e88a79ae4eafcfc9df8ed41c61",
         "type": "github"
       },
       "original": {
@@ -127,52 +130,36 @@
       }
     },
     "nixpkgs": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_2"
+      },
       "locked": {
-        "lastModified": 1776329215,
-        "narHash": "sha256-a8BYi3mzoJ/AcJP8UldOx8emoPRLeWqALZWu4ZvjPXw=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "b86751bc4085f48661017fa226dee99fab6c651b",
+        "lastModified": 1777255908,
+        "narHash": "sha256-5+5dJtPXP5ntLQ16fBxyI9E50DzjaAlmhpPKtZBRUSE=",
+        "owner": "anmonteiro",
+        "repo": "nix-overlays",
+        "rev": "9c840ff083566037afb5996fff7215010ecc3b4b",
         "type": "github"
       },
       "original": {
-        "owner": "NixOS",
-        "ref": "nixpkgs-unstable",
-        "repo": "nixpkgs",
+        "owner": "anmonteiro",
+        "repo": "nix-overlays",
         "type": "github"
       }
     },
     "nixpkgs_2": {
-      "inputs": {
-        "nixpkgs": "nixpkgs_3"
-      },
       "locked": {
-        "lastModified": 1776918699,
-        "narHash": "sha256-yJm69LItpukf8OgVPYrLL3W7ZoBcn+uguWsokPCnKuM=",
-        "owner": "anmonteiro",
-        "repo": "nix-overlays",
-        "rev": "41e30eb85183edc4daf33b46531cce2e83bc867b",
-        "type": "github"
-      },
-      "original": {
-        "owner": "anmonteiro",
-        "repo": "nix-overlays",
-        "type": "github"
-      }
-    },
-    "nixpkgs_3": {
-      "locked": {
-        "lastModified": 1776874119,
-        "narHash": "sha256-uzwLUOyDwS1jssZgF/5IrEuphizt/djitkQ41d4NGMY=",
+        "lastModified": 1777238095,
+        "narHash": "sha256-wyaAOqFhxYmtTb/Gb/+hegVJ3MnwOJjX9aqsQT3+R38=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "911507e40485ac39ec4b71a3849809f50ee47a40",
+        "rev": "c4073437f5ffeaeee270c37a2eddf370658d1332",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "911507e40485ac39ec4b71a3849809f50ee47a40",
+        "rev": "c4073437f5ffeaeee270c37a2eddf370658d1332",
         "type": "github"
       }
     },
@@ -182,7 +169,7 @@
         "fff-cli": "fff-cli",
         "neovim-src": "neovim-src",
         "nixos-hardware": "nixos-hardware",
-        "nixpkgs": "nixpkgs_2"
+        "nixpkgs": "nixpkgs"
       }
     },
     "rust-overlay": {

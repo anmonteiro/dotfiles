@@ -8,7 +8,10 @@
       url = "github:neovim/neovim/master";
       flake = false;
     };
-    fff.url = "github:dmtrKovalenko/fff.nvim";
+    fff = {
+      url = "github:dmtrKovalenko/fff.nvim";
+      inputs.nixpkgs.follows = "nixpkgs/nixpkgs";
+    };
     fff-cli = {
       url = "github:anmonteiro/fff-cli";
       inputs.nixpkgs.follows = "nixpkgs";
