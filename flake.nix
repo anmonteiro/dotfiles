@@ -11,6 +11,7 @@
     fff = {
       url = "github:dmtrKovalenko/fff.nvim";
       inputs.nixpkgs.follows = "nixpkgs/nixpkgs";
+      inputs.zig-overlay.inputs.systems.follows = "fff/flake-utils/systems";
     };
     fff-cli = {
       url = "github:anmonteiro/fff-cli";
