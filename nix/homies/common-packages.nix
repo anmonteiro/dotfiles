@@ -13,29 +13,27 @@ let
 
   # Tmux with a custom tmux.conf baked in
   tmux = callPackage ./tmux { };
-  neovimMasterUnwrapped = pkgs.neovim.unwrapped.overrideAttrs (_: {
-    version = "master-${pkgs.neovim-src.shortRev or (builtins.substring 0 7 pkgs.neovim-src.rev)}";
-    src = pkgs.neovim-src;
-    # versionCheckHook expects a release-style version string, but master
-    # reports upstream's dev version (for example v0.13.0-dev).
+  # Neovim's tests belong to the unwrapped derivation. Overriding the wrapper
+  # leaves pkgs.neovim.passthru.unwrapped.doCheck enabled.
+  neovimUnwrappedNoChecks = pkgs.neovim-unwrapped.overrideAttrs (old: {
     doCheck = false;
     doInstallCheck = false;
-    meta = pkgs.neovim.unwrapped.meta // {
-      changelog = "https://github.com/neovim/neovim/commits/${pkgs.neovim-src.rev}";
-    };
+    preCheck = lib.concatStringsSep "\n" [
+      (old.preCheck or "")
+      ''
+        export XDG_RUNTIME_DIR="$NIX_BUILD_TOP/xdg-runtime"
+        mkdir -p "$XDG_RUNTIME_DIR"
+        chmod 700 "$XDG_RUNTIME_DIR"
+      ''
+    ];
   });
-  neovimWithPython = pkgs.wrapNeovim neovimMasterUnwrapped {
+  neovimWithPython = pkgs.wrapNeovim neovimUnwrappedNoChecks {
     withPython3 = true;
     extraPython3Packages =
       ps: with ps; [
         pynvim
       ];
   };
-  pythonWithPynvim = pkgs.python3.withPackages (
-    ps: with ps; [
-      pynvim
-    ]
-  );
   zshForProfile =
     if stdenv.isDarwin then
       # zsh 5.9 regenerated with Autoconf 2.73 tries C23 on Darwin, which hangs
@@ -65,7 +63,6 @@ with pkgs;
   neovimWithPython
   nix-zsh-completions
   procps
-  pythonWithPynvim
   silver-searcher
   stylua
   fff
