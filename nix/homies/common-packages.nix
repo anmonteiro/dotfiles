@@ -16,6 +16,7 @@ let
   # Neovim's tests belong to the unwrapped derivation. Overriding the wrapper
   # leaves pkgs.neovim.passthru.unwrapped.doCheck enabled.
   neovimUnwrappedNoChecks = pkgs.neovim-unwrapped.overrideAttrs (old: {
+    src = pkgs.neovim-src;
     doCheck = false;
     doInstallCheck = false;
     preCheck = lib.concatStringsSep "\n" [
@@ -63,6 +64,7 @@ with pkgs;
   neovimWithPython
   nix-zsh-completions
   procps
+  python3
   silver-searcher
   stylua
   fff
