@@ -6,7 +6,7 @@ import shlex
 import shutil
 import subprocess
 import sys
-from typing import Optional
+from typing import Any, Optional
 
 
 def should_use_terminal_notifier() -> bool:
@@ -87,6 +87,32 @@ def notify(title: str, message: str) -> None:
         pass
 
 
+def compact(text: Optional[str], fallback: str, limit: int = 120) -> str:
+    value = " ".join((text or "").split()) or fallback
+    if len(value) <= limit:
+        return value
+    return value[: limit - 3] + "..."
+
+
+def old_notification_message(notification: dict[str, Any]) -> Optional[tuple[str, str]]:
+    assistant_message: Optional[str] = notification.get("last-assistant-message")
+    if not assistant_message:
+        return None
+    title = f"Codex: {compact(assistant_message, '')}"
+    input_messages = notification.get("input_messages", [])
+    message = compact(" ".join(input_messages), "")
+    return title, message
+
+
+def stop_hook_message(notification: dict[str, Any]) -> Optional[tuple[str, str]]:
+    assistant_message: Optional[str] = notification.get("last_assistant_message")
+    if not assistant_message:
+        return None
+    title = "Codex"
+    message = compact(assistant_message, "")
+    return title, message
+
+
 def main() -> int:
 
     raw: Optional[str] = None
@@ -107,14 +133,17 @@ def main() -> int:
         # Don’t crash the agent pipeline on local format issues
         return 1
 
-    if notification.get("type") != "agent-turn-complete":
+    if notification.get("hook_event_name") == "Stop":
+        notification_text = stop_hook_message(notification)
+    elif notification.get("type") == "agent-turn-complete":
+        notification_text = old_notification_message(notification)
+    else:
         return 0
 
-    assistant_message: Optional[str] = notification.get("last-assistant-message")
-    title = f"Codex: {assistant_message}" if assistant_message else "Codex: Turn Complete!"
-    input_messages = notification.get("input_messages", [])
-    message = " ".join(input_messages).strip()
+    if not notification_text:
+        return 0
 
+    title, message = notification_text
     notify(title, message)
     return 0
 

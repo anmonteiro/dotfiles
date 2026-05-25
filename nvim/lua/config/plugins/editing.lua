@@ -74,7 +74,7 @@ return {
         noremap = true,
         silent = true,
       })
-      vim.keymap.set("x", "<leader>cc", visual_map(api.comment.linewise), {
+      vim.keymap.set("x", "<leader>cc", visual_smart_map(api.comment.linewise, api.comment.blockwise), {
         desc = "Comment selection",
         noremap = true,
         silent = true,
@@ -85,7 +85,7 @@ return {
         noremap = true,
         silent = true,
       })
-      vim.keymap.set("x", "<leader>c ", visual_map(api.toggle.linewise), {
+      vim.keymap.set("x", "<leader>c ", visual_smart_map(api.toggle.linewise, api.toggle.blockwise), {
         desc = "Toggle comment",
         noremap = true,
         silent = true,
@@ -96,7 +96,7 @@ return {
         noremap = true,
         silent = true,
       })
-      vim.keymap.set("x", "<leader>cu", visual_map(api.uncomment.linewise), {
+      vim.keymap.set("x", "<leader>cu", visual_smart_map(api.uncomment.linewise, api.uncomment.blockwise), {
         desc = "Uncomment selection",
         noremap = true,
         silent = true,

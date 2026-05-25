@@ -1,4 +1,3 @@
-notify = ["/Users/anmonteiro/.nix-profile/bin/python3", "/Users/anmonteiro/.codex/notify.py"]
 model_reasoning_summary = "auto"
 file_opener = "none"
 show_raw_agent_reasoning = true
@@ -48,8 +47,17 @@ hide_rate_limit_model_nudge = true
 "gpt-5.3-codex" = "gpt-5.4"
 
 [features]
+hooks = true
 prevent_idle_sleep = true
+
+[[hooks.Stop]]
+
+[[hooks.Stop.hooks]]
+type = "command"
+command = "/Users/anmonteiro/.nix-profile/bin/python3 /Users/anmonteiro/.codex/notify.py"
+timeout = 5
 
 [tui]
 no_alt_screen = true
 status_line = ["model-with-reasoning", "context-remaining", "current-dir", "session-id"]
+session_picker_view = "dense"

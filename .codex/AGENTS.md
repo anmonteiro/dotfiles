@@ -7,3 +7,7 @@
 
 
 - if there's no flake.nix, feel free to add one for each project we work on. depend on github:nix-ocaml/nix-overlays and use flake systems exposed genattrs, don't bring in flake-utils stuff.
+
+## Working with Git
+
+- When opening Pull Requests, don't add verbose descriptions. State only the purpose of the change, and whether it relates to other work (referencing other PRs, issues, commits, etc)

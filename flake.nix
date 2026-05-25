@@ -8,15 +8,9 @@
       url = "github:neovim/neovim/master";
       flake = false;
     };
-    fff = {
-      url = "github:dmtrKovalenko/fff.nvim";
-      inputs.nixpkgs.follows = "nixpkgs/nixpkgs";
-      inputs.zig-overlay.inputs.systems.follows = "fff/flake-utils/systems";
-    };
     fff-cli = {
       url = "github:anmonteiro/fff-cli";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.fff.follows = "fff";
     };
   };
   outputs =
@@ -25,7 +19,6 @@
       nixpkgs,
       nixos-hardware,
       neovim-src,
-      fff,
       fff-cli,
     }:
     let
@@ -37,11 +30,7 @@
             pkgs = nixpkgs.legacyPackages.${system}.extend (
               self: super: {
                 neovim-src = neovim-src;
-                fff = fff.outputs.packages.${system}.default.overrideAttrs (_: {
-                  postInstall = ''
-                    ln -sfn $out/lib/ $out/release
-                  '';
-                });
+                fff = fff-cli.packages.${system}.fff-nvim;
                 fff-cli = fff-cli.packages.${system}.default;
               }
             );

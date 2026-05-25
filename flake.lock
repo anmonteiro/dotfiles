@@ -19,19 +19,16 @@
       "inputs": {
         "crane": "crane",
         "flake-utils": "flake-utils",
-        "nixpkgs": [
-          "nixpkgs",
-          "nixpkgs"
-        ],
+        "nixpkgs": "nixpkgs",
         "rust-overlay": "rust-overlay",
         "zig-overlay": "zig-overlay"
       },
       "locked": {
-        "lastModified": 1778246585,
-        "narHash": "sha256-vCHJU/D4evrQ+W+TBOjEHdgIMonaFIEpSeLgO6nPnDs=",
+        "lastModified": 1779589736,
+        "narHash": "sha256-u9R6JY1WyRfc+8ANf7742LPMcktIl+352ID+ggM/aZ4=",
         "owner": "dmtrKovalenko",
         "repo": "fff.nvim",
-        "rev": "8cb1f4768b4badab5edcb0c5f45184e236fa3f8a",
+        "rev": "5c3a615e76157c091268a8ac249dd220d73ed56a",
         "type": "github"
       },
       "original": {
@@ -42,19 +39,17 @@
     },
     "fff-cli": {
       "inputs": {
-        "fff": [
-          "fff"
-        ],
+        "fff": "fff",
         "nixpkgs": [
           "nixpkgs"
         ]
       },
       "locked": {
-        "lastModified": 1778371919,
-        "narHash": "sha256-BMXQ40zMvPe4ocJd8XY+XfP+xGoBzS1gk5M8YNxZbzU=",
+        "lastModified": 1779685503,
+        "narHash": "sha256-0tc/FMWXqu/GI599Kls899ixD2fb95RlcU33ixXHcAw=",
         "owner": "anmonteiro",
         "repo": "fff-cli",
-        "rev": "c9af2b61db51d37fee77bc3d45f435e4b45d636d",
+        "rev": "64a79303b983bcba8666577580ae03c5292a56a5",
         "type": "github"
       },
       "original": {
@@ -100,11 +95,11 @@
     "neovim-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1778371567,
-        "narHash": "sha256-G79Tw1Ja5t64xgb/AKmnFEC59drMLfYB3oEd3GEeL48=",
+        "lastModified": 1779663920,
+        "narHash": "sha256-cvvVGl/jKrRSIfAyrrdVNu2ScQpvFgsDaIOKRceMvUE=",
         "owner": "neovim",
         "repo": "neovim",
-        "rev": "2d5f56c0aaded1d9fc903d93d55cbd07c5385ab1",
+        "rev": "89623e5992150b4c748d010d62dccffce47386df",
         "type": "github"
       },
       "original": {
@@ -116,11 +111,11 @@
     },
     "nixos-hardware": {
       "locked": {
-        "lastModified": 1778143761,
-        "narHash": "sha256-lkesY6x2X2qxlqLM7CT2iM/0rP2JB7fruPN3h8POXmI=",
+        "lastModified": 1779258371,
+        "narHash": "sha256-j1iZsLy6oFApqR1oiDmHhvkwxXqcNi0aoSJj643LuwU=",
         "owner": "NixOS",
         "repo": "nixos-hardware",
-        "rev": "3bcaa367d4c550d687a17ac792fd5cda214ee871",
+        "rev": "c97bc4d15bd3473dd095e8e8ba57330ab1943a77",
         "type": "github"
       },
       "original": {
@@ -130,15 +125,31 @@
       }
     },
     "nixpkgs": {
+      "locked": {
+        "lastModified": 1779536132,
+        "narHash": "sha256-q+fF42iv/geEbHfgSzy3tS0FF/EyD6XTZ98E6yxiBO8=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "3d8f0f3f72a6cd4d93d0ad13203f2ea1cb7e1456",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixpkgs-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_2": {
       "inputs": {
-        "nixpkgs": "nixpkgs_2"
+        "nixpkgs": "nixpkgs_3"
       },
       "locked": {
-        "lastModified": 1778370976,
-        "narHash": "sha256-TwwlDayiwGtoR/+w27tUr+pAqlJDmd5kwMicH6a2AKA=",
+        "lastModified": 1779668769,
+        "narHash": "sha256-RO0EfA3Gjy6xHIN+46N5Uhfb7mNDDkgZ7EVrRnM4YNY=",
         "owner": "anmonteiro",
         "repo": "nix-overlays",
-        "rev": "b21fa5162b04ecc3b655f6825c7673ef5976c1cb",
+        "rev": "415e4eaa27ae52c5735d077a9357d35a900b92ed",
         "type": "github"
       },
       "original": {
@@ -147,34 +158,34 @@
         "type": "github"
       }
     },
-    "nixpkgs_2": {
+    "nixpkgs_3": {
       "locked": {
-        "lastModified": 1778228972,
-        "narHash": "sha256-L34YTBob9sdjnc+rd7nMC2X8ddw0LT4RfufnlFyArRU=",
+        "lastModified": 1779630130,
+        "narHash": "sha256-RWn/gMXEy+p6yL5lKh51Z/w6RHC+5Px18Tarkuva99Y=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "1c5503ba41146fb6b49ed9706823b30de7f3a78f",
+        "rev": "68ac0b94b449482d8a90f3e3791d61a8ee186f07",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "1c5503ba41146fb6b49ed9706823b30de7f3a78f",
+        "rev": "68ac0b94b449482d8a90f3e3791d61a8ee186f07",
         "type": "github"
       }
     },
     "root": {
       "inputs": {
-        "fff": "fff",
         "fff-cli": "fff-cli",
         "neovim-src": "neovim-src",
         "nixos-hardware": "nixos-hardware",
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs_2"
       }
     },
     "rust-overlay": {
       "inputs": {
         "nixpkgs": [
+          "fff-cli",
           "fff",
           "nixpkgs"
         ]
@@ -208,18 +219,31 @@
         "type": "github"
       }
     },
+    "systems_2": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1681028828,
+        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
+        "owner": "nix-systems",
+        "repo": "default",
+        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-systems",
+        "repo": "default",
+        "type": "github"
+      }
+    },
     "zig-overlay": {
       "inputs": {
         "flake-compat": "flake-compat",
         "nixpkgs": [
+          "fff-cli",
           "fff",
           "nixpkgs"
         ],
-        "systems": [
-          "fff",
-          "flake-utils",
-          "systems"
-        ]
+        "systems": "systems_2"
       },
       "locked": {
         "lastModified": 1776789209,
