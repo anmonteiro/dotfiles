@@ -56,6 +56,7 @@ with pkgs;
   eza
   ffmpeg
   git
+  gh
   gnupg
   htop
   jq
