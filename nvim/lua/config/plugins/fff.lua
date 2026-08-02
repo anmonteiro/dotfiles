@@ -68,14 +68,11 @@ return {
   {
     "dmtrKovalenko/fff.nvim",
     init = function()
-      local fff_mcp = vim.fn.exepath("fff-mcp")
-      if fff_mcp ~= "" then
-        local resolved = vim.uv.fs_realpath(fff_mcp) or fff_mcp
-        local path = vim.fn.fnamemodify(resolved, ":h:h")
-        if path ~= "" then
-          vim.env.CARGO_TARGET_DIR = path
-          -- print("fff.nvim CARGO_TARGET_DIR: " .. path)
-        end
+      local target_dir = vim.fn.expand("$HOME/.nix-profile/target")
+      local extension = vim.uv.os_uname().sysname == "Darwin" and "dylib" or "so"
+      local backend = target_dir .. "/release/libfff_nvim." .. extension
+      if vim.uv.fs_stat(backend) then
+        vim.env.CARGO_TARGET_DIR = target_dir
       end
     end,
     opts = { -- (optional)
