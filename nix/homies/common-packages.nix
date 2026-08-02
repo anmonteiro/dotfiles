@@ -70,6 +70,7 @@ with pkgs;
   stylua
   fff
   fff-cli
+  fff-mcp
 
   # for nvim
   ripgrep

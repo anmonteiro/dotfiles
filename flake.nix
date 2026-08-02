@@ -31,31 +31,9 @@
             pkgs = nixpkgs.legacyPackages.${system}.extend (
               self: super: {
                 neovim-src = neovim-src;
-                fff =
-                  let
-                    withoutRustOverlayToolchain =
-                      inputs:
-                      builtins.filter (
-                        input: !(input ? pname && input.pname == "rust-default")
-                      ) inputs;
-                  in
-                  fff-cli.packages.${system}.fff-nvim.overrideAttrs (old: {
-                    nativeBuildInputs =
-                      withoutRustOverlayToolchain (old.nativeBuildInputs or [ ])
-                      ++ [
-                        self.rustc
-                        self.cargo
-                      ];
-                    cargoArtifacts = old.cargoArtifacts.overrideAttrs (depsOld: {
-                      nativeBuildInputs =
-                        withoutRustOverlayToolchain (depsOld.nativeBuildInputs or [ ])
-                        ++ [
-                          self.rustc
-                          self.cargo
-                        ];
-                    });
-                  });
+                fff = fff-cli.packages.${system}.fff-nvim;
                 fff-cli = fff-cli.packages.${system}.default;
+                fff-mcp = fff-cli.packages.${system}.fff-mcp;
               }
             );
           in
