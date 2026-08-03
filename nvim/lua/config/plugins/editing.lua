@@ -17,6 +17,15 @@ local function visual_map(callback)
   end
 end
 
+local function visual_smart_map(linewise_callback, blockwise_callback)
+  local visual_block = vim.api.nvim_replace_termcodes("<C-v>", true, false, true)
+
+  return visual_map(function(mode)
+    local callback = mode == visual_block and blockwise_callback or linewise_callback
+    callback(mode)
+  end)
+end
+
 local function setup_editing_autocmds()
   vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
     pattern = "Vagrantfile",
@@ -58,6 +67,7 @@ return {
       local api = require("Comment.api")
       local ft = require("Comment.ft")
 
+      ft.set("jsonc", { "//%s", "/*%s*/" })
       ft.set("reason", { "//%s", "/*%s*/" })
 
       require("Comment").setup({

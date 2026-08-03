@@ -42,6 +42,23 @@ local function lualine_location()
   return string.format("☰ %d/%d ㏑:%d", vim.fn.line("."), vim.fn.line("$"), vim.fn.col("."))
 end
 
+local function lualine_git_diff_source()
+  if vim.bo.buftype ~= "" then
+    return nil
+  end
+
+  local gitsigns = vim.b.gitsigns_status_dict
+  if type(gitsigns) ~= "table" then
+    return nil
+  end
+
+  return {
+    added = gitsigns.added or 0,
+    modified = gitsigns.changed or 0,
+    removed = gitsigns.removed or 0,
+  }
+end
+
 local function lualine_options()
   return {
     options = {
@@ -57,6 +74,7 @@ local function lualine_options()
       lualine_b = {
         {
           "diff",
+          source = lualine_git_diff_source,
           symbols = {
             added = "⨁ ",
             modified = "✎ ",

@@ -62,3 +62,6 @@ timeout = 5
 no_alt_screen = true
 status_line = ["model-with-reasoning", "context-remaining", "current-dir", "session-id"]
 session_picker_view = "dense"
+
+[tui.keymap.editor]
+insert_newline = "alt-enter"
