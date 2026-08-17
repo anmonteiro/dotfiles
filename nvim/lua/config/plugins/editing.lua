@@ -17,11 +17,18 @@ local function visual_map(callback)
   end
 end
 
+-- OCaml has block comments (`(* ... *)`) rather than line comments.
+local function prefer_blockwise_visual()
+  local ft = vim.bo.filetype
+  return ft == "ocaml" or vim.startswith(ft, "ocaml.")
+end
+
 local function visual_smart_map(linewise_callback, blockwise_callback)
   local visual_block = vim.api.nvim_replace_termcodes("<C-v>", true, false, true)
 
   return visual_map(function(mode)
-    local callback = mode == visual_block and blockwise_callback or linewise_callback
+    local use_blockwise = mode == visual_block or prefer_blockwise_visual()
+    local callback = use_blockwise and blockwise_callback or linewise_callback
     callback(mode)
   end)
 end
