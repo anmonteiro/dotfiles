@@ -420,6 +420,8 @@ local function apply_treesitter_highlights(palette)
     ["@tag"] = "Tag",
     ["@tag.attribute"] = "Identifier",
     ["@tag.delimiter"] = "Delimiter",
+    ["@tag.ocaml_mlx"] = "Type",
+    ["@tag.builtin.ocaml_mlx"] = "Function",
     ["@markup.strong"] = "markdownBold",
     ["@markup.italic"] = "markdownItalic",
     ["@markup.strikethrough"] = "DiagnosticDeprecated",

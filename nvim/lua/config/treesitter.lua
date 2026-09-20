@@ -15,6 +15,7 @@ local languages = {
   "nix",
   "ocaml",
   "ocaml_interface",
+  "ocaml_mlx",
   "python",
   "query",
   "reason",
@@ -53,9 +54,25 @@ local function register_rapper_parser()
   }
 end
 
+local function register_mlx_parser()
+  local parsers = require("nvim-treesitter.parsers")
+
+  parsers.ocaml_mlx = {
+    install_info = {
+      url = "https://github.com/ocaml-mlx/tree-sitter-mlx",
+      -- Includes shorthand props and children spreads: ocaml-mlx/tree-sitter-mlx#3.
+      revision = "617c755285d5dcdfbe0b82f497edbda617d40187",
+      location = "grammars/mlx",
+      files = { "src/parser.c", "src/scanner.c" },
+    },
+    requires = { "ocaml" },
+  }
+end
+
 local function register_custom_parsers()
   register_reason_parser()
   register_rapper_parser()
+  register_mlx_parser()
 end
 
 local function warn_missing_or_outdated_cli(message)

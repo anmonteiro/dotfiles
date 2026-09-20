@@ -23,7 +23,7 @@ return {
     config = function()
       require("ocaml").setup({
         install_rapper = false,
-        install_mlx = true,
+        install_mlx = false, -- Managed by config.treesitter with the other parsers.
         setup_lspconfig = false,
         setup_conform = false,
       })
