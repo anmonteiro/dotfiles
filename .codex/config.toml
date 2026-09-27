@@ -1,9 +1,10 @@
-model_reasoning_summary = "auto"
+model_reasoning_summary = "detailed"
 file_opener = "none"
+hide_agent_reasoning = false
 show_raw_agent_reasoning = true
 sandbox_mode = "danger-full-access"
 approval_policy = "never"
-model = "gpt-5.6-sol"
+model = "gpt-6-astra"
 model_reasoning_effort = "max"
 personality = "pragmatic"
 
@@ -59,9 +60,11 @@ command = "/Users/anmonteiro/.nix-profile/bin/python3 /Users/anmonteiro/.codex/n
 timeout = 5
 
 [tui]
-no_alt_screen = true
+alternate_screen = "never"
+fullscreen_transcript = false
 status_line = ["model-with-reasoning", "context-remaining", "current-dir", "session-id"]
 session_picker_view = "dense"
+screen_reader_detection_done = true
 
 [tui.keymap.editor]
 insert_newline = "alt-enter"
