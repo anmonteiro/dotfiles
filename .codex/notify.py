@@ -6,6 +6,7 @@ import shlex
 import shutil
 import subprocess
 import sys
+import time
 from typing import Any, Optional
 
 
@@ -21,41 +22,78 @@ def should_use_terminal_notifier() -> bool:
     return True
 
 
-def tmux_click_command() -> Optional[str]:
+def tmux_click_command(notification: dict[str, Any]) -> Optional[str]:
     """Build a command to jump back to the originating tmux window/pane."""
     tmux = shutil.which("tmux")
-    tmux_pane = os.environ.get("TMUX_PANE")
-    if not tmux or not tmux_pane:
+    if not tmux:
         return None
 
+    deadline = time.monotonic() + 2
     try:
-        # Target the pane where Codex is running so we capture the right window.
         result = subprocess.run(
-            [tmux, "display-message", "-p", "-t", tmux_pane, "#{socket_path}\t#{window_id}\t#{pane_id}"],
+            [
+                tmux, "list-panes", "-a", "-F",
+                "#{socket_path}\t#{window_id}\t#{pane_id}\t#{pane_current_command}\t#{pane_current_path}",
+            ],
             capture_output=True,
             text=True,
             timeout=2,
             check=True,
         )
-    except Exception:
+    except (OSError, subprocess.SubprocessError):
         return None
 
-    parts = result.stdout.strip().split("\t")
-    if len(parts) != 3 or not all(parts):
+    panes = [line.split("\t", 4) for line in result.stdout.splitlines()]
+    panes = [pane for pane in panes if len(pane) == 5 and "codex" in pane[3]]
+    session_id = notification.get("session_id") or notification.get("thread-id")
+    cwd = notification.get("cwd")
+    cwd_panes = [
+        pane for pane in panes
+        if cwd and os.path.realpath(pane[4]) == os.path.realpath(cwd)
+    ]
+
+    # A shared app-server inherits TMUX_PANE from its own launch, not this TUI.
+    # Match the session-id in our configured status line, without reading scrollback.
+    matches = []
+    if session_id:
+        for pane in panes:
+            remaining = deadline - time.monotonic()
+            if remaining <= 0:
+                return None
+            try:
+                screen = subprocess.run(
+                    [tmux, "-S", pane[0], "capture-pane", "-p", "-t", pane[2], "-S", "0"],
+                    capture_output=True,
+                    text=True,
+                    timeout=remaining,
+                    check=True,
+                )
+            except (OSError, subprocess.SubprocessError):
+                continue
+            lines = screen.stdout.rstrip().splitlines()
+            if lines and session_id in lines[-1].split(" · "):
+                matches.append(pane)
+
+    if not matches:
+        # A narrow pane can truncate the UUID. Only fall back to the cwd when
+        # every matching Codex pane belongs to the same window.
+        matches = cwd_panes
+    windows = {(pane[0], pane[1]) for pane in matches}
+    if len(windows) != 1:
         return None
 
-    socket_path, window_id, pane_id = parts
+    socket_path, window_id = windows.pop()
     q_tmux = shlex.quote(tmux)
     q_socket = shlex.quote(socket_path)
     q_window = shlex.quote(window_id)
-    q_pane = shlex.quote(pane_id)
-    return (
-        f"{q_tmux} -S {q_socket} select-window -t {q_window} >/dev/null 2>&1; "
-        f"{q_tmux} -S {q_socket} select-pane -t {q_pane} >/dev/null 2>&1"
-    )
+    command = f"{q_tmux} -S {q_socket} select-window -t {q_window} >/dev/null 2>&1"
+    if len(matches) == 1:
+        q_pane = shlex.quote(matches[0][2])
+        command += f" && {q_tmux} -S {q_socket} select-pane -t {q_pane} >/dev/null 2>&1"
+    return command
 
 
-def notify(title: str, message: str) -> None:
+def notify(title: str, message: str, notification: dict[str, Any]) -> None:
     """Send a notification using terminal-notifier only.
 
     Minimal, non-blocking and predictable: runs
@@ -78,7 +116,7 @@ def notify(title: str, message: str) -> None:
         "-activate",
         "net.kovidgoyal.kitty",
     ]
-    click_cmd = tmux_click_command()
+    click_cmd = tmux_click_command(notification)
     if click_cmd:
         args.extend(["-execute", click_cmd])
     try:
@@ -144,7 +182,7 @@ def main() -> int:
         return 0
 
     title, message = notification_text
-    notify(title, message)
+    notify(title, message, notification)
     return 0
 
 
