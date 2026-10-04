@@ -36,7 +36,7 @@ let
       ];
   };
   zshForProfile =
-    if stdenv.isDarwin then
+    if stdenv.hostPlatform.isDarwin then
       # zsh 5.9 regenerated with Autoconf 2.73 tries C23 on Darwin, which hangs
       # in interactive external command substitutions and compdump.
       pkgs.zsh.overrideAttrs (old: {
@@ -57,6 +57,7 @@ with pkgs;
   ffmpeg
   git
   gh
+  glow
   gnupg
   htop
   jq

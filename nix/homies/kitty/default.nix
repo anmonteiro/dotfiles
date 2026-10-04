@@ -1,8 +1,9 @@
-{ kitty
-, symlinkJoin
-, stdenv
-, makeBinaryWrapper
-, autoSignDarwinBinariesHook
+{
+  kitty,
+  symlinkJoin,
+  stdenv,
+  makeBinaryWrapper,
+  autoSignDarwinBinariesHook,
 }:
 
 let
@@ -11,12 +12,20 @@ in
 
 symlinkJoin {
   name = "kitty";
-  nativeBuildInputs = [ makeBinaryWrapper autoSignDarwinBinariesHook ];
+  nativeBuildInputs = [
+    makeBinaryWrapper
+    autoSignDarwinBinariesHook
+  ];
   paths = [ kitty ];
   postBuild = ''
-    ${if stdenv.isDarwin then ''
-        wrapProgram "$out/Applications/kitty.app/Contents/MacOS/kitty" --add-flags "--config ${conf}"
-      '' else ""}
+    ${
+      if stdenv.hostPlatform.isDarwin then
+        ''
+          wrapProgram "$out/Applications/kitty.app/Contents/MacOS/kitty" --add-flags "--config ${conf}"
+        ''
+      else
+        ""
+    }
     wrapProgram "$out/bin/kitty" --add-flags "--config ${conf}"
   '';
 }
