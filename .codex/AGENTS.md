@@ -11,3 +11,4 @@
 ## Working with Git
 
 - When opening Pull Requests, don't add verbose descriptions. State only the purpose of the change, and whether it relates to other work (referencing other PRs, issues, commits, etc)
+- When opening Pull requests, always include the Codex session UUID in the PR description, but only the UUID without further context
