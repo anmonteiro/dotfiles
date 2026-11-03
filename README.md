@@ -8,6 +8,7 @@ symlinking files inside the repository out of it, into your home directory:
 
 ```shell
 ln -sfn $PWD/nvim ~/.config/nvim
+ln -sfn $PWD/rex ~/.config/rex
 ```
 
 ```shell
