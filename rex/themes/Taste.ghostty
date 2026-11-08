@@ -1,0 +1,36 @@
+# Taste dark, matching ../../nix/homies/kitty/kitty.conf.
+# https://github.com/jordwalke/vim-taste/blob/master/terminals/kitty.conf
+# Import in Rex with: rex do client.theme.import path=/absolute/path/Taste.ghostty
+
+background = #303030
+foreground = #d4d4d4
+selection-background = #464646
+selection-foreground = #d4d4d4
+
+# Kitty's effective cursor defaults; Taste does not override them.
+cursor-color = #cccccc
+cursor-text = #111111
+
+# Keep xterm colors 16-255, including tmux's colour75 and colour214.
+palette-generate = false
+palette-harmonious = false
+
+# Standard ANSI colors. Taste deliberately uses blue shades for cyan.
+palette = 0=#202020
+palette = 1=#f58c84
+palette = 2=#a5d75a
+palette = 3=#fadf78
+palette = 4=#78bcfb
+palette = 5=#c9a2f4
+palette = 6=#5e9df2
+palette = 7=#e4e4e4
+
+# Bright ANSI colors. Preserve Taste's ordering rather than sorting by brightness.
+palette = 8=#565656
+palette = 9=#e25256
+palette = 10=#d6fb8b
+palette = 11=#fcf19c
+palette = 12=#9ad7fc
+palette = 13=#e1c8f8
+palette = 14=#4e8de2
+palette = 15=#ffffff

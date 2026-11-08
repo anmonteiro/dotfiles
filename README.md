@@ -11,6 +11,8 @@ ln -sfn $PWD/nvim ~/.config/nvim
 ln -sfn $PWD/rex ~/.config/rex
 ```
 
+See [the Rex setup](rex/README.md) for importing the Taste terminal theme.
+
 ```shell
 ~ $ rm ~/.emacs.d
 ~ $ cd ~
