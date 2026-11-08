@@ -109,6 +109,77 @@ local function configure_lsp_keymaps(bufnr)
   )
 end
 
+local function supports_ocaml_switch(client)
+  local experimental = client.server_capabilities.experimental
+  local ocamllsp = type(experimental) == "table" and experimental.ocamllsp
+  return client.name == "ocamllsp" and type(ocamllsp) == "table" and ocamllsp.handleSwitchImplIntf
+end
+
+local function configure_ocaml_switch(client, bufnr)
+  if not supports_ocaml_switch(client) then
+    return
+  end
+
+  local function fallback()
+    if vim.fn.exists("*OCaml_switch") == 1 then
+      vim.fn.OCaml_switch(0)
+    end
+  end
+
+  local function open_uri(uri)
+    local filename = vim.uri_to_fname(uri)
+    vim.cmd.edit(vim.fn.fnameescape(filename))
+  end
+
+  vim.keymap.set("n", "<localleader>s", function()
+    local active_client
+    for _, attached_client in ipairs(vim.lsp.get_clients({ bufnr = bufnr, name = "ocamllsp" })) do
+      if not attached_client:is_stopped() and supports_ocaml_switch(attached_client) then
+        active_client = attached_client
+        break
+      end
+    end
+
+    if not active_client then
+      fallback()
+      return
+    end
+
+    local uri = vim.uri_from_bufnr(bufnr)
+    local sent = active_client:request("ocamllsp/switchImplIntf", { uri }, function(err, uris)
+      if err or type(uris) ~= "table" or #uris == 0 then
+        fallback()
+        return
+      end
+
+      if #uris == 1 then
+        open_uri(uris[1])
+        return
+      end
+
+      vim.ui.select(uris, {
+        prompt = "Switch implementation/interface",
+        format_item = function(candidate)
+          return vim.fn.fnamemodify(vim.uri_to_fname(candidate), ":~:.")
+        end,
+      }, function(selected)
+        if selected then
+          open_uri(selected)
+        end
+      end)
+    end, bufnr)
+
+    if not sent then
+      fallback()
+    end
+  end, {
+    buffer = bufnr,
+    desc = "Switch OCaml implementation/interface",
+    noremap = true,
+    silent = true,
+  })
+end
+
 local function enable_supported_lsp_features(client, bufnr)
   if client:supports_method(methods.textDocument_inlayHint, bufnr) then
     vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
@@ -189,6 +260,7 @@ M.setup = function()
   local on_attach = function(client, bufnr)
     configure_lsp_toggle_commands(bufnr)
     configure_lsp_keymaps(bufnr)
+    configure_ocaml_switch(client, bufnr)
     enable_supported_lsp_features(client, bufnr)
     if client.name == "nixd_local" then
       configure_nixd_workspace(client, bufnr)

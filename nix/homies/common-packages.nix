@@ -67,7 +67,7 @@ with pkgs;
   nix-zsh-completions
   procps
   python3
-  silver-searcher
+  silver-searcher-ng
   stylua
   fff
   fff-cli

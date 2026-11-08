@@ -6,10 +6,6 @@
   "(" @delimiter
   ")" @delimiter @sentinel) @container
 
-(local_open_expression ; Line 27
-  "(" @delimiter
-  ")" @delimiter @sentinel) @container
-
 (module_parameter ; Line 38
   "(" @delimiter
   ")" @delimiter @sentinel) @container
@@ -18,6 +14,7 @@
   "(" @delimiter
   ")" @delimiter @sentinel) @container
 
+; tree-sitter-ocaml 0.25 nests M.(...) delimiters in this node.
 (parenthesized_expression ; Line 6
   "(" @delimiter
   ")" @delimiter @sentinel) @container
