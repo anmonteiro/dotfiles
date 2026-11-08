@@ -52,13 +52,6 @@ hooks = true
 prevent_idle_sleep = true
 terminal_resize_reflow = true
 
-[[hooks.Stop]]
-
-[[hooks.Stop.hooks]]
-type = "command"
-command = "/Users/anmonteiro/.nix-profile/bin/python3 /Users/anmonteiro/.codex/notify.py"
-timeout = 5
-
 [tui]
 alternate_screen = "never"
 fullscreen_transcript = false

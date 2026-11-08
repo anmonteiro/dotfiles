@@ -1,0 +1,55 @@
+diff --git a/options-table.c b/options-table.c
+--- a/options-table.c
++++ b/options-table.c
+@@ -2139,6 +2139,8 @@
+ 	    "Run when a pane exits a mode."),
+ 	OPTIONS_TABLE_PANE_HOOK("pane-moved", "",
+ 	    "Run when a pane is moved to another window."),
++	OPTIONS_TABLE_PANE_HOOK("pane-program-status-changed", "",
++	    "Run when an OSC 7501 program state or application changes."),
+ 	OPTIONS_TABLE_PANE_HOOK("pane-prompt-closed", "",
+ 	    "Run when a prompt in a pane is closed."),
+ 	OPTIONS_TABLE_PANE_HOOK("pane-prompt-opened", "",
+diff --git a/window.c b/window.c
+--- a/window.c
++++ b/window.c
+@@ -2005,13 +2005,16 @@
+ window_pane_set_program_status(struct window_pane *wp, struct program_status *ps)
+ {
+ 	struct program_status *old = wp->program_status;
+-	int unseen, changed;
++	struct event_payload *ep;
++	struct cmd_find_state fs;
++	int unseen, changed, status_changed;
+ 
+ 	unseen = strcmp(ps->state, "done") == 0 ||
+ 	    strcmp(ps->state, "error") == 0;
+-	changed = old == NULL || strcmp(old->state, ps->state) != 0 ||
++	status_changed = old == NULL || strcmp(old->state, ps->state) != 0 ||
+ 	    ((old->app == NULL) != (ps->app == NULL)) ||
+-	    (old->app != NULL && strcmp(old->app, ps->app) != 0) ||
++	    (old->app != NULL && strcmp(old->app, ps->app) != 0);
++	changed = status_changed ||
+ 	    ((old->msg == NULL) != (ps->msg == NULL)) ||
+ 	    (old->msg != NULL && strcmp(old->msg, ps->msg) != 0) ||
+ 	    wp->program_result_unseen != unseen;
+@@ -2021,6 +2024,19 @@
+ 	if (changed) {
+ 		server_status_window(wp->window);
+ 		server_redraw_window_borders(wp->window);
++	}
++	if (status_changed) {
++		ep = event_payload_create();
++		cmd_find_from_pane(&fs, wp, 0);
++		event_payload_set_target(ep, &fs);
++		event_payload_set_pane(ep, "pane", wp);
++		event_payload_set_window(ep, "window", wp->window);
++		event_payload_set_string(ep, "program_state", "%s", ps->state);
++		event_payload_set_string(ep, "program_name", "%s",
++		    ps->app != NULL ? ps->app : "");
++		event_payload_set_string(ep, "program_message", "%s",
++		    ps->msg != NULL ? ps->msg : "");
++		events_fire("pane-program-status-changed", ep);
+ 	}
+ }
+ 
