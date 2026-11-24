@@ -109,6 +109,8 @@ rex.action {
 rex.bind("ctrl+l", "tmux_clear")
 
 -- Sessions and configuration.
+require("codex").setup()
+bind("f", "find_codex_session")
 bind("s", "session.switch")
 bind("ctrl+j", "session.switch")
 bind("shift+9", "session.previous") -- (

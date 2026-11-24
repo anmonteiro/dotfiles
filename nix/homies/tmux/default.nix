@@ -63,7 +63,14 @@ let
       --tmux ${patchedTmux}/bin/tmux \
       --notifier ${terminal-notifier}/bin/terminal-notifier -- "$@"
   '';
-  config = replaceVars ./tmux.conf { tmux_notify = notify; };
+  findCodex = writeShellScript "tmux-find-codex" ''
+    exec ${python3}/bin/python3 ${./find-codex.py} \
+      --tmux ${patchedTmux}/bin/tmux "$@"
+  '';
+  config = replaceVars ./tmux.conf {
+    tmux_notify = notify;
+    tmux_find_codex = findCodex;
+  };
 in
 
 symlinkJoin {
@@ -72,5 +79,6 @@ symlinkJoin {
   paths = [ patchedTmux ];
   postBuild = ''
     wrapProgram "$out/bin/tmux" --add-flags "-f ${config}"
+    ln -s ${findCodex} "$out/bin/tmux-find-codex"
   '';
 }
