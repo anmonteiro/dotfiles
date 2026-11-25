@@ -27,6 +27,20 @@ After changing the config, run `rex config check`, then `rex config reload`
 (or press **Ctrl+A**, then **r**).
 After changing the theme, rerun the theme import command above.
 
+## Copy mode and navigation
+
+Press **Ctrl+A**, then **[** to enter copy mode. Use vi motions to move,
+**v** to select, **Ctrl+V** for a rectangular selection, and **y** to copy.
+**Enter** copies and exits; **q** or **Esc** exits.
+Press **Ctrl+A**, then **]** to paste the clipboard.
+
+- **Alt+H/J/K/L:** switch panes in copy mode.
+- **Ctrl+A**, then **l**: toggle between the last two tabs in the current session.
+
+Last-tab switching uses Rex's built-in `focus_history.reverse` API, available in
+Rex Server `0.1.0-preview.23`. An older running server must be restarted into a
+version providing this API; reloading the config alone does not upgrade it.
+
 ## Find a Codex session
 
 Press **Ctrl+A**, then **f**, paste the session UUID, and press **Enter**.

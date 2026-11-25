@@ -1,7 +1,7 @@
 -- Match the active tmux configuration: Ctrl+A prefix and one-based tabs.
 -- Reload with Rex's Reload Config action or `rex config reload`.
--- Rex has no native tmux copy mode, last-window/last-pane action, buffer
--- picker, or preset-layout cycle. Those keys are intentionally unassigned.
+-- Rex has no tmux buffer picker or preset-layout cycle.
+-- Those keys are intentionally unassigned.
 
 local prefix = "ctrl+a>"
 local function bind(key, action, args)
@@ -15,9 +15,27 @@ bind("ctrl+a", "pane.send_key", { key = "ctrl+a" })
 rex.bind("ctrl+enter", "pane.send_key", { key = "enter" })
 
 -- Windows in tmux are tabs in Rex.
+rex.action {
+  name = "tmux_last_tab",
+  title = "Go to Last Tab in Session",
+  description = "Toggle between the last two tabs, like tmux last-window.",
+  run = function(ctx)
+    local view = assert(rex.session.view {})
+    local target = assert(rex.call("focus_history.reverse", {
+      session_id = ctx.session_id,
+      not_window_id = view.active_window_id,
+    }))
+    if target.reversed then
+      rex.client.queue("session.select", {
+        session_id = target.session_id, window_id = target.window_id,
+      })
+    end
+  end,
+}
 bind("c", "client.tab.new")
 bind("n", "client.tab.next")
 bind("p", "client.tab.previous")
+bind("l", "tmux_last_tab")
 bind(",", "client.tab.rename")
 bind("shift+7", "client.tab.close") -- &
 for index = 1, 9 do
@@ -25,6 +43,17 @@ for index = 1, 9 do
 end
 rex.bind("alt+n", "client.tab.next")
 rex.bind("alt+p", "client.tab.previous")
+
+-- Native copy mode uses vi motions, v/V/Ctrl+V selections, and /? search.
+bind("[", "pane.copy_mode.enter")
+bind("]", "pane.paste")
+-- Match copy-selection in tmux: y copies without leaving copy mode.
+rex.bind("copy/y", "pane.copy")
+rex.bind("copy/space", "pane.copy_mode.select", { mode = "char" })
+rex.bind("copy/ctrl+c", "pane.copy_mode.exit")
+rex.bind("copy/ctrl+j", "pane.copy_mode.yank")
+rex.bind("copy/backspace", "pane.copy_mode.move", { to = "left" })
+rex.bind("copy/ctrl+h", "pane.copy_mode.move", { to = "left" })
 
 -- Splits: custom | and -, plus tmux's default % and ".
 -- Rex spells shifted symbols using the unshifted key on a US keyboard.
@@ -86,6 +115,8 @@ for _, entry in ipairs({
   rex.bind("alt+" .. key, "tmux_navigate", {
     direction = direction, key = "alt+" .. key,
   })
+  -- Copy mode navigates panes directly, even when the pane is running Vim.
+  rex.bind("copy/alt+" .. key, "pane.focus", { direction = direction })
 
   -- Rex resizes by percentage, whereas tmux resizes by terminal cells.
   bind("shift+" .. key, "pane.resize", { direction = direction, amount = 5 })
