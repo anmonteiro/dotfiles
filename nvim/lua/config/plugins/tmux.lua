@@ -4,11 +4,11 @@ local function navigate(command, direction)
     vim.cmd(command)
 
     -- Let Vim move between its splits before handing navigation back to Rex.
-    local session = vim.env.REX_SESSION
+    local block = vim.env.REX_BLOCK
     if
       vim.api.nvim_get_current_win() ~= window
-      or not session
-      or session == ""
+      or not block
+      or block == ""
       or (vim.env.TMUX and vim.env.TMUX ~= "")
       or vim.fn.getcmdwintype() ~= ""
     then
@@ -23,8 +23,9 @@ local function navigate(command, direction)
       return
     end
 
+    -- Rex resolves the current session and window from REX_BLOCK.
     vim.system(
-      { rex, "--autostart=false", "focus", "--wrap", "--session", session, direction },
+      { rex, "--autostart=false", "focus", "--wrap", direction },
       { text = true, timeout = 2000 },
       vim.schedule_wrap(function(result)
         if result.code ~= 0 then
